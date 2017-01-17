@@ -28,7 +28,7 @@ describe('compile', function() {
 			});
 			
 			var data = compiler.instrument().compile().toSource();
-			console.log(data);
+			//console.log(data);
 			
 			expect(data).to.equal(fs.readFileSync(path.join(__dirname, 'fixtures', 'compile', name + '.js'), {
 				encoding: 'utf8'

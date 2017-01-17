@@ -237,37 +237,71 @@ const $expressions = {
 	`\(NodeKind::IfExpression)`(data, coverage, coverageName, file, node) { // {{{
 		let bid = coverage.branchMap.length + 1
 		
-		coverage.branchMap.push({
-			type: 'cond-expr'
-			line: data.condition.start.line
-			locations: [
-				{
-					start: {
-						line: data.whenTrue.start.line
-						column: data.whenTrue.start.column - 1
+		if data.whenFalse? {
+			coverage.branchMap.push({
+				type: 'cond-expr'
+				line: data.start.line
+				locations: [
+					{
+						start: {
+							line: data.whenTrue.start.line
+							column: data.whenTrue.start.column - 1
+						}
+						end: {
+							line: data.whenTrue.end.line
+							column: data.whenTrue.end.column - 1
+						}
 					}
-					end: {
-						line: data.whenTrue.end.line
-						column: data.whenTrue.end.column - 1
+					{
+						start: {
+							line: data.whenFalse.start.line
+							column: data.whenFalse.start.column - 1
+						}
+						end: {
+							line: data.whenFalse.end.line
+							column: data.whenFalse.end.column - 1
+						}
 					}
-				}
-				{
-					start: {
-						line: data.whenFalse.start.line
-						column: data.whenFalse.start.column - 1
+				]
+			})
+			
+			data.condition = $compile.expression(data.condition, coverage, coverageName, file, node)
+			
+			data.whenTrue = $sequence($increment.branch(bid, 0, coverageName, file), data.whenTrue, coverage, coverageName, file, node)
+			data.whenFalse = $sequence($increment.branch(bid, 1, coverageName, file), data.whenFalse, coverage, coverageName, file, node)
+		}
+		else {
+			coverage.branchMap.push({
+				type: 'cond-expr'
+				line: data.start.line
+				locations: [
+					{
+						start: {
+							line: data.start.line
+							column: data.start.column - 1
+						}
+						end: {
+							line: data.start.line
+							column: data.start.column - 1
+						}
 					}
-					end: {
-						line: data.whenFalse.end.line
-						column: data.whenFalse.end.column - 1
+					{
+						start: {
+							line: data.start.line
+							column: data.start.column - 1
+						}
+						end: {
+							line: data.start.line
+							column: data.start.column - 1
+						}
 					}
-				}
-			]
-		})
-		
-		data.condition = $compile.expression(data.condition, coverage, coverageName, file, node)
-		
-		data.whenTrue = $sequence($increment.branch(bid, 0, coverageName, file), data.whenTrue, coverage, coverageName, file, node)
-		data.whenFalse = $sequence($increment.branch(bid, 1, coverageName, file), data.whenFalse, coverage, coverageName, file, node)
+				]
+			})
+			
+			data.condition = $compile.expression(data.condition, coverage, coverageName, file, node)
+			
+			data.whenTrue = $sequence($increment.branch(bid, 0, coverageName, file), data.whenTrue, coverage, coverageName, file, node)
+		}
 		
 		return data
 	} // }}}
@@ -278,6 +312,7 @@ const $expressions = {
 	} // }}}
 	`\(NodeKind::NumericExpression)`(data, coverage, coverageName, file, node) => data
 	`\(NodeKind::Identifier)`(data, coverage, coverageName, file, node) => data
+	`\(NodeKind::LambdaExpression)`(data, coverage, coverageName, file, node) => $function(data, coverage, coverageName, file, node)
 	`\(NodeKind::Literal)`(data, coverage, coverageName, file, node) => data
 	`\(NodeKind::ObjectExpression)`(data, coverage, coverageName, file, node) { // {{{
 		let properties = data.properties
@@ -339,6 +374,42 @@ const $expressions = {
 	`\(NodeKind::TypeReference)`(data, coverage, coverageName, file, node) => data
 	`\(NodeKind::UnaryExpression)`(data, coverage, coverageName, file, node) { // {{{
 		data.argument = $compile.expression(data.argument, coverage, coverageName, file, node)
+		
+		return data
+	} // }}}
+	`\(NodeKind::UnlessExpression)`(data, coverage, coverageName, file, node) { // {{{
+		let bid = coverage.branchMap.length + 1
+		
+		coverage.branchMap.push({
+			type: 'cond-expr'
+			line: data.start.line
+			locations: [
+				{
+					start: {
+						line: data.start.line
+						column: data.start.column - 1
+					}
+					end: {
+						line: data.start.line
+						column: data.start.column - 1
+					}
+				}
+				{
+					start: {
+						line: data.start.line
+						column: data.start.column - 1
+					}
+					end: {
+						line: data.start.line
+						column: data.start.column - 1
+					}
+				}
+			]
+		})
+		
+		data.condition = $compile.expression(data.condition, coverage, coverageName, file, node)
+		
+		data.whenFalse = $sequence($increment.branch(bid, 0, coverageName, file), data.whenFalse, coverage, coverageName, file, node)
 		
 		return data
 	} // }}}
@@ -498,6 +569,7 @@ func $sequence(init, data, coverage, coverageName, file, node) { // {{{
 } // }}}
 
 const $statements = {
+	`\(NodeKind::BreakStatement)`(data, coverage, coverageName, file, node) => data
 	`\(NodeKind::ClassDeclaration)`(data, coverage, coverageName, file, node) { // {{{
 		let members = data.members
 		
@@ -524,14 +596,30 @@ const $statements = {
 		
 		return data
 	} // }}}
+	`\(NodeKind::ContinueStatement)`(data, coverage, coverageName, file, node) => data
+	`\(NodeKind::DestroyStatement)`(data, coverage, coverageName, file, node) => data
+	`\(NodeKind::DoUntilStatement)`(data, coverage, coverageName, file, node) { // {{{
+		data.condition = $compile.expression(data.condition, coverage, coverageName, file, node)
+		
+		data.body.statements = $compile.statements(data.body.statements, coverage, coverageName, file, node)
+		
+		return data
+	} // }}}
+	`\(NodeKind::DoWhileStatement)`(data, coverage, coverageName, file, node) { // {{{
+		data.condition = $compile.expression(data.condition, coverage, coverageName, file, node)
+		
+		data.body.statements = $compile.statements(data.body.statements, coverage, coverageName, file, node)
+		
+		return data
+	} // }}}
 	`\(NodeKind::EnumDeclaration)`(data, coverage, coverageName, file, node) => data
 	`\(NodeKind::ExportDeclaration)`(data, coverage, coverageName, file, node) { // {{{
-		/* data.declarations = [($statements[declaration.kind] ?? $expressions[declaration.kind])(declaration, coverage, coverageName, file, node) for declaration in data.declarations] */
-		data.declarations = [$statements[declaration.kind]? ? $statements[declaration.kind](declaration, coverage, coverageName, file, node) : $expressions[declaration.kind](declaration, coverage, coverageName, file, node) for declaration in data.declarations]
+		data.declarations = [($statements[declaration.kind] ?? $expressions[declaration.kind])(declaration, coverage, coverageName, file, node) for declaration in data.declarations]
 		
 		return data
 	} // }}}
 	`\(NodeKind::ExternDeclaration)`(data, coverage, coverageName, file, node) => data
+	`\(NodeKind::ExternOrRequireDeclaration)`(data, coverage, coverageName, file, node) => data
 	`\(NodeKind::ForFromStatement)`(data, coverage, coverageName, file, node) { // {{{
 		data.from = $compile.expression(data.from, coverage, coverageName, file, node)
 		
@@ -634,13 +722,11 @@ const $statements = {
 		return data
 	} // }}}
 	`\(NodeKind::ImportDeclaration)`(data, coverage, coverageName, file, node) => data
-	`\(NodeKind::IncludeDeclaration)`(data, coverage, coverageName, file, node) { // {{{
-		return data
-	} // }}}
-	`\(NodeKind::IncludeOnceDeclaration)`(data, coverage, coverageName, file, node) { // {{{
-		return data
-	} // }}}
+	`\(NodeKind::IncludeDeclaration)`(data, coverage, coverageName, file, node) => data
+	`\(NodeKind::IncludeOnceDeclaration)`(data, coverage, coverageName, file, node) => data
 	`\(NodeKind::RequireDeclaration)`(data, coverage, coverageName, file, node) => data
+	`\(NodeKind::RequireOrExternDeclaration)`(data, coverage, coverageName, file, node) => data
+	`\(NodeKind::RequireOrImportDeclaration)`(data, coverage, coverageName, file, node) => data
 	`\(NodeKind::ReturnStatement)`(data, coverage, coverageName, file, node) { // {{{
 		if data.value? {
 			data.value = $compile.expression(data.value, coverage, coverageName, file, node)
@@ -659,6 +745,39 @@ const $statements = {
 		return data
 	} // }}}
 	`\(NodeKind::TypeAliasDeclaration)`(data, coverage, coverageName, file, node) => data
+	`\(NodeKind::UnlessStatement)`(data, coverage, coverageName, file, node) { // {{{
+		let bid = coverage.branchMap.length + 1
+		
+		let loc = {
+			start: {
+				line: data.start.line
+				column: data.start.column - 1
+			}
+			end: {
+				line: data.start.line
+				column: data.start.column - 1
+			}
+		}
+		
+		coverage.branchMap.push({
+			type: 'if'
+			line: data.start.line
+			locations: [loc, loc]
+		})
+		
+		data.condition = $compile.expression(data.condition, coverage, coverageName, file, node)
+		
+		data.whenFalse = $block($increment.branch(bid, 0, coverageName, file), data.whenFalse, coverage, coverageName, file, node)
+		
+		return data
+	} // }}}
+	`\(NodeKind::UntilStatement)`(data, coverage, coverageName, file, node) { // {{{
+		data.condition = $compile.expression(data.condition, coverage, coverageName, file, node)
+		
+		data.body.statements = $compile.statements(data.body.statements, coverage, coverageName, file, node)
+		
+		return data
+	} // }}}
 	`\(NodeKind::VariableDeclaration)`(data, coverage, coverageName, file, node) { // {{{
 		for declaration in data.declarations when declaration.init? {
 			declaration.init = $compile.expression(declaration.init, coverage, coverageName, file, node)
@@ -696,126 +815,137 @@ class CoverageCompiler extends Compiler {
 		return this
 	} // }}}
 	compile(data?) { // {{{
-		@module = new Module(data ?? @readFile(), this, @file)
-		
 		if @instrument {
-			let coverage = @module.instrument(@coverageName, @file)
-			
-			@module.analyse()
-			
-			@module.fuse()
-			
-			const header = new FragmentBuilder(0)
-			
-			header.line(`var __ks_coverage = (function(_export) {\n\treturn typeof _export.__ks_coverage === 'undefined' ? _export.__ks_coverage = {} : _export.__ks_coverage;\n})(typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : this)`)
-			
-			const line = header.newLine()
-			
-			line.code(`if(!\(@coverageName)["\(@file)"]) {\n`)
-			line.code(`\t\(@coverageName)["\(@file)"] = {`)
-			
-			line.code(`"path":"\(@file)",`)
-			
-			line.code(`"s":{`)
-			for i from 1 to coverage.statementMap.length {
-				line.code(`,`) if i > 1
-				
-				line.code(`"\(i)":0`)
-			}
-			line.code(`},`)
-			
-			line.code(`"b":{`)
-			for i from 1 to coverage.branchMap.length {
-				line.code(`,`) if i > 1
-				
-				line.code(`"\(i)":[`)
-				
-				for j from 0 til coverage.branchMap[i - 1].locations.length {
-					line.code(`,`) if j != 0
-					
-					line.code(`0`)
-				}
-				
-				line.code(`]`)
-			}
-			line.code(`},`)
-			
-			line.code(`"f":{`)
-			for i from 1 to coverage.fnMap.length {
-				line.code(`,`) if i > 1
-				
-				line.code(`"\(i)":0`)
-			}
-			line.code(`},`)
-			
-			line.code(`"statementMap":{`)
-			for i from 0 til coverage.statementMap.length {
-				line.code(`,`) if i > 0
-				
-				line.code(`"\(i + 1)":\(JSON.stringify(coverage.statementMap[i]))`)
-			}
-			line.code(`},`)
-			
-			line.code(`"branchMap":{`)
-			for i from 0 til coverage.branchMap.length {
-				line.code(`,`) if i > 0
-				
-				line.code(`"\(i + 1)":\(JSON.stringify(coverage.branchMap[i]))`)
-			}
-			line.code(`},`)
-			
-			line.code(`"fnMap":{`)
-			for i from 0 til coverage.fnMap.length {
-				line.code(`,`) if i > 0
-				
-				line.code(`"\(i + 1)":\(JSON.stringify(coverage.fnMap[i]))`)
-			}
-			line.code(`}`)
-			
-			line.code(`};\n`)
-			line.code(`}`)
-			line.done()
-			
-			@fragments = header.toArray().concat(@module.toFragments())
+			@module = new CoverageModule(data ?? @readFile(), @coverageName, this, @file)
 		}
 		else {
-			@module.analyse()
-			
-			@module.fuse()
-			
-			@fragments = @module.toFragments()
+			@module = new Module(data ?? @readFile(), this, @file)
 		}
+		
+		@module.analyse()
+		
+		@module.fuse()
+		
+		@fragments = @module.toFragments()
 		
 		return this
 	} // }}}
 }
 
-impl Module {
-	instrument(coverageName, file) { // {{{
-		let coverage = {
-			path: @file
+class CoverageModule extends Module {
+	private {
+		_coverageName
+		_coverages = []
+	}
+	$create(data, @coverageName, compiler, file) { // {{{
+		super(data, compiler, file)
+	} // }}}
+	parse(data, file) { // {{{
+		@coverages.push(coverage = {
+			path: file
 			statementMap: []
 			branchMap: []
 			fnMap: []
-		}
+		})
 		
-		@data.body = $compile.statements(@data.body, coverage, coverageName, file, this)
+		data = super.parse(data, file)
 		
-		@data.body.unshift({
+		data.body = $compile.statements(data.body, coverage, @coverageName, file, this)
+		
+		data.body.unshift({
 			kind: NodeKind::ExternDeclaration
 			declarations: [
 				{
 					kind: NodeKind::VariableDeclarator
 					name: {
 						kind: NodeKind::Identifier
-						name: coverageName
+						name: @coverageName
 					}
 				}
 			]
 			attributes: []
 		})
 		
-		return coverage
+		return data
+	} // }}}
+	toFragments() { // {{{
+		const header = new FragmentBuilder(0)
+			
+		header.line(`var \(@coverageName) = (function(_export) {\n\treturn typeof _export.\(@coverageName) === 'undefined' ? _export.\(@coverageName) = {} : _export.\(@coverageName);\n})(typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : this)`)
+		
+		for coverage in @coverages {
+			@toCoverageFragments(header, coverage)
+		}
+		
+		return header.toArray().concat(super.toFragments())
+	} // }}}
+	private toCoverageFragments(fragments, coverage) { // {{{
+		const line = fragments.newLine()
+		
+		line.code(`if(!\(@coverageName)["\(coverage.path)"]) {\n`)
+		line.code(`\t\(@coverageName)["\(coverage.path)"] = {`)
+		
+		line.code(`"path":"\(coverage.path)",`)
+		
+		line.code(`"s":{`)
+		for i from 1 to coverage.statementMap.length {
+			line.code(`,`) if i > 1
+			
+			line.code(`"\(i)":0`)
+		}
+		line.code(`},`)
+		
+		line.code(`"b":{`)
+		for i from 1 to coverage.branchMap.length {
+			line.code(`,`) if i > 1
+			
+			line.code(`"\(i)":[`)
+			
+			for j from 0 til coverage.branchMap[i - 1].locations.length {
+				line.code(`,`) if j != 0
+				
+				line.code(`0`)
+			}
+			
+			line.code(`]`)
+		}
+		line.code(`},`)
+		
+		line.code(`"f":{`)
+		for i from 1 to coverage.fnMap.length {
+			line.code(`,`) if i > 1
+			
+			line.code(`"\(i)":0`)
+		}
+		line.code(`},`)
+		
+		line.code(`"statementMap":{`)
+		for i from 0 til coverage.statementMap.length {
+			line.code(`,`) if i > 0
+			
+			line.code(`"\(i + 1)":\(JSON.stringify(coverage.statementMap[i]))`)
+		}
+		line.code(`},`)
+		
+		line.code(`"branchMap":{`)
+		for i from 0 til coverage.branchMap.length {
+			line.code(`,`) if i > 0
+			
+			line.code(`"\(i + 1)":\(JSON.stringify(coverage.branchMap[i]))`)
+		}
+		line.code(`},`)
+		
+		line.code(`"fnMap":{`)
+		for i from 0 til coverage.fnMap.length {
+			line.code(`,`) if i > 0
+			
+			line.code(`"\(i + 1)":\(JSON.stringify(coverage.fnMap[i]))`)
+		}
+		line.code(`}`)
+		
+		line.code(`};\n`)
+		line.code(`}`)
+		line.done()
 	} // }}}
 }
 
