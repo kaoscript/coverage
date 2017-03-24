@@ -14,8 +14,11 @@ module.exports = function() {
 		name: "pluck",
 		sealed: __ks_Array,
 		function: function(name) {
-			if(name === undefined || name === null) {
-				throw new Error("Missing parameter 'name'");
+			if(arguments.length < 1) {
+				throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 1)");
+			}
+			if(name === void 0 || name === null) {
+				throw new TypeError("'name' is not nullable");
 			}
 			__ks_coverage["/Users/baptiste/Development/Projects/Kaoscript/coverage-istanbul/test/fixtures/compile/xample.pluck.when.ks"].f[1]++;
 			__ks_coverage["/Users/baptiste/Development/Projects/Kaoscript/coverage-istanbul/test/fixtures/compile/xample.pluck.when.ks"].s[3]++;

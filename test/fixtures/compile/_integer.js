@@ -8,7 +8,16 @@ module.exports = function() {
 	__ks_coverage["/Users/baptiste/Development/Projects/Kaoscript/coverage-istanbul/test/fixtures/compile/_integer.ks"].s[1]++;
 	__ks_coverage["/Users/baptiste/Development/Projects/Kaoscript/coverage-istanbul/test/fixtures/compile/_integer.ks"].s[2]++;
 	let Integer = {
-		parse(value = null, radix = null) {
+		parse(value, radix) {
+			if(arguments.length < 2) {
+				throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 2)");
+			}
+			if(value === void 0) {
+				value = null;
+			}
+			if(radix === void 0) {
+				radix = null;
+			}
 			__ks_coverage["/Users/baptiste/Development/Projects/Kaoscript/coverage-istanbul/test/fixtures/compile/_integer.ks"].f[1]++;
 			__ks_coverage["/Users/baptiste/Development/Projects/Kaoscript/coverage-istanbul/test/fixtures/compile/_integer.ks"].s[3]++;
 			return parseInt(value, radix);

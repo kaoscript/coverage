@@ -14,8 +14,11 @@ describe("diskspace", function() {
 	__ks_coverage["/Users/baptiste/Development/Projects/Kaoscript/coverage-istanbul/test/fixtures/compile/diskspace.test.ks"].f[1]++;
 	__ks_coverage["/Users/baptiste/Development/Projects/Kaoscript/coverage-istanbul/test/fixtures/compile/diskspace.test.ks"].s[4]++;
 	it("print", function(done) {
-		if(done === undefined || done === null) {
-			throw new Error("Missing parameter 'done'");
+		if(arguments.length < 1) {
+			throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 1)");
+		}
+		if(done === void 0 || done === null) {
+			throw new TypeError("'done' is not nullable");
 		}
 		__ks_coverage["/Users/baptiste/Development/Projects/Kaoscript/coverage-istanbul/test/fixtures/compile/diskspace.test.ks"].f[2]++;
 		__ks_coverage["/Users/baptiste/Development/Projects/Kaoscript/coverage-istanbul/test/fixtures/compile/diskspace.test.ks"].s[5]++;

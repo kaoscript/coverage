@@ -12,10 +12,17 @@ module.exports = function() {
 	var {Number, __ks_Number} = require("./_number.ks")();
 	__ks_coverage["/Users/baptiste/Development/Projects/Kaoscript/coverage-istanbul/test/fixtures/compile/xample.alpha.ks"].s[3]++;
 	__ks_coverage["/Users/baptiste/Development/Projects/Kaoscript/coverage-istanbul/test/fixtures/compile/xample.alpha.ks"].s[4]++;
-	function alpha(n = null, percentage) {
-		if(percentage === undefined || percentage === null) {
-			percentage = false;
+	function alpha() {
+		if(arguments.length < 1) {
+			throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 1)");
 		}
+		let __ks_i = -1;
+		let n = arguments[++__ks_i];
+		if(n === void 0) {
+			n = null;
+		}
+		let __ks__;
+		let percentage = arguments.length > 1 && (__ks__ = arguments[++__ks_i]) !== void 0 && __ks__ !== null ? __ks__ : false;
 		__ks_coverage["/Users/baptiste/Development/Projects/Kaoscript/coverage-istanbul/test/fixtures/compile/xample.alpha.ks"].f[1]++;
 		__ks_coverage["/Users/baptiste/Development/Projects/Kaoscript/coverage-istanbul/test/fixtures/compile/xample.alpha.ks"].s[5]++;
 		let i = Float.parse(n);

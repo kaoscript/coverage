@@ -8,17 +8,20 @@ var Type = require("@kaoscript/runtime").Type;
 module.exports = function() {
 	__ks_coverage["/Users/baptiste/Development/Projects/Kaoscript/coverage-istanbul/test/fixtures/compile/function.lambda.ks"].s[1]++;
 	const foo = function(a, b) {
-		if(a === undefined || a === null) {
-			throw new Error("Missing parameter 'a'");
+		if(arguments.length < 2) {
+			throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 2)");
 		}
-		if(!Type.isNumber(a)) {
-			throw new Error("Invalid type for parameter 'a'");
+		if(a === void 0 || a === null) {
+			throw new TypeError("'a' is not nullable");
 		}
-		if(b === undefined || b === null) {
-			throw new Error("Missing parameter 'b'");
+		else if(!Type.isNumber(a)) {
+			throw new TypeError("'a' is not of type 'Number'");
 		}
-		if(!Type.isNumber(b)) {
-			throw new Error("Invalid type for parameter 'b'");
+		if(b === void 0 || b === null) {
+			throw new TypeError("'b' is not nullable");
+		}
+		else if(!Type.isNumber(b)) {
+			throw new TypeError("'b' is not of type 'Number'");
 		}
 		__ks_coverage["/Users/baptiste/Development/Projects/Kaoscript/coverage-istanbul/test/fixtures/compile/function.lambda.ks"].f[1]++;
 		__ks_coverage["/Users/baptiste/Development/Projects/Kaoscript/coverage-istanbul/test/fixtures/compile/function.lambda.ks"].s[2]++;

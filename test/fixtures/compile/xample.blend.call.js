@@ -13,23 +13,26 @@ module.exports = function() {
 	__ks_coverage["/Users/baptiste/Development/Projects/Kaoscript/coverage-istanbul/test/fixtures/compile/xample.blend.call.ks"].s[3]++;
 	__ks_coverage["/Users/baptiste/Development/Projects/Kaoscript/coverage-istanbul/test/fixtures/compile/xample.blend.call.ks"].s[4]++;
 	function blend(x, y, percentage) {
-		if(x === undefined || x === null) {
-			throw new Error("Missing parameter 'x'");
+		if(arguments.length < 3) {
+			throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 3)");
 		}
-		if(!Type.isNumber(x)) {
-			throw new Error("Invalid type for parameter 'x'");
+		if(x === void 0 || x === null) {
+			throw new TypeError("'x' is not nullable");
 		}
-		if(y === undefined || y === null) {
-			throw new Error("Missing parameter 'y'");
+		else if(!Type.isNumber(x)) {
+			throw new TypeError("'x' is not of type 'Number'");
 		}
-		if(!Type.isNumber(y)) {
-			throw new Error("Invalid type for parameter 'y'");
+		if(y === void 0 || y === null) {
+			throw new TypeError("'y' is not nullable");
 		}
-		if(percentage === undefined || percentage === null) {
-			throw new Error("Missing parameter 'percentage'");
+		else if(!Type.isNumber(y)) {
+			throw new TypeError("'y' is not of type 'Number'");
 		}
-		if(!Type.isNumber(percentage)) {
-			throw new Error("Invalid type for parameter 'percentage'");
+		if(percentage === void 0 || percentage === null) {
+			throw new TypeError("'percentage' is not nullable");
+		}
+		else if(!Type.isNumber(percentage)) {
+			throw new TypeError("'percentage' is not of type 'Number'");
 		}
 		__ks_coverage["/Users/baptiste/Development/Projects/Kaoscript/coverage-istanbul/test/fixtures/compile/xample.blend.call.ks"].f[1]++;
 		__ks_coverage["/Users/baptiste/Development/Projects/Kaoscript/coverage-istanbul/test/fixtures/compile/xample.blend.call.ks"].s[5]++;

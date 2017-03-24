@@ -13,12 +13,18 @@ module.exports = function(Helper, Type) {
 		class: Function,
 		name: "vcurry",
 		sealed: __ks_Function,
-		function: function(self, bind = null, ...args) {
-			if(self === undefined || self === null) {
-				throw new Error("Missing parameter 'self'");
+		function: function(self, bind, ...args) {
+			if(arguments.length < 2) {
+				throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 2)");
 			}
-			if(!Type.isFunction(self)) {
-				throw new Error("Invalid type for parameter 'self'");
+			if(self === void 0 || self === null) {
+				throw new TypeError("'self' is not nullable");
+			}
+			else if(!Type.isFunction(self)) {
+				throw new TypeError("'self' is not of type 'Function'");
+			}
+			if(bind === void 0) {
+				bind = null;
 			}
 			__ks_coverage["/Users/baptiste/Development/Projects/Kaoscript/coverage-istanbul/test/fixtures/compile/_function.ks"].f[1]++;
 			__ks_coverage["/Users/baptiste/Development/Projects/Kaoscript/coverage-istanbul/test/fixtures/compile/_function.ks"].s[4]++;
@@ -30,7 +36,7 @@ module.exports = function(Helper, Type) {
 		},
 		signature: {
 			access: 3,
-			min: 1,
+			min: 2,
 			max: Infinity,
 			parameters: [
 				{
@@ -40,7 +46,7 @@ module.exports = function(Helper, Type) {
 				},
 				{
 					type: "Any",
-					min: 0,
+					min: 1,
 					max: Infinity
 				}
 			]

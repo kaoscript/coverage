@@ -8,7 +8,13 @@ module.exports = function() {
 	__ks_coverage["/Users/baptiste/Development/Projects/Kaoscript/coverage-istanbul/test/fixtures/compile/_float.ks"].s[1]++;
 	__ks_coverage["/Users/baptiste/Development/Projects/Kaoscript/coverage-istanbul/test/fixtures/compile/_float.ks"].s[2]++;
 	let Float = {
-		parse(value = null) {
+		parse(value) {
+			if(arguments.length < 1) {
+				throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 1)");
+			}
+			if(value === void 0) {
+				value = null;
+			}
 			__ks_coverage["/Users/baptiste/Development/Projects/Kaoscript/coverage-istanbul/test/fixtures/compile/_float.ks"].f[1]++;
 			__ks_coverage["/Users/baptiste/Development/Projects/Kaoscript/coverage-istanbul/test/fixtures/compile/_float.ks"].s[3]++;
 			return parseFloat(value);

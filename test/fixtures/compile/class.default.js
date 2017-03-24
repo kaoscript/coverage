@@ -2,7 +2,7 @@ var __ks_coverage = (function(_export) {
 	return typeof _export.__ks_coverage === 'undefined' ? _export.__ks_coverage = {} : _export.__ks_coverage;
 })(typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : this);
 if(!__ks_coverage["/Users/baptiste/Development/Projects/Kaoscript/coverage-istanbul/test/fixtures/compile/class.default.ks"]) {
-	__ks_coverage["/Users/baptiste/Development/Projects/Kaoscript/coverage-istanbul/test/fixtures/compile/class.default.ks"] = {"path":"/Users/baptiste/Development/Projects/Kaoscript/coverage-istanbul/test/fixtures/compile/class.default.ks","s":{"1":0,"2":0,"3":0,"4":0,"5":0,"6":0,"7":0},"b":{},"f":{"1":0,"2":0,"3":0},"statementMap":{"1":{"start":{"line":1,"column":0},"end":{"line":3,"column":1}},"2":{"start":{"line":5,"column":0},"end":{"line":21,"column":1}},"3":{"start":{"line":11,"column":2},"end":{"line":11,"column":16}},"4":{"start":{"line":15,"column":2},"end":{"line":15,"column":25}},"5":{"start":{"line":19,"column":2},"end":{"line":19,"column":66}},"6":{"start":{"line":23,"column":0},"end":{"line":23,"column":41}},"7":{"start":{"line":25,"column":0},"end":{"line":25,"column":38}}},"branchMap":{},"fnMap":{"1":{"name":"$create","line":10,"loc":{"start":{"line":10,"column":1},"end":{"line":12,"column":2}}},"2":{"name":"$create","line":14,"loc":{"start":{"line":14,"column":1},"end":{"line":16,"column":2}}},"3":{"name":"greet","line":18,"loc":{"start":{"line":18,"column":1},"end":{"line":20,"column":2}}}}};
+	__ks_coverage["/Users/baptiste/Development/Projects/Kaoscript/coverage-istanbul/test/fixtures/compile/class.default.ks"] = {"path":"/Users/baptiste/Development/Projects/Kaoscript/coverage-istanbul/test/fixtures/compile/class.default.ks","s":{"1":0,"2":0,"3":0,"4":0,"5":0,"6":0,"7":0},"b":{},"f":{"1":0,"2":0,"3":0},"statementMap":{"1":{"start":{"line":1,"column":0},"end":{"line":3,"column":1}},"2":{"start":{"line":5,"column":0},"end":{"line":21,"column":1}},"3":{"start":{"line":11,"column":2},"end":{"line":11,"column":16}},"4":{"start":{"line":15,"column":2},"end":{"line":15,"column":25}},"5":{"start":{"line":19,"column":2},"end":{"line":19,"column":66}},"6":{"start":{"line":23,"column":0},"end":{"line":23,"column":41}},"7":{"start":{"line":25,"column":0},"end":{"line":25,"column":38}}},"branchMap":{},"fnMap":{"1":{"name":"constructor","line":10,"loc":{"start":{"line":10,"column":1},"end":{"line":12,"column":2}}},"2":{"name":"constructor","line":14,"loc":{"start":{"line":14,"column":1},"end":{"line":16,"column":2}}},"3":{"name":"greet","line":18,"loc":{"start":{"line":18,"column":1},"end":{"line":20,"column":2}}}}};
 };
 module.exports = function() {
 	__ks_coverage["/Users/baptiste/Development/Projects/Kaoscript/coverage-istanbul/test/fixtures/compile/class.default.ks"].s[1]++;
@@ -24,8 +24,11 @@ module.exports = function() {
 			Greetings.prototype.__ks_cons.call(this, ["Hello!"]);
 		}
 		__ks_cons_1(message) {
-			if(message === undefined || message === null) {
-				throw new Error("Missing parameter 'message'");
+			if(arguments.length < 1) {
+				throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 1)");
+			}
+			if(message === void 0 || message === null) {
+				throw new TypeError("'message' is not nullable");
 			}
 			__ks_coverage["/Users/baptiste/Development/Projects/Kaoscript/coverage-istanbul/test/fixtures/compile/class.default.ks"].f[2]++;
 			__ks_coverage["/Users/baptiste/Development/Projects/Kaoscript/coverage-istanbul/test/fixtures/compile/class.default.ks"].s[4]++;
@@ -39,12 +42,15 @@ module.exports = function() {
 				Greetings.prototype.__ks_cons_1.apply(this, args);
 			}
 			else {
-				throw new Error("Wrong number of arguments");
+				throw new SyntaxError("wrong number of arguments");
 			}
 		}
 		__ks_func_greet_0(name) {
-			if(name === undefined || name === null) {
-				throw new Error("Missing parameter 'name'");
+			if(arguments.length < 1) {
+				throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 1)");
+			}
+			if(name === void 0 || name === null) {
+				throw new TypeError("'name' is not nullable");
 			}
 			__ks_coverage["/Users/baptiste/Development/Projects/Kaoscript/coverage-istanbul/test/fixtures/compile/class.default.ks"].f[3]++;
 			__ks_coverage["/Users/baptiste/Development/Projects/Kaoscript/coverage-istanbul/test/fixtures/compile/class.default.ks"].s[5]++;
@@ -54,7 +60,7 @@ module.exports = function() {
 			if(arguments.length === 1) {
 				return Greetings.prototype.__ks_func_greet_0.apply(this, arguments);
 			}
-			throw new Error("Wrong number of arguments");
+			throw new SyntaxError("wrong number of arguments");
 		}
 	}
 	Greetings.__ks_reflect = {

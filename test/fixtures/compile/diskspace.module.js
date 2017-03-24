@@ -15,8 +15,11 @@ module.exports = function() {
 	const df_regex = /([\/[a-z0-9\-\_\s]+)\s+([0-9]+)\s+([0-9]+)\s+([0-9]+)\s+([0-9]+%)\s+([0-9]+)\s+([0-9]+)\s+([0-9]+%)\s+(\/.*)/i;
 	__ks_coverage["/Users/baptiste/Development/Projects/Kaoscript/coverage-istanbul/test/fixtures/compile/diskspace.module.ks"].s[4]++;
 	function disks(__ks_cb) {
+		if(arguments.length < 1) {
+			throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 1)");
+		}
 		if(!Type.isFunction(__ks_cb)) {
-			throw new Error("Invalid callback");
+			throw new TypeError("'callback' must be a function");
 		}
 		__ks_coverage["/Users/baptiste/Development/Projects/Kaoscript/coverage-istanbul/test/fixtures/compile/diskspace.module.ks"].f[1]++;
 		__ks_coverage["/Users/baptiste/Development/Projects/Kaoscript/coverage-istanbul/test/fixtures/compile/diskspace.module.ks"].s[5]++;

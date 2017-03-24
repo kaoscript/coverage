@@ -14,17 +14,20 @@ module.exports = function() {
 		name: "map",
 		sealed: __ks_Array,
 		function: function(array, iterator) {
-			if(array === undefined || array === null) {
-				throw new Error("Missing parameter 'array'");
+			if(arguments.length < 2) {
+				throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 2)");
 			}
-			if(!Type.isArray(array)) {
-				throw new Error("Invalid type for parameter 'array'");
+			if(array === void 0 || array === null) {
+				throw new TypeError("'array' is not nullable");
 			}
-			if(iterator === undefined || iterator === null) {
-				throw new Error("Missing parameter 'iterator'");
+			else if(!Type.isArray(array)) {
+				throw new TypeError("'array' is not of type 'Array'");
 			}
-			if(!Type.isFunction(iterator)) {
-				throw new Error("Invalid type for parameter 'iterator'");
+			if(iterator === void 0 || iterator === null) {
+				throw new TypeError("'iterator' is not nullable");
+			}
+			else if(!Type.isFunction(iterator)) {
+				throw new TypeError("'iterator' is not of type 'Function'");
 			}
 			__ks_coverage["/Users/baptiste/Development/Projects/Kaoscript/coverage-istanbul/test/fixtures/compile/_array.ks"].f[1]++;
 			__ks_coverage["/Users/baptiste/Development/Projects/Kaoscript/coverage-istanbul/test/fixtures/compile/_array.ks"].s[3]++;
@@ -61,23 +64,26 @@ module.exports = function() {
 		name: "map",
 		sealed: __ks_Array,
 		function: function(array, iterator, condition) {
-			if(array === undefined || array === null) {
-				throw new Error("Missing parameter 'array'");
+			if(arguments.length < 3) {
+				throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 3)");
 			}
-			if(!Type.isArray(array)) {
-				throw new Error("Invalid type for parameter 'array'");
+			if(array === void 0 || array === null) {
+				throw new TypeError("'array' is not nullable");
 			}
-			if(iterator === undefined || iterator === null) {
-				throw new Error("Missing parameter 'iterator'");
+			else if(!Type.isArray(array)) {
+				throw new TypeError("'array' is not of type 'Array'");
 			}
-			if(!Type.isFunction(iterator)) {
-				throw new Error("Invalid type for parameter 'iterator'");
+			if(iterator === void 0 || iterator === null) {
+				throw new TypeError("'iterator' is not nullable");
 			}
-			if(condition === undefined || condition === null) {
-				throw new Error("Missing parameter 'condition'");
+			else if(!Type.isFunction(iterator)) {
+				throw new TypeError("'iterator' is not of type 'Function'");
 			}
-			if(!Type.isFunction(condition)) {
-				throw new Error("Invalid type for parameter 'condition'");
+			if(condition === void 0 || condition === null) {
+				throw new TypeError("'condition' is not nullable");
+			}
+			else if(!Type.isFunction(condition)) {
+				throw new TypeError("'condition' is not of type 'Function'");
 			}
 			__ks_coverage["/Users/baptiste/Development/Projects/Kaoscript/coverage-istanbul/test/fixtures/compile/_array.ks"].f[2]++;
 			__ks_coverage["/Users/baptiste/Development/Projects/Kaoscript/coverage-istanbul/test/fixtures/compile/_array.ks"].s[7]++;
@@ -118,7 +124,7 @@ module.exports = function() {
 		name: "last",
 		sealed: __ks_Array,
 		function: function(index) {
-			if(index === undefined || index === null) {
+			if(index === void 0 || index === null) {
 				index = 1;
 			}
 			__ks_coverage["/Users/baptiste/Development/Projects/Kaoscript/coverage-istanbul/test/fixtures/compile/_array.ks"].f[3]++;

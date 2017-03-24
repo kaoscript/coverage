@@ -42,11 +42,14 @@ module.exports = function() {
 		name: "startsWith",
 		sealed: __ks_String,
 		function: function(value) {
-			if(value === undefined || value === null) {
-				throw new Error("Missing parameter 'value'");
+			if(arguments.length < 1) {
+				throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 1)");
 			}
-			if(!Type.isString(value)) {
-				throw new Error("Invalid type for parameter 'value'");
+			if(value === void 0 || value === null) {
+				throw new TypeError("'value' is not nullable");
+			}
+			else if(!Type.isString(value)) {
+				throw new TypeError("'value' is not of type 'String'");
 			}
 			__ks_coverage["/Users/baptiste/Development/Projects/Kaoscript/coverage-istanbul/test/fixtures/compile/xample.evaluate.const.ks"].f[2]++;
 			__ks_coverage["/Users/baptiste/Development/Projects/Kaoscript/coverage-istanbul/test/fixtures/compile/xample.evaluate.const.ks"].s[8]++;

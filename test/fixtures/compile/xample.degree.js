@@ -14,11 +14,14 @@ module.exports = function() {
 	__ks_coverage["/Users/baptiste/Development/Projects/Kaoscript/coverage-istanbul/test/fixtures/compile/xample.degree.ks"].s[3]++;
 	__ks_coverage["/Users/baptiste/Development/Projects/Kaoscript/coverage-istanbul/test/fixtures/compile/xample.degree.ks"].s[4]++;
 	function degree(value) {
-		if(value === undefined || value === null) {
-			throw new Error("Missing parameter 'value'");
+		if(arguments.length < 1) {
+			throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 1)");
 		}
-		if(!(Type.isNumber(value) || Type.isString(value))) {
-			throw new Error("Invalid type for parameter 'value'");
+		if(value === void 0 || value === null) {
+			throw new TypeError("'value' is not nullable");
+		}
+		else if(!(Type.isNumber(value) || Type.isString(value))) {
+			throw new TypeError("'value' is not of type 'Number' or 'String'");
 		}
 		__ks_coverage["/Users/baptiste/Development/Projects/Kaoscript/coverage-istanbul/test/fixtures/compile/xample.degree.ks"].f[1]++;
 		__ks_coverage["/Users/baptiste/Development/Projects/Kaoscript/coverage-istanbul/test/fixtures/compile/xample.degree.ks"].s[5]++;

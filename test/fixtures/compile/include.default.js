@@ -19,7 +19,7 @@ module.exports = function() {
 		name: "lines",
 		sealed: __ks_String,
 		function: function(emptyLines) {
-			if(emptyLines === undefined || emptyLines === null) {
+			if(emptyLines === void 0 || emptyLines === null) {
 				emptyLines = false;
 			}
 			__ks_coverage["/Users/baptiste/Development/Projects/Kaoscript/coverage-istanbul/test/fixtures/compile/_string.ks"].f[1]++;
@@ -90,7 +90,7 @@ module.exports = function() {
 		name: "toInt",
 		sealed: __ks_String,
 		function: function(base) {
-			if(base === undefined || base === null) {
+			if(base === void 0 || base === null) {
 				base = 10;
 			}
 			__ks_coverage["/Users/baptiste/Development/Projects/Kaoscript/coverage-istanbul/test/fixtures/compile/_string.ks"].f[3]++;

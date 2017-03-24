@@ -7,14 +7,14 @@
  * Licensed under the MIT license.
  * http://www.opensource.org/licenses/mit-license.php
  **/
-#![cfg(error='off')]
+#![error(off)]
 
 import {
 	*	from @kaoscript/ast
 	*	from kaoscript
 }
 
-extern console, Error: class, JSON
+extern console, JSON
 
 func $block(init, data, coverage, coverageName, file, node) { // {{{
 	if data.kind == NodeKind::Block {
@@ -588,8 +588,7 @@ const $statements = {
 					data.members.push($statements[NodeKind::FunctionDeclaration](member, coverage, coverageName, file, node))
 				}
 				=> {
-					console.error(member)
-					$throw('Not Implemented', node)
+					throw new NotImplementedException(file, member.start.line)
 				}
 			}
 		}
@@ -713,8 +712,7 @@ const $statements = {
 				NodeKind::MethodAliasDeclaration => data.properties.push(property)
 				NodeKind::MethodLinkDeclaration => data.properties.push(property)
 				=> {
-					console.error(property)
-					$throw('Not Implemented', node)
+					throw new NotImplementedException(file, property.start.line)
 				}
 			}
 		}
@@ -794,16 +792,6 @@ const $statements = {
 	} // }}}
 }
 
-func $throw(message, node?) ~ Error { // {{{
-	let error = new Error(message)
-	
-	if node? {
-		error.filename = node.file()
-	}
-	
-	throw error
-} // }}}
-
 class CoverageCompiler extends Compiler {
 	private {
 		_coverageName
@@ -814,7 +802,7 @@ class CoverageCompiler extends Compiler {
 		
 		return this
 	} // }}}
-	compile(data?) { // {{{
+	compile(data = null) { // {{{
 		if @instrument {
 			@module = new CoverageModule(data ?? @readFile(), @coverageName, this, @file)
 		}
@@ -822,9 +810,7 @@ class CoverageCompiler extends Compiler {
 			@module = new Module(data ?? @readFile(), this, @file)
 		}
 		
-		@module.analyse()
-		
-		@module.fuse()
+		@module.compile()
 		
 		@fragments = @module.toFragments()
 		
@@ -834,10 +820,11 @@ class CoverageCompiler extends Compiler {
 
 class CoverageModule extends Module {
 	private {
+		_addCoverageVariable: Boolean	= true
 		_coverageName
-		_coverages = []
+		_coverages						= []
 	}
-	$create(data, @coverageName, compiler, file) { // {{{
+	constructor(data, @coverageName, compiler, file) { // {{{
 		super(data, compiler, file)
 	} // }}}
 	parse(data, file) { // {{{
@@ -852,19 +839,23 @@ class CoverageModule extends Module {
 		
 		data.body = $compile.statements(data.body, coverage, @coverageName, file, this)
 		
-		data.body.unshift({
-			kind: NodeKind::ExternDeclaration
-			declarations: [
-				{
-					kind: NodeKind::VariableDeclarator
-					name: {
-						kind: NodeKind::Identifier
-						name: @coverageName
+		if @addCoverageVariable {
+			data.body.unshift({
+				kind: NodeKind::ExternDeclaration
+				declarations: [
+					{
+						kind: NodeKind::VariableDeclarator
+						name: {
+							kind: NodeKind::Identifier
+							name: @coverageName
+						}
 					}
-				}
-			]
-			attributes: []
-		})
+				]
+				attributes: []
+			})
+			
+			@addCoverageVariable = false
+		}
 		
 		return data
 	} // }}}

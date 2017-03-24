@@ -8,8 +8,11 @@ module.exports = function() {
 	__ks_coverage["/Users/baptiste/Development/Projects/Kaoscript/coverage-istanbul/test/fixtures/compile/unless.throw.ks"].s[1]++;
 	__ks_coverage["/Users/baptiste/Development/Projects/Kaoscript/coverage-istanbul/test/fixtures/compile/unless.throw.ks"].s[2]++;
 	function foo(x) {
-		if(x === undefined || x === null) {
-			throw new Error("Missing parameter 'x'");
+		if(arguments.length < 1) {
+			throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 1)");
+		}
+		if(x === void 0 || x === null) {
+			throw new TypeError("'x' is not nullable");
 		}
 		__ks_coverage["/Users/baptiste/Development/Projects/Kaoscript/coverage-istanbul/test/fixtures/compile/unless.throw.ks"].f[1]++;
 		__ks_coverage["/Users/baptiste/Development/Projects/Kaoscript/coverage-istanbul/test/fixtures/compile/unless.throw.ks"].s[3]++;

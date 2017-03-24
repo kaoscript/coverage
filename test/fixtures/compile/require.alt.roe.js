@@ -23,16 +23,15 @@ module.exports = function(__ks_0, __ks___ks_0) {
 		sealed: __ks_Array,
 		function: function() {
 			if(arguments.length < 1) {
-				throw new Error("Wrong number of arguments");
+				throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 1)");
 			}
 			let __ks_i = -1;
-			var item = arguments[++__ks_i];
-			if(arguments.length > 1) {
-				var from = arguments[++__ks_i];
+			let item = arguments[++__ks_i];
+			if(item === void 0 || item === null) {
+				throw new TypeError("'item' is not nullable");
 			}
-			else {
-				var from = 0;
-			}
+			let __ks__;
+			let from = arguments.length > 1 && (__ks__ = arguments[++__ks_i]) !== void 0 && __ks__ !== null ? __ks__ : 0;
 			__ks_coverage["/Users/baptiste/Development/Projects/Kaoscript/coverage-istanbul/test/fixtures/compile/require.alt.roe.ks"].f[1]++;
 			__ks_coverage["/Users/baptiste/Development/Projects/Kaoscript/coverage-istanbul/test/fixtures/compile/require.alt.roe.ks"].s[3]++;
 			return this.indexOf(item, from) !== -1;
@@ -84,12 +83,12 @@ module.exports = function(__ks_0, __ks___ks_0) {
 		},
 		signature: {
 			access: 3,
-			min: 1,
+			min: 0,
 			max: Infinity,
 			parameters: [
 				{
 					type: "Any",
-					min: 1,
+					min: 0,
 					max: Infinity
 				}
 			]
