@@ -3,6 +3,8 @@
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 ![Dependencies](https://img.shields.io/david/kaoscript/target-commons.svg)
+[![Build Status](https://travis-ci.org/kaoscript/coverage-istanbul.svg?branch=master)](https://travis-ci.org/kaoscript/coverage-istanbul)
+[![CircleCI](https://circleci.com/gh/kaoscript/coverage-istanbul/tree/master.svg?style=shield)](https://circleci.com/gh/kaoscript/coverage-istanbul/tree/master)
 
 [Istanbul](https://github.com/gotwarlost/istanbul) instrumentation for [kaoscript](https://github.com/kaoscript/kaoscript)
 
