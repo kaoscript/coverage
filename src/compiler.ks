@@ -88,7 +88,7 @@ const $compile = {
 							}
 							property: {
 								kind: NodeKind::Literal
-								value: file
+								value: node.reducePath(file)
 							}
 							computed: true
 							nullable: false
@@ -162,8 +162,8 @@ const $expressions = {
 				]
 			})
 			
-			data.left = $sequence($increment.branch(bid, 0, coverageName, file), data.left, coverage, coverageName, file, node)
-			data.right = $sequence($increment.branch(bid, 1, coverageName, file), data.right, coverage, coverageName, file, node)
+			data.left = $sequence($increment.branch(bid, 0, coverageName, file, node), data.left, coverage, coverageName, file, node)
+			data.right = $sequence($increment.branch(bid, 1, coverageName, file, node), data.right, coverage, coverageName, file, node)
 		}
 		else {
 			data.left = $compile.expression(data.left, coverage, coverageName, file, node)
@@ -210,8 +210,8 @@ const $expressions = {
 		
 		data.condition = $compile.expression(data.condition, coverage, coverageName, file, node)
 		
-		data.whenTrue = $sequence($increment.branch(bid, 0, coverageName, file), data.whenTrue, coverage, coverageName, file, node)
-		data.whenFalse = $sequence($increment.branch(bid, 1, coverageName, file), data.whenFalse, coverage, coverageName, file, node)
+		data.whenTrue = $sequence($increment.branch(bid, 0, coverageName, file, node), data.whenTrue, coverage, coverageName, file, node)
+		data.whenFalse = $sequence($increment.branch(bid, 1, coverageName, file, node), data.whenFalse, coverage, coverageName, file, node)
 		
 		return data
 	} // }}}
@@ -267,8 +267,8 @@ const $expressions = {
 			
 			data.condition = $compile.expression(data.condition, coverage, coverageName, file, node)
 			
-			data.whenTrue = $sequence($increment.branch(bid, 0, coverageName, file), data.whenTrue, coverage, coverageName, file, node)
-			data.whenFalse = $sequence($increment.branch(bid, 1, coverageName, file), data.whenFalse, coverage, coverageName, file, node)
+			data.whenTrue = $sequence($increment.branch(bid, 0, coverageName, file, node), data.whenTrue, coverage, coverageName, file, node)
+			data.whenFalse = $sequence($increment.branch(bid, 1, coverageName, file, node), data.whenFalse, coverage, coverageName, file, node)
 		}
 		else {
 			coverage.branchMap.push({
@@ -300,7 +300,7 @@ const $expressions = {
 			
 			data.condition = $compile.expression(data.condition, coverage, coverageName, file, node)
 			
-			data.whenTrue = $sequence($increment.branch(bid, 0, coverageName, file), data.whenTrue, coverage, coverageName, file, node)
+			data.whenTrue = $sequence($increment.branch(bid, 0, coverageName, file, node), data.whenTrue, coverage, coverageName, file, node)
 		}
 		
 		return data
@@ -356,7 +356,7 @@ const $expressions = {
 					}
 				})
 				
-				data.operands.push($sequence($increment.branch(bid, index, coverageName, file), operand, coverage, coverageName, file, node))
+				data.operands.push($sequence($increment.branch(bid, index, coverageName, file, node), operand, coverage, coverageName, file, node))
 			}
 		}
 		else {
@@ -409,7 +409,7 @@ const $expressions = {
 		
 		data.condition = $compile.expression(data.condition, coverage, coverageName, file, node)
 		
-		data.whenFalse = $sequence($increment.branch(bid, 0, coverageName, file), data.whenFalse, coverage, coverageName, file, node)
+		data.whenFalse = $sequence($increment.branch(bid, 0, coverageName, file, node), data.whenFalse, coverage, coverageName, file, node)
 		
 		return data
 	} // }}}
@@ -450,7 +450,7 @@ func $function(data, coverage, coverageName, file, node) { // {{{
 					}
 					property: {
 						kind: NodeKind::Literal
-						value: file
+						value: node.reducePath(file)
 					}
 					computed: true
 					nullable: false
@@ -497,7 +497,7 @@ func $if(condition, whenTrue, coverage, coverageName, file, node) { // {{{
 } // }}}
 
 const $increment = {
-	branch(bid, eid, coverageName, file) { // {{{
+	branch(bid, eid, coverageName, file, node) { // {{{
 		return {
 			kind: NodeKind::UnaryExpression
 			operator: {
@@ -517,7 +517,7 @@ const $increment = {
 							}
 							property: {
 								kind: NodeKind::Literal
-								value: file
+								value: node.reducePath(file)
 							}
 							computed: true
 							nullable: false
@@ -691,10 +691,10 @@ const $statements = {
 		
 		data.condition = $compile.expression(data.condition, coverage, coverageName, file, node)
 		
-		data.whenTrue = $block($increment.branch(bid, 0, coverageName, file), data.whenTrue, coverage, coverageName, file, node)
+		data.whenTrue = $block($increment.branch(bid, 0, coverageName, file, node), data.whenTrue, coverage, coverageName, file, node)
 		
 		if data.whenFalse? {
-			data.whenFalse = $block($increment.branch(bid, 1, coverageName, file), data.whenFalse, coverage, coverageName, file, node)
+			data.whenFalse = $block($increment.branch(bid, 1, coverageName, file, node), data.whenFalse, coverage, coverageName, file, node)
 		}
 		
 		return data
@@ -765,7 +765,7 @@ const $statements = {
 		
 		data.condition = $compile.expression(data.condition, coverage, coverageName, file, node)
 		
-		data.whenFalse = $block($increment.branch(bid, 0, coverageName, file), data.whenFalse, coverage, coverageName, file, node)
+		data.whenFalse = $block($increment.branch(bid, 0, coverageName, file, node), data.whenFalse, coverage, coverageName, file, node)
 		
 		return data
 	} // }}}
@@ -823,13 +823,20 @@ class CoverageModule extends Module {
 		_addCoverageVariable: Boolean	= true
 		_coverageName
 		_coverages						= []
+		reducePath: Function			= path => path
 	}
 	constructor(data, @coverageName, compiler, file) { // {{{
 		super(data, compiler, file)
 	} // }}}
 	parse(data, file) { // {{{
+		if @compiler._options.reducePath is Function {
+			@reducePath = @compiler._options.reducePath
+		}
+		
+		const reducePath = @reducePath
+		
 		@coverages.push(coverage = {
-			path: file
+			path: reducePath(file)
 			statementMap: []
 			branchMap: []
 			fnMap: []

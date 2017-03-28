@@ -5,6 +5,7 @@ var fs = require('fs');
 var path = require('path');
 
 describe('compile', function() {
+	var length = __dirname.length;
 	var files = fs.readdirSync(path.join(__dirname, 'fixtures', 'compile'));
 	
 	var file;
@@ -24,6 +25,9 @@ describe('compile', function() {
 			var compiler = new Compiler(path.join(__dirname, 'fixtures', 'compile', file), {
 				config: {
 					header: false
+				},
+				reducePath: function(path) {
+					return path.substr(length);
 				}
 			});
 			
