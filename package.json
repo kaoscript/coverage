@@ -30,9 +30,9 @@
 	],
 	"main": "lib/compiler.js",
 	"dependencies": {
-		"@kaoscript/ast": "^0.7.0",
-		"@kaoscript/runtime": "^0.6.0",
-		"kaoscript": ">=0.9 <1"
+		"@kaoscript/ast": "kaoscript/ast#v0.7.0",
+		"@kaoscript/runtime": "kaoscript/runtime#v0.6.0",
+		"kaoscript": "kaoscript/kaoscript#v0.9.0"
 	},
 	"devDependencies": {
 		"chai": "^2.3.0",
