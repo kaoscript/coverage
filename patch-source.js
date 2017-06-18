@@ -1,7 +1,7 @@
 var Compiler = require('./lib/compiler.js')().Compiler;
 var fs = require('fs');
 var path = require('path');
-var program = require("commander");
+var program = require('commander');
 
 program.parse(process.argv);
 
@@ -23,10 +23,15 @@ function patch(file) {
 	
 	console.log('patching ./' + path.join('test', 'fixtures', 'compile', name + '.ks'))
 	
+	var length = path.join(__dirname, 'test').length;
+	
 	try {
 		var compiler = new Compiler(path.join(__dirname, 'test', 'fixtures', 'compile', name + '.ks'), {
 			config: {
 				header: false
+			},
+			reducePath: function(path) {
+				return path.substr(length);
 			}
 		});
 		

@@ -10,9 +10,9 @@ build:
 	./node_modules/.bin/kaoscript -c -t ecma-v5 -o lib -r src/compiler.ks=lib/compiler.js src/register.ks
 
 comp:
-	./node_modules/.bin/kaoscript -c -t ecma-v5 -o lib src/compiler.ks
+	time ./node_modules/.bin/kaoscript -c -t ecma-v5 -o lib src/compiler.ks
 
 clean:
-	find . -type f \( -name "*.ksb" -o -name "*.ksh" -o -name "*.ksm" \) -delete
+	find -L . -type f \( -name "*.ksb" -o -name "*.ksh" -o -name "*.ksm" \) -exec rm {} \;
 
 .PHONY: build test

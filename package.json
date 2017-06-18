@@ -1,7 +1,7 @@
 {
 	"name": "@kaoscript/coverage-istanbul",
 	"description": "Istanbul instrumentation for kaoscript",
-	"version": "0.1.0",
+	"version": "0.2.0",
 	"author": {
 		"name": "Baptiste Augrain",
 		"email": "daiyam@zokugun.org"
@@ -30,13 +30,14 @@
 	],
 	"main": "lib/compiler.js",
 	"dependencies": {
-		"@kaoscript/ast": "^0.6.0",
-		"@kaoscript/runtime": "^0.5.3",
-		"kaoscript": ">=0.8 <1"
+		"@kaoscript/ast": "^0.7.0",
+		"@kaoscript/runtime": "^0.6.0",
+		"kaoscript": ">=0.9 <1"
 	},
 	"devDependencies": {
-		"chai": "2.x",
-		"mocha": "2.x"
+		"chai": "^2.3.0",
+		"commander": "^2.9.0",
+		"mocha": "^2.5.3"
 	},
 	"scripts": {
 		"test": "mocha --colors --check-leaks --reporter spec"

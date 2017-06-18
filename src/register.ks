@@ -1,6 +1,6 @@
 /**
  * register.ks
- * Version 0.1.0
+ * Version 0.2.0
  * January 11th, 2017
  *
  * Copyright (c) 2017 Baptiste Augrain
@@ -10,10 +10,10 @@
 #![bin]
 
 import {
-	*					from ./compiler
-	* as fs				from kaoscript/src/fs.js
-	* as path			from path
-	registerExtension	from ./module.js
+	'./compiler'
+	'kaoscript/src/fs.js'	as fs
+	'path'
+	'./module.js'			for registerExtension
 }
 
 extern console, Date, global, JSON, parseInt, process

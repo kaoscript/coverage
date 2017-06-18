@@ -1,6 +1,6 @@
 /**
  * coverage.ks
- * Version 0.1.0
+ * Version 0.2.0
  * January 11th, 2017
  *
  * Copyright (c) 2017 Baptiste Augrain
@@ -10,8 +10,8 @@
 #![error(off)]
 
 import {
-	*	from @kaoscript/ast
-	*	from kaoscript
+	'@kaoscript/ast'
+	'kaoscript'
 }
 
 extern console, JSON
@@ -51,7 +51,6 @@ func $body(data) { // {{{
 
 const $compile = {
 	expression(data, coverage, coverageName, file, node) { // {{{
-		//console.log('expression', data.kind)
 		return $expressions[data.kind](data, coverage, coverageName, file, node)
 	} // }}}
 	statements(statements, coverage, coverageName, file, node) { // {{{
@@ -709,8 +708,6 @@ const $statements = {
 				NodeKind::MethodDeclaration => {
 					data.properties.push($statements[NodeKind::FunctionDeclaration](property, coverage, coverageName, file, node))
 				}
-				NodeKind::MethodAliasDeclaration => data.properties.push(property)
-				NodeKind::MethodLinkDeclaration => data.properties.push(property)
 				=> {
 					throw new NotImplementedException(file, property.start.line)
 				}
@@ -777,8 +774,8 @@ const $statements = {
 		return data
 	} // }}}
 	`\(NodeKind::VariableDeclaration)`(data, coverage, coverageName, file, node) { // {{{
-		for declaration in data.declarations when declaration.init? {
-			declaration.init = $compile.expression(declaration.init, coverage, coverageName, file, node)
+		if data.init? {
+			data.init = $compile.expression(data.init, coverage, coverageName, file, node)
 		}
 		
 		return data
@@ -825,7 +822,9 @@ class CoverageModule extends Module {
 		_coverages						= []
 		reducePath: Function			= path => path
 	}
-	constructor(data, @coverageName, compiler, file) { // {{{
+	constructor(@data, @coverageName, @compiler, @file) { // {{{
+		@coverageName = coverageName
+		
 		super(data, compiler, file)
 	} // }}}
 	parse(data, file) { // {{{

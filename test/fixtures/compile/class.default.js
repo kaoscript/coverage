@@ -63,54 +63,6 @@ module.exports = function() {
 			throw new SyntaxError("wrong number of arguments");
 		}
 	}
-	Greetings.__ks_reflect = {
-		inits: 1,
-		constructors: [
-			{
-				access: 3,
-				min: 0,
-				max: 0,
-				parameters: []
-			},
-			{
-				access: 3,
-				min: 1,
-				max: 1,
-				parameters: [
-					{
-						type: "Any",
-						min: 1,
-						max: 1
-					}
-				]
-			}
-		],
-		destructors: 0,
-		instanceVariables: {
-			_message: {
-				access: 1,
-				type: "String"
-			}
-		},
-		classVariables: {},
-		instanceMethods: {
-			greet: [
-				{
-					access: 3,
-					min: 1,
-					max: 1,
-					parameters: [
-						{
-							type: "Any",
-							min: 1,
-							max: 1
-						}
-					]
-				}
-			]
-		},
-		classMethods: {}
-	};
 	__ks_coverage["/fixtures/compile/class.default.ks"].s[6]++;
 	let hello = new Greetings("Hello world!");
 	__ks_coverage["/fixtures/compile/class.default.ks"].s[7]++;

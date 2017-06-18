@@ -9,49 +9,31 @@ module.exports = function(Helper, Type) {
 	__ks_coverage["/fixtures/compile/_function.ks"].s[2]++;
 	var __ks_Function = {};
 	__ks_coverage["/fixtures/compile/_function.ks"].s[3]++;
-	Helper.newClassMethod({
-		class: Function,
-		name: "vcurry",
-		sealed: __ks_Function,
-		function: function(self, bind, ...args) {
-			if(arguments.length < 2) {
-				throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 2)");
-			}
-			if(self === void 0 || self === null) {
-				throw new TypeError("'self' is not nullable");
-			}
-			else if(!Type.isFunction(self)) {
-				throw new TypeError("'self' is not of type 'Function'");
-			}
-			if(bind === void 0) {
-				bind = null;
-			}
-			__ks_coverage["/fixtures/compile/_function.ks"].f[1]++;
-			__ks_coverage["/fixtures/compile/_function.ks"].s[4]++;
-			return function(...additionals) {
-				__ks_coverage["/fixtures/compile/_function.ks"].f[2]++;
-				__ks_coverage["/fixtures/compile/_function.ks"].s[5]++;
-				return self.apply(bind, args.concat(additionals));
-			};
-		},
-		signature: {
-			access: 3,
-			min: 2,
-			max: Infinity,
-			parameters: [
-				{
-					type: "Function",
-					min: 1,
-					max: 1
-				},
-				{
-					type: "Any",
-					min: 1,
-					max: Infinity
-				}
-			]
+	__ks_Function.__ks_sttc_vcurry_0 = function(self, bind, ...args) {
+		if(arguments.length < 2) {
+			throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 2)");
 		}
-	});
+		if(self === void 0 || self === null) {
+			throw new TypeError("'self' is not nullable");
+		}
+		else if(!Type.isFunction(self)) {
+			throw new TypeError("'self' is not of type 'Function'");
+		}
+		if(bind === void 0) {
+			bind = null;
+		}
+		__ks_coverage["/fixtures/compile/_function.ks"].f[1]++;
+		__ks_coverage["/fixtures/compile/_function.ks"].s[4]++;
+		return function(...additionals) {
+			__ks_coverage["/fixtures/compile/_function.ks"].f[2]++;
+			__ks_coverage["/fixtures/compile/_function.ks"].s[5]++;
+			return self.apply(bind, args.concat(additionals));
+		};
+	};
+	__ks_Function._cm_vcurry = function() {
+		var args = Array.prototype.slice.call(arguments);
+		return __ks_Function.__ks_sttc_vcurry_0.apply(null, args);
+	};
 	__ks_coverage["/fixtures/compile/_function.ks"].s[6]++;
 	return {
 		Function: Function,
