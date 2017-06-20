@@ -38,58 +38,40 @@ func loadFile(module, filename) { // {{{
 } // }}}
 
 func loadInstrumentedFile(module, filename) { // {{{
-	try {
+	const compiler = new Compiler(filename, {
+		register: false,
+		target: target
+	})
+	
+	compiler.instrument(coverageName)
+	
+	compiler.compile(fs.readFile(filename))
+	
+	compiler.writeFiles()
+	
+	const data = compiler.toSource()
+	//console.log(data)
+	
+	return module._compile(data, filename)
+} // }}}
+
+func loadOriginalFile(module, filename) { // {{{
+	const source = fs.readFile(filename)
+	
+	if(fs.isFile(getBinaryPath(filename, target)) && fs.isFile(getHashPath(filename, target)) && isUpToDate(filename, target, source)) {
+		return module._compile(fs.readFile(getBinaryPath(filename, target)), filename)
+	}
+	else {
 		const compiler = new Compiler(filename, {
 			register: false,
 			target: target
 		})
 		
-		compiler.instrument(coverageName)
-		
-		compiler.compile(fs.readFile(filename))
+		compiler.compile(source)
 		
 		compiler.writeFiles()
 		
-		const data = compiler.toSource()
-		//console.log(data)
-		
-		return module._compile(data, filename)
-	}
-	catch error {
-		if !error.message.startsWith('/') {
-			error.message = (error.filename || filename) + ': ' + error.message
-		}
-		
-		throw error
-	}
-} // }}}
-
-func loadOriginalFile(module, filename) { // {{{
-	try {
-		const source = fs.readFile(filename)
-		
-		if(fs.isFile(getBinaryPath(filename, target)) && fs.isFile(getHashPath(filename, target)) && isUpToDate(filename, target, source)) {
-			return module._compile(fs.readFile(getBinaryPath(filename, target)), filename)
-		}
-		else {
-			const compiler = new Compiler(filename, {
-				register: false,
-				target: target
-			})
-			
-			compiler.compile(source)
-			
-			compiler.writeFiles()
-			
-			return module._compile(compiler.toSource(), filename)
-		}
-	}
-	catch error {
-		if !error.message.startsWith('/') {
-			error.message = (error.filename || filename) + ': ' + error.message
-		}
-		
-		throw error
+		return module._compile(compiler.toSource(), filename)
 	}
 } // }}}
 

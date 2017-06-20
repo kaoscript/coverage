@@ -31,12 +31,39 @@ describe('compile', function() {
 				}
 			});
 			
-			var data = compiler.instrument().compile().toSource();
-			//console.log(data);
+			try {
+				var error = fs.readFileSync(path.join(__dirname, 'fixtures', 'compile', name + '.error'), {
+					encoding: 'utf8'
+				});
+			}
+			catch(error) {
+			}
 			
-			expect(data).to.equal(fs.readFileSync(path.join(__dirname, 'fixtures', 'compile', name + '.js'), {
-				encoding: 'utf8'
-			}));
+			if(error) {
+				var data;
+				
+				try {
+					data = compiler.compile().toSource();
+				}
+				catch(ex) {
+					//console.log(ex)
+					expect(ex.fileName).to.exist;
+					
+					ex.fileName = path.relative(__dirname, ex.fileName);
+					
+					expect(ex.toString()).to.equal(error);
+				}
+				
+				expect(data).to.not.exist;
+			}
+			else {
+				var data = compiler.instrument().compile().toSource();
+				console.log(data);
+				
+				expect(data).to.equal(fs.readFileSync(path.join(__dirname, 'fixtures', 'compile', name + '.js'), {
+					encoding: 'utf8'
+				}));
+			}
 		});
 	}
 });

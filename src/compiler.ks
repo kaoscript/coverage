@@ -30,9 +30,15 @@ func $block(init, data, coverage, coverageName, file, node) { // {{{
 	}
 } // }}}
 
-func $body(data) { // {{{
-	if data.kind == NodeKind::Block {
-		return data 
+func $body(data?) { // {{{
+	if data == null {
+		return {
+			kind: NodeKind::Block
+			statements: []
+		}
+	}
+	else if data.kind == NodeKind::Block {
+		return data
 	}
 	else {
 		return {
@@ -50,8 +56,24 @@ func $body(data) { // {{{
 } // }}}
 
 const $compile = {
+	compile(data, coverage, coverageName, file, node) { // {{{
+		if $statements[data.kind]? {
+			return $statements[data.kind](data, coverage, coverageName, file, node)
+		}
+		else if $expressions[data.kind]? {
+			return $expressions[data.kind](data, coverage, coverageName, file, node)
+		}
+		else {
+			throw new NotImplementedException(`Not supported kind "\(data.kind)"`, file, data.start.line)
+		}
+	} // }}}
 	expression(data, coverage, coverageName, file, node) { // {{{
-		return $expressions[data.kind](data, coverage, coverageName, file, node)
+		if $expressions[data.kind]? {
+			return $expressions[data.kind](data, coverage, coverageName, file, node)
+		}
+		else {
+			throw new NotImplementedException(`Not supported kind "\(data.kind)"`, file, data.start.line)
+		}
 	} // }}}
 	statements(statements, coverage, coverageName, file, node) { // {{{
 		const result = []
@@ -113,14 +135,114 @@ const $compile = {
 			if $statements[statement.kind]? {
 				result.push($statements[statement.kind](statement, coverage, coverageName, file, node))
 			}
-			else {
+			else if $expressions[statement.kind]? {
 				result.push($expressions[statement.kind](statement, coverage, coverageName, file, node))
+			}
+			else {
+				throw new NotImplementedException(`Not supported kind "\(statement.kind)"`, file, statement.start.line)
 			}
 		}
 		
 		return result
 	} // }}}
 }
+
+func $constructor(members, data, coverage, coverageName, file, node) { // {{{
+	let fid = coverage.fnMap.length + 1
+	
+	coverage.fnMap.push({
+		name: data.name.name
+		line: data.start.line
+		loc: {
+			start: {
+				line: data.start.line
+				column: data.start.column - 1
+			}
+			end: {
+				line: data.end.line
+				column: data.end.column - 1
+			}
+		}
+	})
+	
+	const fields = {}
+	for member in members {
+		if member.kind == NodeKind::FieldDeclaration {
+			fields[member.name.name] = true
+			
+			if member.name.name[0] == '_' {
+				fields[member.name.name.substr(1)] = true
+			}
+		}
+	}
+	
+	const arguments = []
+	for parameter in data.parameters {
+		if fields[parameter.name.name] != true {
+			arguments.push(parameter.name)
+		}
+	}
+	
+	data.body = {
+		kind: NodeKind::Block
+		statements: [
+			{
+				kind: NodeKind::CallExpression
+				scope: {
+					kind: ScopeKind::This
+				}
+				callee: {
+					kind: NodeKind::Identifier
+					name: 'super'
+					start: data.start
+					end: data.end
+				}
+				arguments: arguments
+				nullable: false
+			}
+			{
+				kind: NodeKind::UnaryExpression
+				operator: {
+					kind: UnaryOperatorKind::IncrementPostfix
+				}
+				argument: {
+					kind: NodeKind::MemberExpression
+					object: {
+						kind: NodeKind::MemberExpression
+						object: {
+							kind: NodeKind::MemberExpression
+							object: {
+								kind: NodeKind::Identifier
+								name: coverageName
+							}
+							property: {
+								kind: NodeKind::Literal
+								value: node.reducePath(file)
+							}
+							computed: true
+							nullable: false
+						}
+						property: {
+							kind: NodeKind::Identifier
+							name: 'f'
+						}
+						computed: false
+						nullable: false
+					}
+					property: {
+						kind: NodeKind::NumericExpression
+						value: fid
+					}
+					computed: true
+					nullable: false
+				}
+				attributes: []
+			}
+		]
+	}
+	
+	return data
+} // }}}
 
 const $expressions = {
 	`\(NodeKind::ArrayComprehension)`(data, coverage, coverageName, file, node) => data
@@ -232,6 +354,7 @@ const $expressions = {
 		return data
 	} // }}}
 	`\(NodeKind::EnumExpression)`(data, coverage, coverageName, file, node) => data
+	`\(NodeKind::ExportAlias)`(data, coverage, coverageName, file, node) => data
 	`\(NodeKind::FunctionExpression)`(data, coverage, coverageName, file, node) => $function(data, coverage, coverageName, file, node)
 	`\(NodeKind::IfExpression)`(data, coverage, coverageName, file, node) { // {{{
 		let bid = coverage.branchMap.length + 1
@@ -370,6 +493,7 @@ const $expressions = {
 		
 		return data
 	} // }}}
+	`\(NodeKind::ThisExpression)`(data, coverage, coverageName, file, node) => data
 	`\(NodeKind::TypeReference)`(data, coverage, coverageName, file, node) => data
 	`\(NodeKind::UnaryExpression)`(data, coverage, coverageName, file, node) { // {{{
 		data.argument = $compile.expression(data.argument, coverage, coverageName, file, node)
@@ -584,7 +708,12 @@ const $statements = {
 					data.members.push(member)
 				}
 				NodeKind::MethodDeclaration => {
-					data.members.push($statements[NodeKind::FunctionDeclaration](member, coverage, coverageName, file, node))
+					if data.extends? && member.name.name == 'constructor' && !?member.body {
+						data.members.push($constructor(members, member, coverage, coverageName, file, node))
+					}
+					else {
+						data.members.push($statements[NodeKind::FunctionDeclaration](member, coverage, coverageName, file, node))
+					}
 				}
 				=> {
 					throw new NotImplementedException(file, member.start.line)
@@ -612,7 +741,7 @@ const $statements = {
 	} // }}}
 	`\(NodeKind::EnumDeclaration)`(data, coverage, coverageName, file, node) => data
 	`\(NodeKind::ExportDeclaration)`(data, coverage, coverageName, file, node) { // {{{
-		data.declarations = [($statements[declaration.kind] ?? $expressions[declaration.kind])(declaration, coverage, coverageName, file, node) for declaration in data.declarations]
+		data.declarations = [$compile.compile(declaration, coverage, coverageName, file, node) for declaration in data.declarations]
 		
 		return data
 	} // }}}
@@ -719,12 +848,47 @@ const $statements = {
 	`\(NodeKind::ImportDeclaration)`(data, coverage, coverageName, file, node) => data
 	`\(NodeKind::IncludeDeclaration)`(data, coverage, coverageName, file, node) => data
 	`\(NodeKind::IncludeOnceDeclaration)`(data, coverage, coverageName, file, node) => data
+	`\(NodeKind::NamespaceDeclaration)`(data, coverage, coverageName, file, node) { // {{{
+		data.statements = $compile.statements(data.statements, coverage, coverageName, file, node)
+		
+		return data
+	} // }}}
 	`\(NodeKind::RequireDeclaration)`(data, coverage, coverageName, file, node) => data
 	`\(NodeKind::RequireOrExternDeclaration)`(data, coverage, coverageName, file, node) => data
 	`\(NodeKind::RequireOrImportDeclaration)`(data, coverage, coverageName, file, node) => data
 	`\(NodeKind::ReturnStatement)`(data, coverage, coverageName, file, node) { // {{{
 		if data.value? {
 			data.value = $compile.expression(data.value, coverage, coverageName, file, node)
+		}
+		
+		return data
+	} // }}}
+	`\(NodeKind::SwitchStatement)`(data, coverage, coverageName, file, node) { // {{{
+		let bid = coverage.branchMap.length + 1
+		
+		const branch = {
+			type: 'switch'
+			line: data.start.line
+			locations: []
+		}
+		
+		coverage.branchMap.push(branch)
+		
+		data.expression = $compile.expression(data.expression, coverage, coverageName, file, node)
+		
+		for clause, index in data.clauses {
+			clause.body = $block($increment.branch(bid, index, coverageName, file, node), clause.body, coverage, coverageName, file, node)
+			
+			branch.locations.push({
+				start: {
+					line: clause.start.line
+					column: clause.start.column - 1
+				}
+				end: {
+					line: clause.end.line
+					column: clause.end.column - 1
+				}
+			})
 		}
 		
 		return data

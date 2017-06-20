@@ -11,6 +11,4 @@
 License
 -------
 
-Copyright &copy; 2016 Baptiste Augrain
-
-Licensed under the [MIT license](http://www.opensource.org/licenses/mit-license.php).
+[MIT](http://www.opensource.org/licenses/mit-license.php) &copy; Baptiste Augrain
