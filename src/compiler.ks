@@ -173,13 +173,6 @@ func $constructor(members, data, coverage, coverageName, file, node) { // {{{
 		}
 	}
 
-	const arguments = []
-	for parameter in data.parameters {
-		if fields[parameter.name.name] != true {
-			arguments.push(parameter.name)
-		}
-	}
-
 	data.body = {
 		kind: NodeKind::Block
 		statements: [
@@ -194,7 +187,7 @@ func $constructor(members, data, coverage, coverageName, file, node) { // {{{
 					start: data.start
 					end: data.end
 				}
-				arguments: arguments
+				arguments: []
 				nullable: false
 			}
 			{
