@@ -12,4 +12,4 @@ module.exports = function() {
 	let u = 42;
 	__ks_coverage["/fixtures/compile/template.default.ks"].s[4]++;
 	console.log("" + d + u);
-}
+};

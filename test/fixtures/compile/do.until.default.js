@@ -12,4 +12,4 @@ module.exports = function() {
 		sell();
 	}
 	while(!(supply > demand))
-}
+};

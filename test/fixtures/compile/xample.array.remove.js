@@ -48,4 +48,4 @@ module.exports = function() {
 		var args = Array.prototype.slice.call(arguments, 1, arguments.length);
 		return __ks_Array.__ks_func_remove_0.apply(that, args);
 	};
-}
+};

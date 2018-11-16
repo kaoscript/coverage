@@ -79,4 +79,4 @@ module.exports = function() {
 	let r = new Rectangle("black");
 	__ks_coverage["/fixtures/compile/class.extends.cons.emp.own.ks"].s[6]++;
 	console.log(r.draw());
-}
+};

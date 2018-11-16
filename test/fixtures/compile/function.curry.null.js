@@ -11,10 +11,10 @@ module.exports = function() {
 	function log(...args) {
 		__ks_coverage["/fixtures/compile/function.curry.null.ks"].f[1]++;
 		__ks_coverage["/fixtures/compile/function.curry.null.ks"].s[3]++;
-		console.log.apply(console, args);
+		console.log(...args);
 	}
 	__ks_coverage["/fixtures/compile/function.curry.null.ks"].s[4]++;
-	let logHello = Helper.curry(log, null, ["hello: "]);
+	let logHello = Helper.vcurry(log, null, ...["hello: "]);
 	__ks_coverage["/fixtures/compile/function.curry.null.ks"].s[5]++;
 	logHello("foo");
-}
+};

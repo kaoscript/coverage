@@ -3,7 +3,7 @@ import 'child_process' for exec
 
 const df_regex = /([\/[a-z0-9\-\_\s]+)\s+([0-9]+)\s+([0-9]+)\s+([0-9]+)\s+([0-9]+%)\s+([0-9]+)\s+([0-9]+)\s+([0-9]+%)\s+(\/.*)/i
 
-func disks() async {
+async func disks() {
 	let stdout: string, stderr = await exec('df -k')
 	
 	let disks = []

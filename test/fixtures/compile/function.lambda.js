@@ -27,4 +27,4 @@ module.exports = function() {
 		__ks_coverage["/fixtures/compile/function.lambda.ks"].s[2]++;
 		return a - b;
 	};
-}
+};

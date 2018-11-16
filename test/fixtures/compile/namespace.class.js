@@ -42,4 +42,4 @@ module.exports = function() {
 	})();
 	__ks_coverage["/fixtures/compile/namespace.class.ks"].s[4]++;
 	const x = new qux.Foobar();
-}
+};

@@ -8,7 +8,7 @@ var Helper = require("@kaoscript/runtime").Helper;
 module.exports = function() {
 	__ks_coverage["/fixtures/compile/function.curry.self.ks"].s[1]++;
 	__ks_coverage["/fixtures/compile/function.curry.self.ks"].s[2]++;
-	let log = Helper.curry(console.log, console, ["hello: "]);
+	let log = Helper.vcurry(console.log, console, ...["hello: "]);
 	__ks_coverage["/fixtures/compile/function.curry.self.ks"].s[3]++;
 	log("foo");
-}
+};

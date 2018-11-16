@@ -15,4 +15,4 @@ module.exports = function(Color, Space) {
 		Color: ColorCIE,
 		Space: SpaceCIE
 	};
-}
+};

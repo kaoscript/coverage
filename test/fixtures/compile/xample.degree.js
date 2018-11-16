@@ -27,4 +27,4 @@ module.exports = function() {
 		__ks_coverage["/fixtures/compile/xample.degree.ks"].s[5]++;
 		return __ks_Number._im_mod(Type.isNumber(value) ? __ks_Number._im_toInt(value) : __ks_String._im_toInt(value), 360);
 	}
-}
+};

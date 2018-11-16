@@ -29,4 +29,4 @@ module.exports = function() {
 		__ks_coverage["/fixtures/compile/switch.stmt.prime.ks"].s[7]++;
 		console.log("Ain't special");
 	}
-}
+};

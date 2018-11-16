@@ -11,4 +11,4 @@ module.exports = function() {
 		__ks_coverage["/fixtures/compile/until.default.ks"].s[3]++;
 		sell();
 	}
-}
+};

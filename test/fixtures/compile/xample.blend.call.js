@@ -40,4 +40,4 @@ module.exports = function() {
 	}
 	__ks_coverage["/fixtures/compile/xample.blend.call.ks"].s[6]++;
 	console.log(__ks_Number._im_round(blend(0.8, 0.5, 0.3), 2));
-}
+};

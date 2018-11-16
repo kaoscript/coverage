@@ -9,17 +9,14 @@
  **/
 #![error(off)]
 
-import {
-	'@kaoscript/ast'
-	'kaoscript'
-}
+import 'kaoscript'
 
 extern console, JSON
 
 func $block(init, data, coverage, coverageName, file, node) { // {{{
 	if data.kind == NodeKind::Block {
 		data.statements = [].concat(init, $compile.statements(data.statements, coverage, coverageName, file, node))
-		
+
 		return data
 	}
 	else {
@@ -77,10 +74,10 @@ const $compile = {
 	} // }}}
 	statements(statements, coverage, coverageName, file, node) { // {{{
 		const result = []
-		
+
 		for statement in statements {
 			let sid = coverage.statementMap.length + 1
-			
+
 			coverage.statementMap.push({
 				start: {
 					line: statement.start.line
@@ -91,7 +88,7 @@ const $compile = {
 					column: statement.end.column - 1
 				}
 			})
-			
+
 			result.push({
 				kind: NodeKind::UnaryExpression
 				operator: {
@@ -130,7 +127,7 @@ const $compile = {
 				}
 				attributes: []
 			})
-			
+
 			//console.log('statement', statement.kind)
 			if $statements[statement.kind]? {
 				result.push($statements[statement.kind](statement, coverage, coverageName, file, node))
@@ -142,14 +139,14 @@ const $compile = {
 				throw new NotImplementedException(`Not supported kind "\(statement.kind)"`, file, statement.start.line)
 			}
 		}
-		
+
 		return result
 	} // }}}
 }
 
 func $constructor(members, data, coverage, coverageName, file, node) { // {{{
 	let fid = coverage.fnMap.length + 1
-	
+
 	coverage.fnMap.push({
 		name: data.name.name
 		line: data.start.line
@@ -164,25 +161,25 @@ func $constructor(members, data, coverage, coverageName, file, node) { // {{{
 			}
 		}
 	})
-	
+
 	const fields = {}
 	for member in members {
 		if member.kind == NodeKind::FieldDeclaration {
 			fields[member.name.name] = true
-			
+
 			if member.name.name[0] == '_' {
 				fields[member.name.name.substr(1)] = true
 			}
 		}
 	}
-	
+
 	const arguments = []
 	for parameter in data.parameters {
 		if fields[parameter.name.name] != true {
 			arguments.push(parameter.name)
 		}
 	}
-	
+
 	data.body = {
 		kind: NodeKind::Block
 		statements: [
@@ -240,7 +237,7 @@ func $constructor(members, data, coverage, coverageName, file, node) { // {{{
 			}
 		]
 	}
-	
+
 	return data
 } // }}}
 
@@ -248,14 +245,14 @@ const $expressions = {
 	`\(NodeKind::ArrayComprehension)`(data, coverage, coverageName, file, node) => data
 	`\(NodeKind::ArrayExpression)`(data, coverage, coverageName, file, node) { // {{{
 		data.values = [$compile.expression(value, coverage, coverageName, file, node) for value in data.values]
-		
+
 		return data
 	} // }}}
 	`\(NodeKind::ArrayRange)`(data, coverage, coverageName, file, node) => data
 	`\(NodeKind::BinaryExpression)`(data, coverage, coverageName, file, node) { // {{{
 		if data.operator.kind == BinaryOperatorKind::And || data.operator.kind == BinaryOperatorKind::Or {
 			let bid = coverage.branchMap.length + 1
-			
+
 			coverage.branchMap.push({
 				type: 'binary-expr'
 				line: data.start.line
@@ -282,7 +279,7 @@ const $expressions = {
 					}
 				]
 			})
-			
+
 			data.left = $sequence($increment.branch(bid, 0, coverageName, file, node), data.left, coverage, coverageName, file, node)
 			data.right = $sequence($increment.branch(bid, 1, coverageName, file, node), data.right, coverage, coverageName, file, node)
 		}
@@ -290,18 +287,18 @@ const $expressions = {
 			data.left = $compile.expression(data.left, coverage, coverageName, file, node)
 			data.right = $compile.expression(data.right, coverage, coverageName, file, node)
 		}
-		
+
 		return data
 	} // }}}
 	`\(NodeKind::CallExpression)`(data, coverage, coverageName, file, node) { // {{{
 		data.callee = $compile.expression(data.callee, coverage, coverageName, file, node)
 		data.arguments = [$compile.expression(argument, coverage, coverageName, file, node) for argument in data.arguments]
-		
+
 		return data
 	} // }}}
 	`\(NodeKind::ConditionalExpression)`(data, coverage, coverageName, file, node) { // {{{
 		let bid = coverage.branchMap.length + 1
-		
+
 		coverage.branchMap.push({
 			type: 'cond-expr'
 			line: data.start.line
@@ -328,37 +325,37 @@ const $expressions = {
 				}
 			]
 		})
-		
+
 		data.condition = $compile.expression(data.condition, coverage, coverageName, file, node)
-		
+
 		data.whenTrue = $sequence($increment.branch(bid, 0, coverageName, file, node), data.whenTrue, coverage, coverageName, file, node)
 		data.whenFalse = $sequence($increment.branch(bid, 1, coverageName, file, node), data.whenFalse, coverage, coverageName, file, node)
-		
+
 		return data
 	} // }}}
 	`\(NodeKind::CreateExpression)`(data, coverage, coverageName, file, node) { // {{{
 		data.class = $compile.expression(data.class, coverage, coverageName, file, node)
 		data.arguments = [$compile.expression(argument, coverage, coverageName, file, node) for argument in data.arguments]
-		
+
 		return data
 	} // }}}
 	`\(NodeKind::CurryExpression)`(data, coverage, coverageName, file, node) { // {{{
 		data.callee = $compile.expression(data.callee, coverage, coverageName, file, node)
-		
+
 		if data.scope.kind == ScopeKind::Argument {
 			data.scope.value = $compile.expression(data.scope.value, coverage, coverageName, file, node)
 		}
-		
+
 		data.arguments = [$compile.expression(argument, coverage, coverageName, file, node) for argument in data.arguments]
-		
+
 		return data
 	} // }}}
 	`\(NodeKind::EnumExpression)`(data, coverage, coverageName, file, node) => data
-	`\(NodeKind::ExportAlias)`(data, coverage, coverageName, file, node) => data
+	`\(NodeKind::ExportNamedSpecifier)`(data, coverage, coverageName, file, node) => data
 	`\(NodeKind::FunctionExpression)`(data, coverage, coverageName, file, node) => $function(data, coverage, coverageName, file, node)
 	`\(NodeKind::IfExpression)`(data, coverage, coverageName, file, node) { // {{{
 		let bid = coverage.branchMap.length + 1
-		
+
 		if data.whenFalse? {
 			coverage.branchMap.push({
 				type: 'cond-expr'
@@ -386,9 +383,9 @@ const $expressions = {
 					}
 				]
 			})
-			
+
 			data.condition = $compile.expression(data.condition, coverage, coverageName, file, node)
-			
+
 			data.whenTrue = $sequence($increment.branch(bid, 0, coverageName, file, node), data.whenTrue, coverage, coverageName, file, node)
 			data.whenFalse = $sequence($increment.branch(bid, 1, coverageName, file, node), data.whenFalse, coverage, coverageName, file, node)
 		}
@@ -419,17 +416,17 @@ const $expressions = {
 					}
 				]
 			})
-			
+
 			data.condition = $compile.expression(data.condition, coverage, coverageName, file, node)
-			
+
 			data.whenTrue = $sequence($increment.branch(bid, 0, coverageName, file, node), data.whenTrue, coverage, coverageName, file, node)
 		}
-		
+
 		return data
 	} // }}}
 	`\(NodeKind::MemberExpression)`(data, coverage, coverageName, file, node) { // {{{
 		data.object = $compile.expression(data.object, coverage, coverageName, file, node)
-		
+
 		return data
 	} // }}}
 	`\(NodeKind::NumericExpression)`(data, coverage, coverageName, file, node) => data
@@ -438,34 +435,34 @@ const $expressions = {
 	`\(NodeKind::Literal)`(data, coverage, coverageName, file, node) => data
 	`\(NodeKind::ObjectExpression)`(data, coverage, coverageName, file, node) { // {{{
 		let properties = data.properties
-		
+
 		data.properties = []
-		
+
 		for property in properties {
 			data.properties.push($compile.expression(property, coverage, coverageName, file, node))
 		}
-		
+
 		return data
 	} // }}}
 	`\(NodeKind::ObjectMember)`(data, coverage, coverageName, file, node) { // {{{
 		data.value = $compile.expression(data.value, coverage, coverageName, file, node)
-		
+
 		return data
 	} // }}}
 	`\(NodeKind::PolyadicExpression)`(data, coverage, coverageName, file, node) { // {{{
 		if data.operator.kind == BinaryOperatorKind::And || data.operator.kind == BinaryOperatorKind::Or {
 			let bid = coverage.branchMap.length + 1
-			
+
 			coverage.branchMap.push(branch = {
 				type: 'binary-expr'
 				line: data.start.line
 				locations: []
 			})
-			
+
 			let operands = data.operands
-			
+
 			data.operands = []
-			
+
 			for operand, index in operands {
 				branch.locations.push({
 					start: {
@@ -477,32 +474,32 @@ const $expressions = {
 						column: operand.end.column - 1
 					}
 				})
-				
+
 				data.operands.push($sequence($increment.branch(bid, index, coverageName, file, node), operand, coverage, coverageName, file, node))
 			}
 		}
 		else {
 			data.operands = [$compile.expression(operand, coverage, coverageName, file, node) for operand in data.operands]
 		}
-		
+
 		return data
 	} // }}}
 	`\(NodeKind::RegularExpression)`(data, coverage, coverageName, file, node) => data
 	`\(NodeKind::TemplateExpression)`(data, coverage, coverageName, file, node) { // {{{
 		data.elements = [$compile.expression(element, coverage, coverageName, file, node) for element in data.elements]
-		
+
 		return data
 	} // }}}
 	`\(NodeKind::ThisExpression)`(data, coverage, coverageName, file, node) => data
 	`\(NodeKind::TypeReference)`(data, coverage, coverageName, file, node) => data
 	`\(NodeKind::UnaryExpression)`(data, coverage, coverageName, file, node) { // {{{
 		data.argument = $compile.expression(data.argument, coverage, coverageName, file, node)
-		
+
 		return data
 	} // }}}
 	`\(NodeKind::UnlessExpression)`(data, coverage, coverageName, file, node) { // {{{
 		let bid = coverage.branchMap.length + 1
-		
+
 		coverage.branchMap.push({
 			type: 'cond-expr'
 			line: data.start.line
@@ -529,18 +526,18 @@ const $expressions = {
 				}
 			]
 		})
-		
+
 		data.condition = $compile.expression(data.condition, coverage, coverageName, file, node)
-		
+
 		data.whenFalse = $sequence($increment.branch(bid, 0, coverageName, file, node), data.whenFalse, coverage, coverageName, file, node)
-		
+
 		return data
 	} // }}}
 }
 
 func $function(data, coverage, coverageName, file, node) { // {{{
 	let fid = coverage.fnMap.length + 1
-	
+
 	coverage.fnMap.push({
 		name: data.name?.name ?? `(anonymous_\(fid))`
 		line: data.start.line
@@ -555,7 +552,7 @@ func $function(data, coverage, coverageName, file, node) { // {{{
 			}
 		}
 	})
-	
+
 	data.body = $block({
 		kind: NodeKind::UnaryExpression
 		operator: {
@@ -594,7 +591,7 @@ func $function(data, coverage, coverageName, file, node) { // {{{
 		}
 		attributes: []
 	}, $body(data.body), coverage, coverageName, file, node)
-	
+
 	return data
 } // }}}
 
@@ -605,7 +602,7 @@ func $if(condition, whenTrue, coverage, coverageName, file, node) { // {{{
 		start: condition.start
 		end: whenTrue.end
 	}
-	
+
 	if whenTrue.kind == NodeKind::Block {
 		data.whenTrue = whenTrue
 	}
@@ -615,7 +612,7 @@ func $if(condition, whenTrue, coverage, coverageName, file, node) { // {{{
 			statements: [whenTrue]
 		}
 	}
-	
+
 	return $statements[NodeKind::IfStatement](data, coverage, coverageName, file, node)
 } // }}}
 
@@ -674,13 +671,13 @@ const $increment = {
 func $sequence(init, data, coverage, coverageName, file, node) { // {{{
 	if data.kind == NodeKind::SequenceExpression {
 		let expressions = data.expressions
-		
+
 		data.expressions = [init]
-		
+
 		for expression in expressions {
 			data.expressions.push($compile.expression(expression, coverage, coverageName, file, node))
 		}
-		
+
 		return data
 	}
 	else {
@@ -695,16 +692,16 @@ const $statements = {
 	`\(NodeKind::BreakStatement)`(data, coverage, coverageName, file, node) => data
 	`\(NodeKind::ClassDeclaration)`(data, coverage, coverageName, file, node) { // {{{
 		let members = data.members
-		
+
 		data.members = []
-		
+
 		for member in members {
 			switch member.kind {
 				NodeKind::FieldDeclaration => {
 					if member.defaultValue? {
 						member.defaultValue = $compile.expression(member.defaultValue, coverage, coverageName, file, node)
 					}
-					
+
 					data.members.push(member)
 				}
 				NodeKind::MethodDeclaration => {
@@ -720,28 +717,33 @@ const $statements = {
 				}
 			}
 		}
-		
+
 		return data
 	} // }}}
 	`\(NodeKind::ContinueStatement)`(data, coverage, coverageName, file, node) => data
 	`\(NodeKind::DestroyStatement)`(data, coverage, coverageName, file, node) => data
 	`\(NodeKind::DoUntilStatement)`(data, coverage, coverageName, file, node) { // {{{
 		data.condition = $compile.expression(data.condition, coverage, coverageName, file, node)
-		
+
 		data.body.statements = $compile.statements(data.body.statements, coverage, coverageName, file, node)
-		
+
 		return data
 	} // }}}
 	`\(NodeKind::DoWhileStatement)`(data, coverage, coverageName, file, node) { // {{{
 		data.condition = $compile.expression(data.condition, coverage, coverageName, file, node)
-		
+
 		data.body.statements = $compile.statements(data.body.statements, coverage, coverageName, file, node)
-		
+
 		return data
 	} // }}}
 	`\(NodeKind::EnumDeclaration)`(data, coverage, coverageName, file, node) => data
 	`\(NodeKind::ExportDeclaration)`(data, coverage, coverageName, file, node) { // {{{
 		data.declarations = [$compile.compile(declaration, coverage, coverageName, file, node) for declaration in data.declarations]
+
+		return data
+	} // }}}
+	`\(NodeKind::ExportDeclarationSpecifier)`(data, coverage, coverageName, file, node) { // {{{
+		data.declaration = $compile.compile(data.declaration, coverage, coverageName, file, node)
 		
 		return data
 	} // }}}
@@ -749,57 +751,57 @@ const $statements = {
 	`\(NodeKind::ExternOrRequireDeclaration)`(data, coverage, coverageName, file, node) => data
 	`\(NodeKind::ForFromStatement)`(data, coverage, coverageName, file, node) { // {{{
 		data.from = $compile.expression(data.from, coverage, coverageName, file, node)
-		
+
 		if data.til? {
 			data.til = $compile.expression(data.til, coverage, coverageName, file, node)
 		}
 		else {
 			data.to = $compile.expression(data.to, coverage, coverageName, file, node)
 		}
-		
+
 		if data.by? {
 			data.by = $compile.expression(data.by, coverage, coverageName, file, node)
 		}
-		
+
 		if data.when? {
 			data.body = $if(data.when, data.body, coverage, coverageName, file, node)
-			
+
 			delete data.when
 		}
 		else {
 			data.body.statements = $compile.statements(data.body.statements, coverage, coverageName, file, node)
 		}
-		
+
 		return data
 	} // }}}
 	`\(NodeKind::ForInStatement)`(data, coverage, coverageName, file, node) { // {{{
 		if data.when? {
 			data.body = $if(data.when, data.body, coverage, coverageName, file, node)
-			
+
 			delete data.when
 		}
 		else {
 			data.body.statements = $compile.statements(data.body.statements, coverage, coverageName, file, node)
 		}
-		
+
 		return data
 	} // }}}
 	`\(NodeKind::ForOfStatement)`(data, coverage, coverageName, file, node) { // {{{
 		if data.when? {
 			data.body = $if(data.when, data.body, coverage, coverageName, file, node)
-			
+
 			delete data.when
 		}
 		else {
 			data.body.statements = $compile.statements(data.body.statements, coverage, coverageName, file, node)
 		}
-		
+
 		return data
 	} // }}}
 	`\(NodeKind::FunctionDeclaration)`(data, coverage, coverageName, file, node) => $function(data, coverage, coverageName, file, node)
 	`\(NodeKind::IfStatement)`(data, coverage, coverageName, file, node) { // {{{
 		let bid = coverage.branchMap.length + 1
-		
+
 		let loc = {
 			start: {
 				line: data.start.line
@@ -810,28 +812,28 @@ const $statements = {
 				column: data.start.column - 1
 			}
 		}
-		
+
 		coverage.branchMap.push({
 			type: 'if'
 			line: data.start.line
 			locations: [loc, loc]
 		})
-		
+
 		data.condition = $compile.expression(data.condition, coverage, coverageName, file, node)
-		
+
 		data.whenTrue = $block($increment.branch(bid, 0, coverageName, file, node), data.whenTrue, coverage, coverageName, file, node)
-		
+
 		if data.whenFalse? {
 			data.whenFalse = $block($increment.branch(bid, 1, coverageName, file, node), data.whenFalse, coverage, coverageName, file, node)
 		}
-		
+
 		return data
 	} // }}}
 	`\(NodeKind::ImplementDeclaration)`(data, coverage, coverageName, file, node) { // {{{
 		let properties = data.properties
-		
+
 		data.properties = []
-		
+
 		for property in properties {
 			switch property.kind {
 				NodeKind::MethodDeclaration => {
@@ -842,15 +844,14 @@ const $statements = {
 				}
 			}
 		}
-		
+
 		return data
 	} // }}}
 	`\(NodeKind::ImportDeclaration)`(data, coverage, coverageName, file, node) => data
 	`\(NodeKind::IncludeDeclaration)`(data, coverage, coverageName, file, node) => data
-	`\(NodeKind::IncludeOnceDeclaration)`(data, coverage, coverageName, file, node) => data
 	`\(NodeKind::NamespaceDeclaration)`(data, coverage, coverageName, file, node) { // {{{
 		data.statements = $compile.statements(data.statements, coverage, coverageName, file, node)
-		
+
 		return data
 	} // }}}
 	`\(NodeKind::RequireDeclaration)`(data, coverage, coverageName, file, node) => data
@@ -860,25 +861,25 @@ const $statements = {
 		if data.value? {
 			data.value = $compile.expression(data.value, coverage, coverageName, file, node)
 		}
-		
+
 		return data
 	} // }}}
 	`\(NodeKind::SwitchStatement)`(data, coverage, coverageName, file, node) { // {{{
 		let bid = coverage.branchMap.length + 1
-		
+
 		const branch = {
 			type: 'switch'
 			line: data.start.line
 			locations: []
 		}
-		
+
 		coverage.branchMap.push(branch)
-		
+
 		data.expression = $compile.expression(data.expression, coverage, coverageName, file, node)
-		
+
 		for clause, index in data.clauses {
 			clause.body = $block($increment.branch(bid, index, coverageName, file, node), clause.body, coverage, coverageName, file, node)
-			
+
 			branch.locations.push({
 				start: {
 					line: clause.start.line
@@ -890,23 +891,23 @@ const $statements = {
 				}
 			})
 		}
-		
+
 		return data
 	} // }}}
 	`\(NodeKind::ThrowStatement)`(data, coverage, coverageName, file, node) { // {{{
 		data.value = $compile.expression(data.value, coverage, coverageName, file, node)
-		
+
 		return data
 	} // }}}
 	`\(NodeKind::TryStatement)`(data, coverage, coverageName, file, node) { // {{{
 		data.body.statements = $compile.statements(data.body.statements, coverage, coverageName, file, node)
-		
+
 		return data
 	} // }}}
 	`\(NodeKind::TypeAliasDeclaration)`(data, coverage, coverageName, file, node) => data
 	`\(NodeKind::UnlessStatement)`(data, coverage, coverageName, file, node) { // {{{
 		let bid = coverage.branchMap.length + 1
-		
+
 		let loc = {
 			start: {
 				line: data.start.line
@@ -917,38 +918,38 @@ const $statements = {
 				column: data.start.column - 1
 			}
 		}
-		
+
 		coverage.branchMap.push({
 			type: 'if'
 			line: data.start.line
 			locations: [loc, loc]
 		})
-		
+
 		data.condition = $compile.expression(data.condition, coverage, coverageName, file, node)
-		
+
 		data.whenFalse = $block($increment.branch(bid, 0, coverageName, file, node), data.whenFalse, coverage, coverageName, file, node)
-		
+
 		return data
 	} // }}}
 	`\(NodeKind::UntilStatement)`(data, coverage, coverageName, file, node) { // {{{
 		data.condition = $compile.expression(data.condition, coverage, coverageName, file, node)
-		
+
 		data.body.statements = $compile.statements(data.body.statements, coverage, coverageName, file, node)
-		
+
 		return data
 	} // }}}
 	`\(NodeKind::VariableDeclaration)`(data, coverage, coverageName, file, node) { // {{{
 		if data.init? {
 			data.init = $compile.expression(data.init, coverage, coverageName, file, node)
 		}
-		
+
 		return data
 	} // }}}
 	`\(NodeKind::WhileStatement)`(data, coverage, coverageName, file, node) { // {{{
 		data.condition = $compile.expression(data.condition, coverage, coverageName, file, node)
-		
+
 		data.body.statements = $compile.statements(data.body.statements, coverage, coverageName, file, node)
-		
+
 		return data
 	} // }}}
 }
@@ -960,7 +961,7 @@ class CoverageCompiler extends Compiler {
 	}
 	instrument(@coverageName = '__ks_coverage') { // {{{
 		@instrument = true
-		
+
 		return this
 	} // }}}
 	compile(data = null) { // {{{
@@ -970,11 +971,11 @@ class CoverageCompiler extends Compiler {
 		else {
 			@module = new Module(data ?? @readFile(), this, @file)
 		}
-		
+
 		@module.compile()
-		
+
 		@fragments = @module.toFragments()
-		
+
 		return this
 	} // }}}
 }
@@ -988,27 +989,27 @@ class CoverageModule extends Module {
 	}
 	constructor(@data, @coverageName, @compiler, @file) { // {{{
 		@coverageName = coverageName
-		
+
 		super(data, compiler, file)
 	} // }}}
 	parse(data, file) { // {{{
 		if @compiler._options.reducePath is Function {
 			@reducePath = @compiler._options.reducePath
 		}
-		
+
 		const reducePath = @reducePath
-		
+
 		@coverages.push(coverage = {
 			path: reducePath(file)
 			statementMap: []
 			branchMap: []
 			fnMap: []
 		})
-		
+
 		data = super.parse(data, file)
-		
+
 		data.body = $compile.statements(data.body, coverage, @coverageName, file, this)
-		
+
 		if @addCoverageVariable {
 			data.body.unshift({
 				kind: NodeKind::ExternDeclaration
@@ -1023,91 +1024,91 @@ class CoverageModule extends Module {
 				]
 				attributes: []
 			})
-			
+
 			@addCoverageVariable = false
 		}
-		
+
 		return data
 	} // }}}
 	toFragments() { // {{{
 		const header = new FragmentBuilder(0)
-			
+
 		header.line(`var \(@coverageName) = (function(_export) {\n\treturn typeof _export.\(@coverageName) === 'undefined' ? _export.\(@coverageName) = {} : _export.\(@coverageName);\n})(typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : this)`)
-		
+
 		for coverage in @coverages {
 			@toCoverageFragments(header, coverage)
 		}
-		
+
 		return header.toArray().concat(super.toFragments())
 	} // }}}
 	private toCoverageFragments(fragments, coverage) { // {{{
 		const line = fragments.newLine()
-		
+
 		line.code(`if(!\(@coverageName)["\(coverage.path)"]) {\n`)
 		line.code(`\t\(@coverageName)["\(coverage.path)"] = {`)
-		
+
 		line.code(`"path":"\(coverage.path)",`)
-		
+
 		line.code(`"s":{`)
 		for i from 1 to coverage.statementMap.length {
 			line.code(`,`) if i > 1
-			
+
 			line.code(`"\(i)":0`)
 		}
 		line.code(`},`)
-		
+
 		line.code(`"b":{`)
 		for i from 1 to coverage.branchMap.length {
 			line.code(`,`) if i > 1
-			
+
 			line.code(`"\(i)":[`)
-			
+
 			for j from 0 til coverage.branchMap[i - 1].locations.length {
 				line.code(`,`) if j != 0
-				
+
 				line.code(`0`)
 			}
-			
+
 			line.code(`]`)
 		}
 		line.code(`},`)
-		
+
 		line.code(`"f":{`)
 		for i from 1 to coverage.fnMap.length {
 			line.code(`,`) if i > 1
-			
+
 			line.code(`"\(i)":0`)
 		}
 		line.code(`},`)
-		
+
 		line.code(`"statementMap":{`)
 		for i from 0 til coverage.statementMap.length {
 			line.code(`,`) if i > 0
-			
+
 			line.code(`"\(i + 1)":\(JSON.stringify(coverage.statementMap[i]))`)
 		}
 		line.code(`},`)
-		
+
 		line.code(`"branchMap":{`)
 		for i from 0 til coverage.branchMap.length {
 			line.code(`,`) if i > 0
-			
+
 			line.code(`"\(i + 1)":\(JSON.stringify(coverage.branchMap[i]))`)
 		}
 		line.code(`},`)
-		
+
 		line.code(`"fnMap":{`)
 		for i from 0 til coverage.fnMap.length {
 			line.code(`,`) if i > 0
-			
+
 			line.code(`"\(i + 1)":\(JSON.stringify(coverage.fnMap[i]))`)
 		}
 		line.code(`}`)
-		
+
 		line.code(`};\n`)
 		line.code(`}`)
 		line.done()
 	} // }}}
 }
 
-export CoverageCompiler as Compiler, extensions, getBinaryPath, getHashPath, isUpToDate
+export CoverageCompiler => Compiler, extensions, getBinaryPath, getHashPath, isUpToDate

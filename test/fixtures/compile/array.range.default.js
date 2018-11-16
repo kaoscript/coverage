@@ -24,4 +24,4 @@ module.exports = function() {
 	let h = Helper.newArrayRange(5, 1, 2, true, true);
 	__ks_coverage["/fixtures/compile/array.range.default.ks"].s[9]++;
 	let i = Helper.newArrayRange(1, 2, 0.3, true, true);
-}
+};

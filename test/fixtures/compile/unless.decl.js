@@ -8,4 +8,4 @@ module.exports = function() {
 	__ks_coverage["/fixtures/compile/unless.decl.ks"].s[1]++;
 	__ks_coverage["/fixtures/compile/unless.decl.ks"].s[2]++;
 	let x = (y === 0) ? undefined : (__ks_coverage["/fixtures/compile/unless.decl.ks"].b[1][0]++, 1);
-}
+};

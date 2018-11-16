@@ -29,4 +29,4 @@ module.exports = function() {
 		__ks_coverage["/fixtures/compile/xample.alpha.ks"].s[6]++;
 		return isNaN(i) ? (__ks_coverage["/fixtures/compile/xample.alpha.ks"].b[1][0]++, 1) : (__ks_coverage["/fixtures/compile/xample.alpha.ks"].b[1][1]++, __ks_Number._im_round(__ks_Number._im_limit(percentage ? (__ks_coverage["/fixtures/compile/xample.alpha.ks"].b[2][0]++, i / 100) : (__ks_coverage["/fixtures/compile/xample.alpha.ks"].b[2][1]++, i), 0, 1), 3));
 	}
-}
+};

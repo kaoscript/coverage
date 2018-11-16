@@ -17,4 +17,4 @@ module.exports = function() {
 		__ks_coverage["/fixtures/compile/for.block.continue.ks"].s[5]++;
 		console.log(x);
 	}
-}
+};

@@ -100,4 +100,4 @@ module.exports = function(Helper, Type) {
 		Object: Object,
 		__ks_Object: __ks_Object
 	};
-}
+};

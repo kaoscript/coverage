@@ -11,4 +11,4 @@ module.exports = function() {
 	if(!(x === 0)) {
 		__ks_coverage["/fixtures/compile/unless.block.ks"].b[1][0]++;
 	}
-}
+};

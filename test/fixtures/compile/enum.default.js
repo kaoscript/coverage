@@ -16,4 +16,4 @@ module.exports = function() {
 	let color = Color.Red;
 	__ks_coverage["/fixtures/compile/enum.default.ks"].s[4]++;
 	console.log(color);
-}
+};

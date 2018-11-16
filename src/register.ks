@@ -11,7 +11,7 @@
 
 import {
 	'./compiler'
-	'kaoscript/src/fs.js'	as fs
+	'kaoscript/src/fs.js'	=> fs
 	'path'
 	'./module.js'			for registerExtension
 }
@@ -21,8 +21,8 @@ extern console, Date, global, JSON, parseInt, process
 func excludeFile(filename) { // {{{
 	filename = path.relative(root, filename)
 	
-	for exclude in excludes {
-		return true if filename.startsWith(exclude)
+	for exclude in excludes when filename.startsWith(exclude) {
+		return true
 	}
 	
 	return false

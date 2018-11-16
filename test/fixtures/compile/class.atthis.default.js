@@ -70,4 +70,4 @@ module.exports = function() {
 	let hello = new Greetings("Hello world!");
 	__ks_coverage["/fixtures/compile/class.atthis.default.ks"].s[6]++;
 	console.log(hello.greet("miss White"));
-}
+};
