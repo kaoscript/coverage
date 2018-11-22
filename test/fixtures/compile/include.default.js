@@ -39,36 +39,15 @@ module.exports = function() {
 			}
 		}
 	};
-	__ks_String._im_lines = function(that) {
-		var args = Array.prototype.slice.call(arguments, 1, arguments.length);
-		if(args.length >= 0 && args.length <= 1) {
-			return __ks_String.__ks_func_lines_0.apply(that, args);
-		}
-		throw new SyntaxError("wrong number of arguments");
-	};
 	__ks_String.__ks_func_lower_0 = function() {
 		__ks_coverage["/fixtures/compile/_string.ks"].f[2]++;
 		__ks_coverage["/fixtures/compile/_string.ks"].s[9]++;
 		return this.toLowerCase();
 	};
-	__ks_String._im_lower = function(that) {
-		var args = Array.prototype.slice.call(arguments, 1, arguments.length);
-		if(args.length === 0) {
-			return __ks_String.__ks_func_lower_0.apply(that);
-		}
-		throw new SyntaxError("wrong number of arguments");
-	};
 	__ks_String.__ks_func_toFloat_0 = function() {
 		__ks_coverage["/fixtures/compile/_string.ks"].f[3]++;
 		__ks_coverage["/fixtures/compile/_string.ks"].s[10]++;
 		return parseFloat(this);
-	};
-	__ks_String._im_toFloat = function(that) {
-		var args = Array.prototype.slice.call(arguments, 1, arguments.length);
-		if(args.length === 0) {
-			return __ks_String.__ks_func_toFloat_0.apply(that);
-		}
-		throw new SyntaxError("wrong number of arguments");
 	};
 	__ks_String.__ks_func_toInt_0 = function(base) {
 		if(base === void 0 || base === null) {
@@ -77,6 +56,27 @@ module.exports = function() {
 		__ks_coverage["/fixtures/compile/_string.ks"].f[4]++;
 		__ks_coverage["/fixtures/compile/_string.ks"].s[11]++;
 		return parseInt(this, base);
+	};
+	__ks_String._im_lines = function(that) {
+		var args = Array.prototype.slice.call(arguments, 1, arguments.length);
+		if(args.length >= 0 && args.length <= 1) {
+			return __ks_String.__ks_func_lines_0.apply(that, args);
+		}
+		throw new SyntaxError("wrong number of arguments");
+	};
+	__ks_String._im_lower = function(that) {
+		var args = Array.prototype.slice.call(arguments, 1, arguments.length);
+		if(args.length === 0) {
+			return __ks_String.__ks_func_lower_0.apply(that);
+		}
+		throw new SyntaxError("wrong number of arguments");
+	};
+	__ks_String._im_toFloat = function(that) {
+		var args = Array.prototype.slice.call(arguments, 1, arguments.length);
+		if(args.length === 0) {
+			return __ks_String.__ks_func_toFloat_0.apply(that);
+		}
+		throw new SyntaxError("wrong number of arguments");
 	};
 	__ks_String._im_toInt = function(that) {
 		var args = Array.prototype.slice.call(arguments, 1, arguments.length);

@@ -26,13 +26,6 @@ module.exports = function() {
 			return eval(value);
 		}
 	};
-	__ks_String._im_evaluate = function(that) {
-		var args = Array.prototype.slice.call(arguments, 1, arguments.length);
-		if(args.length === 0) {
-			return __ks_String.__ks_func_evaluate_0.apply(that);
-		}
-		throw new SyntaxError("wrong number of arguments");
-	};
 	__ks_String.__ks_func_startsWith_0 = function(value) {
 		if(arguments.length < 1) {
 			throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 1)");
@@ -46,6 +39,13 @@ module.exports = function() {
 		__ks_coverage["/fixtures/compile/xample.evaluate.const.ks"].f[2]++;
 		__ks_coverage["/fixtures/compile/xample.evaluate.const.ks"].s[8]++;
 		return (__ks_coverage["/fixtures/compile/xample.evaluate.const.ks"].b[3][0]++, this.length >= value.length) && (__ks_coverage["/fixtures/compile/xample.evaluate.const.ks"].b[3][1]++, this.slice(0, value.length) === value);
+	};
+	__ks_String._im_evaluate = function(that) {
+		var args = Array.prototype.slice.call(arguments, 1, arguments.length);
+		if(args.length === 0) {
+			return __ks_String.__ks_func_evaluate_0.apply(that);
+		}
+		throw new SyntaxError("wrong number of arguments");
 	};
 	__ks_String._im_startsWith = function(that) {
 		var args = Array.prototype.slice.call(arguments, 1, arguments.length);

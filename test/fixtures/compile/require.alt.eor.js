@@ -32,13 +32,6 @@ module.exports = function(__ks_0, __ks___ks_0) {
 		__ks_coverage["/fixtures/compile/require.alt.eor.ks"].s[3]++;
 		return this.indexOf(item, from) !== -1;
 	};
-	__ks_Array._im_contains = function(that) {
-		var args = Array.prototype.slice.call(arguments, 1, arguments.length);
-		if(args.length >= 1 && args.length <= 2) {
-			return __ks_Array.__ks_func_contains_0.apply(that, args);
-		}
-		throw new SyntaxError("wrong number of arguments");
-	};
 	__ks_Array.__ks_func_pushUniq_0 = function(...args) {
 		__ks_coverage["/fixtures/compile/require.alt.eor.ks"].f[2]++;
 		__ks_coverage["/fixtures/compile/require.alt.eor.ks"].s[4]++;
@@ -66,6 +59,13 @@ module.exports = function(__ks_0, __ks___ks_0) {
 		}
 		__ks_coverage["/fixtures/compile/require.alt.eor.ks"].s[10]++;
 		return this;
+	};
+	__ks_Array._im_contains = function(that) {
+		var args = Array.prototype.slice.call(arguments, 1, arguments.length);
+		if(args.length >= 1 && args.length <= 2) {
+			return __ks_Array.__ks_func_contains_0.apply(that, args);
+		}
+		throw new SyntaxError("wrong number of arguments");
 	};
 	__ks_Array._im_pushUniq = function(that) {
 		var args = Array.prototype.slice.call(arguments, 1, arguments.length);

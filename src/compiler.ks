@@ -289,6 +289,7 @@ const $expressions = {
 
 		return data
 	} // }}}
+	`\(NodeKind::CallMacroExpression)`(data, coverage, coverageName, file, node) => data
 	`\(NodeKind::ConditionalExpression)`(data, coverage, coverageName, file, node) { // {{{
 		let bid = coverage.branchMap.length + 1
 
@@ -737,7 +738,7 @@ const $statements = {
 	} // }}}
 	`\(NodeKind::ExportDeclarationSpecifier)`(data, coverage, coverageName, file, node) { // {{{
 		data.declaration = $compile.compile(data.declaration, coverage, coverageName, file, node)
-		
+
 		return data
 	} // }}}
 	`\(NodeKind::ExternDeclaration)`(data, coverage, coverageName, file, node) => data
@@ -829,11 +830,18 @@ const $statements = {
 
 		for property in properties {
 			switch property.kind {
+				NodeKind::FieldDeclaration => {
+					if property.defaultValue? {
+						property.defaultValue = $compile.expression(property.defaultValue, coverage, coverageName, file, node)
+					}
+
+					data.properties.push(property)
+				}
 				NodeKind::MethodDeclaration => {
 					data.properties.push($statements[NodeKind::FunctionDeclaration](property, coverage, coverageName, file, node))
 				}
 				=> {
-					throw new NotImplementedException(file, property.start.line)
+					throw new NotImplementedException(`Not supported kind "\(property.kind)"`, file, property.start.line)
 				}
 			}
 		}
@@ -842,6 +850,7 @@ const $statements = {
 	} // }}}
 	`\(NodeKind::ImportDeclaration)`(data, coverage, coverageName, file, node) => data
 	`\(NodeKind::IncludeDeclaration)`(data, coverage, coverageName, file, node) => data
+	`\(NodeKind::MacroDeclaration)`(data, coverage, coverageName, file, node) => data
 	`\(NodeKind::NamespaceDeclaration)`(data, coverage, coverageName, file, node) { // {{{
 		data.statements = $compile.statements(data.statements, coverage, coverageName, file, node)
 
@@ -990,10 +999,8 @@ class CoverageModule extends Module {
 			@reducePath = @compiler._options.reducePath
 		}
 
-		const reducePath = @reducePath
-
 		@coverages.push(coverage = {
-			path: reducePath(file)
+			path: this.reducePath(file)
 			statementMap: []
 			branchMap: []
 			fnMap: []

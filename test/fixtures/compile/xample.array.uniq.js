@@ -26,13 +26,6 @@ module.exports = function() {
 		__ks_coverage["/fixtures/compile/xample.array.uniq.ks"].s[4]++;
 		return this.indexOf(item, from) !== -1;
 	};
-	__ks_Array._im_contains = function(that) {
-		var args = Array.prototype.slice.call(arguments, 1, arguments.length);
-		if(args.length >= 1 && args.length <= 2) {
-			return __ks_Array.__ks_func_contains_0.apply(that, args);
-		}
-		throw new SyntaxError("wrong number of arguments");
-	};
 	__ks_Array.__ks_func_uniq_0 = function() {
 		if(arguments.length < 2) {
 			throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 2)");
@@ -128,6 +121,13 @@ module.exports = function() {
 		}
 		__ks_coverage["/fixtures/compile/xample.array.uniq.ks"].s[29]++;
 		return result;
+	};
+	__ks_Array._im_contains = function(that) {
+		var args = Array.prototype.slice.call(arguments, 1, arguments.length);
+		if(args.length >= 1 && args.length <= 2) {
+			return __ks_Array.__ks_func_contains_0.apply(that, args);
+		}
+		throw new SyntaxError("wrong number of arguments");
 	};
 	__ks_Array._im_uniq = function(that) {
 		var args = Array.prototype.slice.call(arguments, 1, arguments.length);

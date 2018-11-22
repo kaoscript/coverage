@@ -37,16 +37,6 @@ module.exports = function() {
 		__ks_coverage["/fixtures/compile/_array.ks"].s[6]++;
 		return results;
 	};
-	__ks_Array._cm_map = function() {
-		var args = Array.prototype.slice.call(arguments);
-		if(args.length === 2) {
-			return __ks_Array.__ks_sttc_map_0.apply(null, args);
-		}
-		else if(args.length === 3) {
-			return __ks_Array.__ks_sttc_map_1.apply(null, args);
-		}
-		throw new SyntaxError("wrong number of arguments");
-	};
 	__ks_Array.__ks_sttc_map_1 = function(array, iterator, condition) {
 		if(arguments.length < 3) {
 			throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 3)");
@@ -85,6 +75,14 @@ module.exports = function() {
 		__ks_coverage["/fixtures/compile/_array.ks"].s[11]++;
 		return results;
 	};
+	__ks_Array.__ks_func_last_0 = function(index) {
+		if(index === void 0 || index === null) {
+			index = 1;
+		}
+		__ks_coverage["/fixtures/compile/_array.ks"].f[3]++;
+		__ks_coverage["/fixtures/compile/_array.ks"].s[12]++;
+		return this.length ? (__ks_coverage["/fixtures/compile/_array.ks"].b[2][0]++, this[this.length - index]) : (__ks_coverage["/fixtures/compile/_array.ks"].b[2][1]++, null);
+	};
 	__ks_Array._cm_map = function() {
 		var args = Array.prototype.slice.call(arguments);
 		if(args.length === 2) {
@@ -94,14 +92,6 @@ module.exports = function() {
 			return __ks_Array.__ks_sttc_map_1.apply(null, args);
 		}
 		throw new SyntaxError("wrong number of arguments");
-	};
-	__ks_Array.__ks_func_last_0 = function(index) {
-		if(index === void 0 || index === null) {
-			index = 1;
-		}
-		__ks_coverage["/fixtures/compile/_array.ks"].f[3]++;
-		__ks_coverage["/fixtures/compile/_array.ks"].s[12]++;
-		return this.length ? (__ks_coverage["/fixtures/compile/_array.ks"].b[2][0]++, this[this.length - index]) : (__ks_coverage["/fixtures/compile/_array.ks"].b[2][1]++, null);
 	};
 	__ks_Array._im_last = function(that) {
 		var args = Array.prototype.slice.call(arguments, 1, arguments.length);

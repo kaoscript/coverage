@@ -23,13 +23,6 @@ module.exports = function() {
 		__ks_coverage["/fixtures/compile/_number.ks"].s[4]++;
 		return isNaN(this) ? (__ks_coverage["/fixtures/compile/_number.ks"].b[1][0]++, min) : (__ks_coverage["/fixtures/compile/_number.ks"].b[1][1]++, Math.min(max, Math.max(min, this)));
 	};
-	__ks_Number._im_limit = function(that) {
-		var args = Array.prototype.slice.call(arguments, 1, arguments.length);
-		if(args.length === 2) {
-			return __ks_Number.__ks_func_limit_0.apply(that, args);
-		}
-		throw new SyntaxError("wrong number of arguments");
-	};
 	__ks_Number.__ks_func_mod_0 = function(max) {
 		if(arguments.length < 1) {
 			throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 1)");
@@ -61,13 +54,6 @@ module.exports = function() {
 			}
 		}
 	};
-	__ks_Number._im_mod = function(that) {
-		var args = Array.prototype.slice.call(arguments, 1, arguments.length);
-		if(args.length === 1) {
-			return __ks_Number.__ks_func_mod_0.apply(that, args);
-		}
-		throw new SyntaxError("wrong number of arguments");
-	};
 	__ks_Number.__ks_func_round_0 = function(precision) {
 		if(precision === void 0 || precision === null) {
 			precision = 0;
@@ -78,24 +64,10 @@ module.exports = function() {
 		__ks_coverage["/fixtures/compile/_number.ks"].s[12]++;
 		return Math.round(this * precision) / precision;
 	};
-	__ks_Number._im_round = function(that) {
-		var args = Array.prototype.slice.call(arguments, 1, arguments.length);
-		if(args.length >= 0 && args.length <= 1) {
-			return __ks_Number.__ks_func_round_0.apply(that, args);
-		}
-		throw new SyntaxError("wrong number of arguments");
-	};
 	__ks_Number.__ks_func_toFloat_0 = function() {
 		__ks_coverage["/fixtures/compile/_number.ks"].f[4]++;
 		__ks_coverage["/fixtures/compile/_number.ks"].s[13]++;
 		return parseFloat(this);
-	};
-	__ks_Number._im_toFloat = function(that) {
-		var args = Array.prototype.slice.call(arguments, 1, arguments.length);
-		if(args.length === 0) {
-			return __ks_Number.__ks_func_toFloat_0.apply(that);
-		}
-		throw new SyntaxError("wrong number of arguments");
 	};
 	__ks_Number.__ks_func_toInt_0 = function(base) {
 		if(base === void 0 || base === null) {
@@ -104,6 +76,34 @@ module.exports = function() {
 		__ks_coverage["/fixtures/compile/_number.ks"].f[5]++;
 		__ks_coverage["/fixtures/compile/_number.ks"].s[14]++;
 		return parseInt(this, base);
+	};
+	__ks_Number._im_limit = function(that) {
+		var args = Array.prototype.slice.call(arguments, 1, arguments.length);
+		if(args.length === 2) {
+			return __ks_Number.__ks_func_limit_0.apply(that, args);
+		}
+		throw new SyntaxError("wrong number of arguments");
+	};
+	__ks_Number._im_mod = function(that) {
+		var args = Array.prototype.slice.call(arguments, 1, arguments.length);
+		if(args.length === 1) {
+			return __ks_Number.__ks_func_mod_0.apply(that, args);
+		}
+		throw new SyntaxError("wrong number of arguments");
+	};
+	__ks_Number._im_round = function(that) {
+		var args = Array.prototype.slice.call(arguments, 1, arguments.length);
+		if(args.length >= 0 && args.length <= 1) {
+			return __ks_Number.__ks_func_round_0.apply(that, args);
+		}
+		throw new SyntaxError("wrong number of arguments");
+	};
+	__ks_Number._im_toFloat = function(that) {
+		var args = Array.prototype.slice.call(arguments, 1, arguments.length);
+		if(args.length === 0) {
+			return __ks_Number.__ks_func_toFloat_0.apply(that);
+		}
+		throw new SyntaxError("wrong number of arguments");
 	};
 	__ks_Number._im_toInt = function(that) {
 		var args = Array.prototype.slice.call(arguments, 1, arguments.length);
