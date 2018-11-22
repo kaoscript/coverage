@@ -706,8 +706,11 @@ const $statements = {
 						data.members.push($statements[NodeKind::FunctionDeclaration](member, coverage, coverageName, file, node))
 					}
 				}
+				NodeKind::MacroDeclaration => {
+					data.members.push(member)
+				}
 				=> {
-					throw new NotImplementedException(file, member.start.line)
+					throw new NotImplementedException(`Not supported kind "\(member.kind)"`, file, member.start.line)
 				}
 			}
 		}
