@@ -18,7 +18,7 @@ module.exports = function() {
 		__ks_coverage["/fixtures/compile/xample.merge.ks"].s[5]++;
 		let l = args.length;
 		__ks_coverage["/fixtures/compile/xample.merge.ks"].s[6]++;
-		while((__ks_coverage["/fixtures/compile/xample.merge.ks"].b[1][0]++, i < l) && (__ks_coverage["/fixtures/compile/xample.merge.ks"].b[1][1]++, !((__ks_coverage["/fixtures/compile/xample.merge.ks"].b[2][0]++, Type.isValue(args[i]) ? source = args[i] : undefined) && (__ks_coverage["/fixtures/compile/xample.merge.ks"].b[2][1]++, Type.isArray(source))))) {
+		while((__ks_coverage["/fixtures/compile/xample.merge.ks"].b[1][0]++, i < l) && (__ks_coverage["/fixtures/compile/xample.merge.ks"].b[1][1]++, !((__ks_coverage["/fixtures/compile/xample.merge.ks"].b[2][0]++, Type.isValue(args[i]) ? (source = args[i], true) : false) && (__ks_coverage["/fixtures/compile/xample.merge.ks"].b[2][1]++, Type.isArray(source))))) {
 			__ks_coverage["/fixtures/compile/xample.merge.ks"].s[7]++;
 			++i;
 		}
