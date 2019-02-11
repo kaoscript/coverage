@@ -30,7 +30,7 @@
 	],
 	"main": "lib/compiler.js",
 	"dependencies": {
-		"@kaoscript/runtime": "github:kaoscript/runtime#v0.6.0",
+		"@kaoscript/runtime": "github:kaoscript/runtime",
 		"kaoscript": "github:kaoscript/kaoscript#v0.9.0"
 	},
 	"devDependencies": {
