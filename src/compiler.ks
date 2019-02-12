@@ -965,7 +965,7 @@ const $statements = {
 class CoverageCompiler extends Compiler {
 	private {
 		_coverageName
-		_instrument		= false
+		_instrument: Boolean	= false
 	}
 	instrument(@coverageName = '__ks_coverage') { // {{{
 		@instrument = true
@@ -993,45 +993,55 @@ class CoverageModule extends Module {
 		_addCoverageVariable: Boolean	= true
 		_coverageName
 		_coverages						= []
+		excludeFile: Function			= file => false
 		reducePath: Function			= path => path
 	}
 	constructor(@data, @coverageName, @compiler, @file) { // {{{
 		@coverageName = coverageName
 
+		if compiler._options.excludeFile is Function {
+			@excludeFile = compiler._options.excludeFile
+		}
+
+		if compiler._options.reducePath is Function {
+			@reducePath = compiler._options.reducePath
+		}
+
 		super(data, compiler, file)
 	} // }}}
 	parse(data, file) { // {{{
-		if @compiler._options.reducePath is Function {
-			@reducePath = @compiler._options.reducePath
+		if this.excludeFile(file) {
+			data = super.parse(data, file)
 		}
-
-		@coverages.push(coverage = {
-			path: this.reducePath(file)
-			statementMap: []
-			branchMap: []
-			fnMap: []
-		})
-
-		data = super.parse(data, file)
-
-		data.body = $compile.statements(data.body, coverage, @coverageName, file, this)
-
-		if @addCoverageVariable {
-			data.body.unshift({
-				kind: NodeKind::ExternDeclaration
-				declarations: [
-					{
-						kind: NodeKind::VariableDeclarator
-						name: {
-							kind: NodeKind::Identifier
-							name: @coverageName
-						}
-					}
-				]
-				attributes: []
+		else {
+			@coverages.push(coverage = {
+				path: this.reducePath(file)
+				statementMap: []
+				branchMap: []
+				fnMap: []
 			})
 
-			@addCoverageVariable = false
+			data = super.parse(data, file)
+
+			data.body = $compile.statements(data.body, coverage, @coverageName, file, this)
+
+			if @addCoverageVariable {
+				data.body.unshift({
+					kind: NodeKind::ExternDeclaration
+					declarations: [
+						{
+							kind: NodeKind::VariableDeclarator
+							name: {
+								kind: NodeKind::Identifier
+								name: @coverageName
+							}
+						}
+					]
+					attributes: []
+				})
+
+				@addCoverageVariable = false
+			}
 		}
 
 		return data

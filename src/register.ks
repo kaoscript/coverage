@@ -20,11 +20,11 @@ extern console, Date, global, JSON, parseInt, process
 
 func excludeFile(filename) { // {{{
 	filename = path.relative(root, filename)
-	
+
 	for exclude in excludes when filename.startsWith(exclude) {
 		return true
 	}
-	
+
 	return false
 } // }}}
 
@@ -40,50 +40,52 @@ func loadFile(module, filename) { // {{{
 func loadInstrumentedFile(module, filename) { // {{{
 	const compiler = new Compiler(filename, {
 		register: false,
-		target: target
+		target: target,
+		excludeFile: excludeFile
 	})
-	
+
 	compiler.instrument(coverageName)
-	
+
 	compiler.compile(fs.readFile(filename))
-	
+
 	compiler.writeFiles()
-	
+
 	const data = compiler.toSource()
 	//console.log(data)
-	
+
 	return module._compile(data, filename)
 } // }}}
 
 func loadOriginalFile(module, filename) { // {{{
 	const source = fs.readFile(filename)
-	
+
 	if(fs.isFile(getBinaryPath(filename, target)) && fs.isFile(getHashPath(filename, target)) && isUpToDate(filename, target, source)) {
 		return module._compile(fs.readFile(getBinaryPath(filename, target)), filename)
 	}
 	else {
 		const compiler = new Compiler(filename, {
 			register: false,
-			target: target
+			target: target,
+			excludeFile: excludeFile
 		})
-		
+
 		compiler.compile(source)
-		
+
 		compiler.writeFiles()
-		
+
 		return module._compile(compiler.toSource(), filename)
 	}
 } // }}}
 
 func findGlobalVariable() { // {{{
 	const coverageVar = '$$cov_' + Date.now() + '$$'
-	
+
 	if global[coverageVar]? {
 		return coverageVar
 	}
 	else {
 		const coverageVars = [key for key of global when key.startsWith('$$cov_')]
-		
+
 		return coverageVars.length == 1 ? coverageVars[0] : null
 	}
 } // }}}
