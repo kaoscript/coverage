@@ -31,7 +31,7 @@
 	"main": "lib/compiler.js",
 	"dependencies": {
 		"@kaoscript/runtime": "github:kaoscript/runtime",
-		"kaoscript": "github:kaoscript/kaoscript#v0.9.0"
+		"kaoscript": "github:kaoscript/kaoscript"
 	},
 	"devDependencies": {
 		"chai": "^4.2.0",

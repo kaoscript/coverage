@@ -2177,8 +2177,8 @@ module.exports = function() {
 	}
 	__ks_coverage["/fixtures/compile/color.ks"].s[432]++;
 	Color.registerSpace({
-		"name": "srgb",
-		"alias": ["rgb"],
+		name: Space.SRGB,
+		"alias": [Space.RGB],
 		"formatters": {
 			hex(that) {
 				if(arguments.length < 1) {
