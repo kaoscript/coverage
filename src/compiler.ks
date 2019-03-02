@@ -482,6 +482,7 @@ const $expressions = {
 		return data
 	} // }}}
 	`\(NodeKind::RegularExpression)`(data, coverage, coverageName, file, node) => data
+	`\(NodeKind::ShorthandProperty)`(data, coverage, coverageName, file, node) => data
 	`\(NodeKind::TemplateExpression)`(data, coverage, coverageName, file, node) { // {{{
 		data.elements = [$compile.expression(element, coverage, coverageName, file, node) for element in data.elements]
 
