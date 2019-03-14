@@ -23,9 +23,7 @@ describe('compile', function() {
 			this.timeout(5000);
 
 			var compiler = new Compiler(path.join(__dirname, 'fixtures', 'compile', file), {
-				config: {
-					header: false
-				},
+				header: false,
 				reducePath: function(path) {
 					return path.substr(length);
 				}

@@ -531,6 +531,11 @@ const $expressions = {
 
 		return data
 	} // }}}
+	`\(NodeKind::VariableDeclaration)`(data, coverage, coverageName, file, node) { // {{{
+		data.init = $compile.expression(data.init, coverage, coverageName, file, node)
+
+		return data
+	} // }}}
 }
 
 func $function(data, coverage, coverageName, file, node) { // {{{
