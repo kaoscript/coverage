@@ -47,8 +47,8 @@ module.exports = function(__ks_0, __ks___ks_0) {
 		else {
 			__ks_coverage["/fixtures/compile/require.alt.roe.ks"].b[1][1]++;
 			__ks_coverage["/fixtures/compile/require.alt.roe.ks"].s[7]++;
-			for(let __ks_1 = 0, __ks_2 = args.length, item; __ks_1 < __ks_2; ++__ks_1) {
-				item = args[__ks_1];
+			for(let __ks_0 = 0, __ks_1 = args.length, item; __ks_0 < __ks_1; ++__ks_0) {
+				item = args[__ks_0];
 				__ks_coverage["/fixtures/compile/require.alt.roe.ks"].s[8]++;
 				if(!__ks_Array._im_contains(this, item)) {
 					__ks_coverage["/fixtures/compile/require.alt.roe.ks"].b[3][0]++;

@@ -14,8 +14,8 @@ module.exports = function() {
 		return "foobar";
 	}
 	__ks_coverage["/fixtures/compile/if.let.default.ks"].s[4]++;
-	let x;
-	if(Type.isValue(x = foobar())) {
+	let x = foobar();
+	if(Type.isValue(x)) {
 		__ks_coverage["/fixtures/compile/if.let.default.ks"].b[1][0]++;
 		__ks_coverage["/fixtures/compile/if.let.default.ks"].s[5]++;
 		console.log("" + x);

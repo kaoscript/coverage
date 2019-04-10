@@ -63,7 +63,7 @@ module.exports = function() {
 		__ks_coverage["/fixtures/compile/_array.ks"].s[7]++;
 		let results = [];
 		__ks_coverage["/fixtures/compile/_array.ks"].s[8]++;
-		for(let index = 0, __ks_1 = array.length, item; index < __ks_1; ++index) {
+		for(let index = 0, __ks_0 = array.length, item; index < __ks_0; ++index) {
 			item = array[index];
 			__ks_coverage["/fixtures/compile/_array.ks"].s[9]++;
 			if(condition(item, index)) {

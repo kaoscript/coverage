@@ -39,9 +39,8 @@ module.exports = function() {
 				__ks_coverage["/fixtures/compile/diskspace.module.ks"].s[7]++;
 				let matches;
 				__ks_coverage["/fixtures/compile/diskspace.module.ks"].s[8]++;
-				let __ks_0 = __ks_String._im_lines(stdout);
-				for(let __ks_1 = 0, __ks_2 = __ks_0.length, line; __ks_1 < __ks_2; ++__ks_1) {
-					line = __ks_0[__ks_1];
+				for(let __ks_0 = 0, __ks_1 = __ks_String._im_lines(stdout), __ks_2 = __ks_1.length, line; __ks_0 < __ks_2; ++__ks_0) {
+					line = __ks_1[__ks_0];
 					__ks_coverage["/fixtures/compile/diskspace.module.ks"].s[9]++;
 					matches = df_regex.exec(line);
 					__ks_coverage["/fixtures/compile/diskspace.module.ks"].s[10]++;

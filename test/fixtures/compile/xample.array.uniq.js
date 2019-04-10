@@ -71,7 +71,7 @@ module.exports = function() {
 			else {
 				__ks_coverage["/fixtures/compile/xample.array.uniq.ks"].b[2][1]++;
 				__ks_coverage["/fixtures/compile/xample.array.uniq.ks"].s[15]++;
-				for(let i = 0, __ks_1 = this.length; i < __ks_1; ++i) {
+				for(let i = 0, __ks_0 = this.length; i < __ks_0; ++i) {
 					value = this[i];
 					__ks_coverage["/fixtures/compile/xample.array.uniq.ks"].s[16]++;
 					if((__ks_coverage["/fixtures/compile/xample.array.uniq.ks"].b[6][0]++, !i) || (__ks_coverage["/fixtures/compile/xample.array.uniq.ks"].b[6][1]++, seen !== value)) {
@@ -92,7 +92,7 @@ module.exports = function() {
 				__ks_coverage["/fixtures/compile/xample.array.uniq.ks"].s[20]++;
 				let seen = [];
 				__ks_coverage["/fixtures/compile/xample.array.uniq.ks"].s[21]++;
-				for(let i = 0, __ks_2 = this.length; i < __ks_2; ++i) {
+				for(let i = 0, __ks_0 = this.length; i < __ks_0; ++i) {
 					__ks_coverage["/fixtures/compile/xample.array.uniq.ks"].s[22]++;
 					value = fn.call(bind, this[i], i, this);
 					__ks_coverage["/fixtures/compile/xample.array.uniq.ks"].s[23]++;
@@ -108,7 +108,7 @@ module.exports = function() {
 			else {
 				__ks_coverage["/fixtures/compile/xample.array.uniq.ks"].b[7][1]++;
 				__ks_coverage["/fixtures/compile/xample.array.uniq.ks"].s[26]++;
-				for(let i = 0, __ks_3 = this.length; i < __ks_3; ++i) {
+				for(let i = 0, __ks_0 = this.length; i < __ks_0; ++i) {
 					value = this[i];
 					__ks_coverage["/fixtures/compile/xample.array.uniq.ks"].s[27]++;
 					if((__ks_coverage["/fixtures/compile/xample.array.uniq.ks"].b[11][0]++, !i) || (__ks_coverage["/fixtures/compile/xample.array.uniq.ks"].b[11][1]++, !__ks_Array._im_contains(result, value))) {
