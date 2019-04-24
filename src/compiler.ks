@@ -13,32 +13,32 @@ import 'kaoscript'
 
 extern console, JSON
 
-func $block(init, data, coverage, coverageName, file, node) { // {{{
+func $block(init, data, coverage, coverageName, location, file, node) { // {{{
 	if data.kind == NodeKind::Block {
-		data.statements = [].concat(init, $compile.statements(data.statements, coverage, coverageName, file, node))
+		data.statements = [].concat($location(init, location), $compile.statements(data.statements, coverage, coverageName, file, node))
 
 		return data
 	}
 	else {
-		return {
+		return $location({
 			kind: NodeKind::Block
-			statements: [].concat(init, $compile.statements([data], coverage, coverageName, file, node))
-		}
+			statements: [].concat($location(init, location), $compile.statements([data], coverage, coverageName, file, node))
+		}, location)
 	}
 } // }}}
 
-func $body(data?) { // {{{
+func $body(data?, location) { // {{{
 	if data == null {
-		return {
+		return $location({
 			kind: NodeKind::Block
 			statements: []
-		}
+		}, location)
 	}
 	else if data.kind == NodeKind::Block {
 		return data
 	}
 	else {
-		return {
+		return $location({
 			kind: NodeKind::Block
 			statements: [
 				{
@@ -48,7 +48,7 @@ func $body(data?) { // {{{
 					end: data.end
 				}
 			]
-		}
+		}, location)
 	}
 } // }}}
 
@@ -89,7 +89,7 @@ const $compile = {
 				}
 			})
 
-			result.push({
+			result.push($location({
 				kind: NodeKind::UnaryExpression
 				operator: {
 					kind: UnaryOperatorKind::IncrementPostfix
@@ -126,7 +126,7 @@ const $compile = {
 					nullable: false
 				}
 				attributes: []
-			})
+			}, statement))
 
 			//console.log('statement', statement.kind)
 			if $statements[statement.kind]? {
@@ -173,10 +173,10 @@ func $constructor(members, data, coverage, coverageName, file, node) { // {{{
 		}
 	}
 
-	data.body = {
+	data.body = $location({
 		kind: NodeKind::Block
 		statements: [
-			{
+			$location({
 				kind: NodeKind::CallExpression
 				scope: {
 					kind: ScopeKind::This
@@ -189,8 +189,8 @@ func $constructor(members, data, coverage, coverageName, file, node) { // {{{
 				}
 				arguments: []
 				nullable: false
-			}
-			{
+			}, data)
+			$location({
 				kind: NodeKind::UnaryExpression
 				operator: {
 					kind: UnaryOperatorKind::IncrementPostfix
@@ -227,9 +227,9 @@ func $constructor(members, data, coverage, coverageName, file, node) { // {{{
 					nullable: false
 				}
 				attributes: []
-			}
+			}, data)
 		]
-	}
+	}, data)
 
 	return data
 } // }}}
@@ -273,8 +273,8 @@ const $expressions = {
 				]
 			})
 
-			data.left = $sequence($increment.branch(bid, 0, coverageName, file, node), data.left, coverage, coverageName, file, node)
-			data.right = $sequence($increment.branch(bid, 1, coverageName, file, node), data.right, coverage, coverageName, file, node)
+			data.left = $sequence($increment.branch(bid, 0, coverageName, data.left, file, node), data.left, coverage, coverageName, file, node)
+			data.right = $sequence($increment.branch(bid, 1, coverageName, data.right, file, node), data.right, coverage, coverageName, file, node)
 		}
 		else if data.operator.kind == BinaryOperatorKind::Assignment {
 			data.right = $compile.expression(data.right, coverage, coverageName, file, node)
@@ -325,8 +325,8 @@ const $expressions = {
 
 		data.condition = $compile.expression(data.condition, coverage, coverageName, file, node)
 
-		data.whenTrue = $sequence($increment.branch(bid, 0, coverageName, file, node), data.whenTrue, coverage, coverageName, file, node)
-		data.whenFalse = $sequence($increment.branch(bid, 1, coverageName, file, node), data.whenFalse, coverage, coverageName, file, node)
+		data.whenTrue = $sequence($increment.branch(bid, 0, coverageName, data.whenTrue, file, node), data.whenTrue, coverage, coverageName, file, node)
+		data.whenFalse = $sequence($increment.branch(bid, 1, coverageName, data.whenFalse, file, node), data.whenFalse, coverage, coverageName, file, node)
 
 		return data
 	} // }}}
@@ -383,8 +383,8 @@ const $expressions = {
 
 			data.condition = $compile.expression(data.condition, coverage, coverageName, file, node)
 
-			data.whenTrue = $sequence($increment.branch(bid, 0, coverageName, file, node), data.whenTrue, coverage, coverageName, file, node)
-			data.whenFalse = $sequence($increment.branch(bid, 1, coverageName, file, node), data.whenFalse, coverage, coverageName, file, node)
+			data.whenTrue = $sequence($increment.branch(bid, 0, coverageName, data.whenTrue, file, node), data.whenTrue, coverage, coverageName, file, node)
+			data.whenFalse = $sequence($increment.branch(bid, 1, coverageName, data.whenFalse, file, node), data.whenFalse, coverage, coverageName, file, node)
 		}
 		else {
 			coverage.branchMap.push({
@@ -416,7 +416,7 @@ const $expressions = {
 
 			data.condition = $compile.expression(data.condition, coverage, coverageName, file, node)
 
-			data.whenTrue = $sequence($increment.branch(bid, 0, coverageName, file, node), data.whenTrue, coverage, coverageName, file, node)
+			data.whenTrue = $sequence($increment.branch(bid, 0, coverageName, data.whenTrue, file, node), data.whenTrue, coverage, coverageName, file, node)
 		}
 
 		return data
@@ -472,7 +472,7 @@ const $expressions = {
 					}
 				})
 
-				data.operands.push($sequence($increment.branch(bid, index, coverageName, file, node), operand, coverage, coverageName, file, node))
+				data.operands.push($sequence($increment.branch(bid, index, coverageName, operand, file, node), operand, coverage, coverageName, file, node))
 			}
 		}
 		else {
@@ -527,7 +527,7 @@ const $expressions = {
 
 		data.condition = $compile.expression(data.condition, coverage, coverageName, file, node)
 
-		data.whenFalse = $sequence($increment.branch(bid, 0, coverageName, file, node), data.whenFalse, coverage, coverageName, file, node)
+		data.whenFalse = $sequence($increment.branch(bid, 0, coverageName, data.whenFalse, file, node), data.whenFalse, coverage, coverageName, file, node)
 
 		return data
 	} // }}}
@@ -593,7 +593,7 @@ func $function(data, coverage, coverageName, file, node) { // {{{
 			nullable: false
 		}
 		attributes: []
-	}, $body(data.body), coverage, coverageName, file, node)
+	}, $body(data.body, data), coverage, coverageName, data, file, node)
 
 	return data
 } // }}}
@@ -620,8 +620,8 @@ func $if(condition, whenTrue, coverage, coverageName, file, node) { // {{{
 } // }}}
 
 const $increment = {
-	branch(bid, eid, coverageName, file, node) { // {{{
-		return {
+	branch(bid, eid, coverageName, data, file, node) { // {{{
+		return $location({
 			kind: NodeKind::UnaryExpression
 			operator: {
 				kind: UnaryOperatorKind::IncrementPostfix
@@ -667,9 +667,31 @@ const $increment = {
 				nullable: false
 			}
 			attributes: []
-		}
+		}, data)
 	} // }}}
 }
+
+func $location(data, location: Object) { // {{{
+	data.start = {
+		line: location.start.line
+	}
+	data.end = {
+		line: location.end.line
+	}
+
+	return data
+} // }}}
+
+func $location(data, lineStart: Number, lineEnd: Number = lineStart) { // {{{
+	data.start = {
+		line: lineStart
+	}
+	data.end = {
+		line: lineEnd
+	}
+
+	return data
+} // }}}
 
 func $sequence(init, data, coverage, coverageName, file, node) { // {{{
 	if data.kind == NodeKind::SequenceExpression {
@@ -827,10 +849,10 @@ const $statements = {
 
 		data.condition = $compile.expression(data.condition, coverage, coverageName, file, node)
 
-		data.whenTrue = $block($increment.branch(bid, 0, coverageName, file, node), data.whenTrue, coverage, coverageName, file, node)
+		data.whenTrue = $block($increment.branch(bid, 0, coverageName, data.whenTrue, file, node), data.whenTrue, coverage, coverageName, loc, file, node)
 
 		if data.whenFalse? {
-			data.whenFalse = $block($increment.branch(bid, 1, coverageName, file, node), data.whenFalse, coverage, coverageName, file, node)
+			data.whenFalse = $block($increment.branch(bid, 1, coverageName, data.whenFalse, file, node), data.whenFalse, coverage, coverageName, loc, file, node)
 		}
 
 		return data
@@ -891,10 +913,9 @@ const $statements = {
 
 		data.expression = $compile.expression(data.expression, coverage, coverageName, file, node)
 
+		let loc
 		for clause, index in data.clauses {
-			clause.body = $block($increment.branch(bid, index, coverageName, file, node), clause.body, coverage, coverageName, file, node)
-
-			branch.locations.push({
+			loc = {
 				start: {
 					line: clause.start.line
 					column: clause.start.column - 1
@@ -903,7 +924,11 @@ const $statements = {
 					line: clause.end.line
 					column: clause.end.column - 1
 				}
-			})
+			}
+
+			clause.body = $block($increment.branch(bid, index, coverageName, clause.body, file, node), clause.body, coverage, coverageName, loc, file, node)
+
+			branch.locations.push(loc)
 		}
 
 		return data
@@ -941,7 +966,7 @@ const $statements = {
 
 		data.condition = $compile.expression(data.condition, coverage, coverageName, file, node)
 
-		data.whenFalse = $block($increment.branch(bid, 0, coverageName, file, node), data.whenFalse, coverage, coverageName, file, node)
+		data.whenFalse = $block($increment.branch(bid, 0, coverageName, data.whenFalse, file, node), data.whenFalse, coverage, coverageName, loc, file, node)
 
 		return data
 	} // }}}
@@ -1032,7 +1057,7 @@ class CoverageModule extends Module {
 			data.body = $compile.statements(data.body, coverage, @coverageName, file, this)
 
 			if @addCoverageVariable {
-				data.body.unshift({
+				data.body.unshift($location({
 					kind: NodeKind::ExternDeclaration
 					declarations: [
 						{
@@ -1044,7 +1069,7 @@ class CoverageModule extends Module {
 						}
 					]
 					attributes: []
-				})
+				}, 1))
 
 				@addCoverageVariable = false
 			}

@@ -18,6 +18,6 @@ module.exports = function() {
 	if(Type.isValue(x)) {
 		__ks_coverage["/fixtures/compile/if.let.default.ks"].b[1][0]++;
 		__ks_coverage["/fixtures/compile/if.let.default.ks"].s[5]++;
-		console.log("" + x);
+		console.log(x);
 	}
 };

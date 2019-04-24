@@ -12,31 +12,29 @@ var preLength = prefix.length
 var file;
 for(var i = 0; i < files.length; i++) {
 	file = files[i];
-	
+
 	if(file.slice(-3) === '.js' && file.substr(0, preLength) === prefix) {
 		patch(file);
 	}
 }
-	
+
 function patch(file) {
 	var name = file.slice(0, -3);
-	
+
 	console.log('patching ./' + path.join('test', 'fixtures', 'compile', name + '.ks'))
-	
+
 	var length = path.join(__dirname, 'test').length;
-	
+
 	try {
 		var compiler = new Compiler(path.join(__dirname, 'test', 'fixtures', 'compile', name + '.ks'), {
-			config: {
-				header: false
-			},
+			header: false,
 			reducePath: function(path) {
 				return path.substr(length);
 			}
 		});
-		
+
 		var data = compiler.instrument().compile().toSource();
-		
+
 		fs.writeFileSync(path.join(__dirname, 'test', 'fixtures', 'compile', name + '.js'), data, {
 			encoding: 'utf8'
 		});
