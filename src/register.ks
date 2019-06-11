@@ -84,7 +84,7 @@ func findGlobalVariable() { // {{{
 		return coverageVar
 	}
 	else {
-		const coverageVars = [key for key of global when key.startsWith('$$cov_')]
+		const coverageVars = [key for :key of global when key.startsWith('$$cov_')]
 
 		return coverageVars.length == 1 ? coverageVars[0] : null
 	}
