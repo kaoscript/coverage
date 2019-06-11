@@ -293,6 +293,7 @@ const $expressions = {
 		return data
 	} // }}}
 	`\(NodeKind::CallMacroExpression)`(data, coverage, coverageName, file, node) => data
+	`\(NodeKind::ComparisonExpression)`(data, coverage, coverageName, file, node) => data
 	`\(NodeKind::ConditionalExpression)`(data, coverage, coverageName, file, node) { // {{{
 		let bid = coverage.branchMap.length + 1
 

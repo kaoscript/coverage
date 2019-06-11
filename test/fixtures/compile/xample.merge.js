@@ -30,7 +30,8 @@ module.exports = function() {
 			if(Type.isArray(args[i])) {
 				__ks_coverage["/fixtures/compile/xample.merge.ks"].b[3][0]++;
 				__ks_coverage["/fixtures/compile/xample.merge.ks"].s[11]++;
-				for(let value in args[i]) {
+				for(let __ks_0 = 0, __ks_1 = args[i].length, value; __ks_0 < __ks_1; ++__ks_0) {
+					value = args[i][__ks_0];
 					__ks_coverage["/fixtures/compile/xample.merge.ks"].s[12]++;
 					source.pushUniq(value);
 				}

@@ -7,21 +7,21 @@ impl Object {
 	static {
 		map(object: object, iterator: func) {
 			let results = []
-			
-			for item, index of object {
+
+			for index, item of object {
 				results.push(iterator(item, index))
 			}
-			
+
 			return results
 		}
-		
+
 		map(object: object, iterator: func, condition: func) {
 			let results = []
-			
-			for item, index of object {
+
+			for index, item of object {
 				results.push(iterator(item, index)) if condition(item, index)
 			}
-			
+
 			return results
 		}
 	}
