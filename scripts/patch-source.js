@@ -1,11 +1,13 @@
-var Compiler = require('./lib/compiler.js')().Compiler;
+var Compiler = require('../lib/compiler.js')().Compiler;
 var fs = require('fs');
 var path = require('path');
 var program = require('commander');
 
 program.parse(process.argv);
 
-var files = fs.readdirSync(path.join(__dirname, 'test', 'fixtures', 'compile'));
+var root = path.join(__dirname, '..', 'test')
+
+var files = fs.readdirSync(path.join(root, 'fixtures', 'compile'));
 var prefix = program.args[0] || ''
 var preLength = prefix.length
 
@@ -21,12 +23,12 @@ for(var i = 0; i < files.length; i++) {
 function patch(file) {
 	var name = file.slice(0, -3);
 
-	console.log('patching ./' + path.join('test', 'fixtures', 'compile', name + '.ks'))
+	console.log('patching ' + path.join('fixtures', 'compile', name + '.ks'))
 
-	var length = path.join(__dirname, 'test').length;
+	var length = root.length;
 
 	try {
-		var compiler = new Compiler(path.join(__dirname, 'test', 'fixtures', 'compile', name + '.ks'), {
+		var compiler = new Compiler(path.join(root, 'fixtures', 'compile', name + '.ks'), {
 			header: false,
 			reducePath: function(path) {
 				return path.substr(length);
@@ -35,7 +37,7 @@ function patch(file) {
 
 		var data = compiler.instrument().compile().toSource();
 
-		fs.writeFileSync(path.join(__dirname, 'test', 'fixtures', 'compile', name + '.js'), data, {
+		fs.writeFileSync(path.join(root, 'fixtures', 'compile', name + '.js'), data, {
 			encoding: 'utf8'
 		});
 	}
