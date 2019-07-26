@@ -21,7 +21,7 @@ module.exports = function(__ks_0, __ks___ks_0) {
 	__ks_coverage["/fixtures/compile/require.alt.roe.ks"].s[2]++;
 	__ks_Array.__ks_func_contains_0 = function() {
 		if(arguments.length < 1) {
-			throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 1)");
+			throw new SyntaxError("Wrong number of arguments (" + arguments.length + " for 1)");
 		}
 		let __ks_i = -1;
 		let item = arguments[++__ks_i];
@@ -67,7 +67,7 @@ module.exports = function(__ks_0, __ks___ks_0) {
 		if(args.length >= 1 && args.length <= 2) {
 			return __ks_Array.__ks_func_contains_0.apply(that, args);
 		}
-		throw new SyntaxError("wrong number of arguments");
+		throw new SyntaxError("Wrong number of arguments");
 	};
 	__ks_Array._im_pushUniq = function(that) {
 		var args = Array.prototype.slice.call(arguments, 1, arguments.length);

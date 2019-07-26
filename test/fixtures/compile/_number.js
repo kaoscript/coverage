@@ -11,7 +11,7 @@ module.exports = function() {
 	__ks_coverage["/fixtures/compile/_number.ks"].s[3]++;
 	__ks_Number.__ks_func_limit_0 = function(min, max) {
 		if(arguments.length < 2) {
-			throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 2)");
+			throw new SyntaxError("Wrong number of arguments (" + arguments.length + " for 2)");
 		}
 		if(min === void 0 || min === null) {
 			throw new TypeError("'min' is not nullable");
@@ -25,7 +25,7 @@ module.exports = function() {
 	};
 	__ks_Number.__ks_func_mod_0 = function(max) {
 		if(arguments.length < 1) {
-			throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 1)");
+			throw new SyntaxError("Wrong number of arguments (" + arguments.length + " for 1)");
 		}
 		if(max === void 0 || max === null) {
 			throw new TypeError("'max' is not nullable");
@@ -82,35 +82,35 @@ module.exports = function() {
 		if(args.length === 2) {
 			return __ks_Number.__ks_func_limit_0.apply(that, args);
 		}
-		throw new SyntaxError("wrong number of arguments");
+		throw new SyntaxError("Wrong number of arguments");
 	};
 	__ks_Number._im_mod = function(that) {
 		var args = Array.prototype.slice.call(arguments, 1, arguments.length);
 		if(args.length === 1) {
 			return __ks_Number.__ks_func_mod_0.apply(that, args);
 		}
-		throw new SyntaxError("wrong number of arguments");
+		throw new SyntaxError("Wrong number of arguments");
 	};
 	__ks_Number._im_round = function(that) {
 		var args = Array.prototype.slice.call(arguments, 1, arguments.length);
 		if(args.length >= 0 && args.length <= 1) {
 			return __ks_Number.__ks_func_round_0.apply(that, args);
 		}
-		throw new SyntaxError("wrong number of arguments");
+		throw new SyntaxError("Wrong number of arguments");
 	};
 	__ks_Number._im_toFloat = function(that) {
 		var args = Array.prototype.slice.call(arguments, 1, arguments.length);
 		if(args.length === 0) {
 			return __ks_Number.__ks_func_toFloat_0.apply(that);
 		}
-		throw new SyntaxError("wrong number of arguments");
+		throw new SyntaxError("Wrong number of arguments");
 	};
 	__ks_Number._im_toInt = function(that) {
 		var args = Array.prototype.slice.call(arguments, 1, arguments.length);
 		if(args.length >= 0 && args.length <= 1) {
 			return __ks_Number.__ks_func_toInt_0.apply(that, args);
 		}
-		throw new SyntaxError("wrong number of arguments");
+		throw new SyntaxError("Wrong number of arguments");
 	};
 	__ks_coverage["/fixtures/compile/_number.ks"].s[15]++;
 	return {

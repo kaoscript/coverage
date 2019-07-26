@@ -15,7 +15,7 @@ describe("diskspace", function() {
 	__ks_coverage["/fixtures/compile/diskspace.test.ks"].s[4]++;
 	it("print", function(done) {
 		if(arguments.length < 1) {
-			throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 1)");
+			throw new SyntaxError("Wrong number of arguments (" + arguments.length + " for 1)");
 		}
 		if(done === void 0 || done === null) {
 			throw new TypeError("'done' is not nullable");

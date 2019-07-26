@@ -13,6 +13,6 @@ comp:
 	time ./node_modules/.bin/kaoscript -c -t ecma-v6 -o lib src/compiler.ks
 
 clean:
-	find -L . -type f \( -name "*.ksb" -o -name "*.ksh" -o -name "*.ksm" \) -exec rm {} \;
+	npx kaoscript --clean
 
 .PHONY: build test

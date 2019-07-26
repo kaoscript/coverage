@@ -11,7 +11,7 @@ module.exports = function(Helper, Type) {
 	__ks_coverage["/fixtures/compile/_function.ks"].s[3]++;
 	__ks_Function.__ks_sttc_vcurry_0 = function(self, bind, ...args) {
 		if(arguments.length < 2) {
-			throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 2)");
+			throw new SyntaxError("Wrong number of arguments (" + arguments.length + " for 2)");
 		}
 		if(self === void 0 || self === null) {
 			throw new TypeError("'self' is not nullable");

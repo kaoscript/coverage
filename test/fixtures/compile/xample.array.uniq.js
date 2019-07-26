@@ -13,7 +13,7 @@ module.exports = function() {
 	__ks_coverage["/fixtures/compile/xample.array.uniq.ks"].s[3]++;
 	__ks_Array.__ks_func_contains_0 = function() {
 		if(arguments.length < 1) {
-			throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 1)");
+			throw new SyntaxError("Wrong number of arguments (" + arguments.length + " for 1)");
 		}
 		let __ks_i = -1;
 		let item = arguments[++__ks_i];
@@ -28,7 +28,7 @@ module.exports = function() {
 	};
 	__ks_Array.__ks_func_uniq_0 = function() {
 		if(arguments.length < 2) {
-			throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 2)");
+			throw new SyntaxError("Wrong number of arguments (" + arguments.length + " for 2)");
 		}
 		let __ks_i = -1;
 		let __ks__;
@@ -127,13 +127,13 @@ module.exports = function() {
 		if(args.length >= 1 && args.length <= 2) {
 			return __ks_Array.__ks_func_contains_0.apply(that, args);
 		}
-		throw new SyntaxError("wrong number of arguments");
+		throw new SyntaxError("Wrong number of arguments");
 	};
 	__ks_Array._im_uniq = function(that) {
 		var args = Array.prototype.slice.call(arguments, 1, arguments.length);
 		if(args.length >= 2 && args.length <= 3) {
 			return __ks_Array.__ks_func_uniq_0.apply(that, args);
 		}
-		throw new SyntaxError("wrong number of arguments");
+		throw new SyntaxError("Wrong number of arguments");
 	};
 };

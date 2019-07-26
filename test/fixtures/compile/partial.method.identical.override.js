@@ -21,7 +21,7 @@ module.exports = function() {
 		}
 		__ks_cons_0(color) {
 			if(arguments.length < 1) {
-				throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 1)");
+				throw new SyntaxError("Wrong number of arguments (" + arguments.length + " for 1)");
 			}
 			if(color === void 0 || color === null) {
 				throw new TypeError("'color' is not nullable");
@@ -37,7 +37,7 @@ module.exports = function() {
 				Shape.prototype.__ks_cons_0.apply(this, args);
 			}
 			else {
-				throw new SyntaxError("wrong number of arguments");
+				throw new SyntaxError("Wrong number of arguments");
 			}
 		}
 		__ks_func_draw_0() {
@@ -49,7 +49,7 @@ module.exports = function() {
 			if(arguments.length === 0) {
 				return Shape.prototype.__ks_func_draw_0.apply(this);
 			}
-			throw new SyntaxError("wrong number of arguments");
+			throw new SyntaxError("Wrong number of arguments");
 		}
 		static __ks_sttc_makeBlue_0() {
 			__ks_coverage["/fixtures/compile/partial.method.identical.override.ks"].f[1]++;
@@ -60,7 +60,7 @@ module.exports = function() {
 			if(arguments.length === 0) {
 				return Shape.__ks_sttc_makeBlue_0.apply(this);
 			}
-			throw new SyntaxError("wrong number of arguments");
+			throw new SyntaxError("Wrong number of arguments");
 		}
 	}
 	__ks_coverage["/fixtures/compile/partial.method.identical.override.ks"].s[5]++;
@@ -74,7 +74,7 @@ module.exports = function() {
 	};
 	Shape.prototype.__ks_func_name_1 = function(name) {
 		if(arguments.length < 1) {
-			throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 1)");
+			throw new SyntaxError("Wrong number of arguments (" + arguments.length + " for 1)");
 		}
 		if(name === void 0 || name === null) {
 			throw new TypeError("'name' is not nullable");
@@ -103,7 +103,7 @@ module.exports = function() {
 		else if(arguments.length === 1) {
 			return Shape.prototype.__ks_func_name_1.apply(this, arguments);
 		}
-		throw new SyntaxError("wrong number of arguments");
+		throw new SyntaxError("Wrong number of arguments");
 	};
 	__ks_coverage["/fixtures/compile/partial.method.identical.override.ks"].s[9]++;
 	let shape = Shape.makeRed();

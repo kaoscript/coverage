@@ -11,7 +11,7 @@ module.exports = function(Helper, Type) {
 	__ks_coverage["/fixtures/compile/_object.ks"].s[3]++;
 	__ks_Object.__ks_sttc_map_0 = function(object, iterator) {
 		if(arguments.length < 2) {
-			throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 2)");
+			throw new SyntaxError("Wrong number of arguments (" + arguments.length + " for 2)");
 		}
 		if(object === void 0 || object === null) {
 			throw new TypeError("'object' is not nullable");
@@ -39,7 +39,7 @@ module.exports = function(Helper, Type) {
 	};
 	__ks_Object.__ks_sttc_map_1 = function(object, iterator, condition) {
 		if(arguments.length < 3) {
-			throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 3)");
+			throw new SyntaxError("Wrong number of arguments (" + arguments.length + " for 3)");
 		}
 		if(object === void 0 || object === null) {
 			throw new TypeError("'object' is not nullable");
@@ -83,7 +83,7 @@ module.exports = function(Helper, Type) {
 		else if(args.length === 3) {
 			return __ks_Object.__ks_sttc_map_1.apply(null, args);
 		}
-		throw new SyntaxError("wrong number of arguments");
+		throw new SyntaxError("Wrong number of arguments");
 	};
 	__ks_coverage["/fixtures/compile/_object.ks"].s[13]++;
 	return {

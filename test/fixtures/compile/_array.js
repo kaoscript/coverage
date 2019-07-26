@@ -11,7 +11,7 @@ module.exports = function() {
 	__ks_coverage["/fixtures/compile/_array.ks"].s[2]++;
 	__ks_Array.__ks_sttc_map_0 = function(array, iterator) {
 		if(arguments.length < 2) {
-			throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 2)");
+			throw new SyntaxError("Wrong number of arguments (" + arguments.length + " for 2)");
 		}
 		if(array === void 0 || array === null) {
 			throw new TypeError("'array' is not nullable");
@@ -39,7 +39,7 @@ module.exports = function() {
 	};
 	__ks_Array.__ks_sttc_map_1 = function(array, iterator, condition) {
 		if(arguments.length < 3) {
-			throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 3)");
+			throw new SyntaxError("Wrong number of arguments (" + arguments.length + " for 3)");
 		}
 		if(array === void 0 || array === null) {
 			throw new TypeError("'array' is not nullable");
@@ -91,14 +91,14 @@ module.exports = function() {
 		else if(args.length === 3) {
 			return __ks_Array.__ks_sttc_map_1.apply(null, args);
 		}
-		throw new SyntaxError("wrong number of arguments");
+		throw new SyntaxError("Wrong number of arguments");
 	};
 	__ks_Array._im_last = function(that) {
 		var args = Array.prototype.slice.call(arguments, 1, arguments.length);
 		if(args.length >= 0 && args.length <= 1) {
 			return __ks_Array.__ks_func_last_0.apply(that, args);
 		}
-		throw new SyntaxError("wrong number of arguments");
+		throw new SyntaxError("Wrong number of arguments");
 	};
 	__ks_coverage["/fixtures/compile/_array.ks"].s[13]++;
 	return {

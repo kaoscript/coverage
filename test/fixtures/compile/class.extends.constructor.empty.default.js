@@ -17,7 +17,7 @@ module.exports = function() {
 		}
 		__ks_cons(args) {
 			if(args.length !== 0) {
-				throw new SyntaxError("wrong number of arguments");
+				throw new SyntaxError("Wrong number of arguments");
 			}
 		}
 		__ks_func_draw_0() {
@@ -27,7 +27,7 @@ module.exports = function() {
 			if(arguments.length === 0) {
 				return Shape.prototype.__ks_func_draw_0.apply(this);
 			}
-			throw new SyntaxError("wrong number of arguments");
+			throw new SyntaxError("Wrong number of arguments");
 		}
 	}
 	__ks_coverage["/fixtures/compile/class.extends.constructor.empty.default.ks"].s[3]++;
@@ -37,7 +37,7 @@ module.exports = function() {
 		}
 		__ks_cons_0(color) {
 			if(arguments.length < 1) {
-				throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 1)");
+				throw new SyntaxError("Wrong number of arguments (" + arguments.length + " for 1)");
 			}
 			if(color === void 0 || color === null) {
 				throw new TypeError("'color' is not nullable");
@@ -54,7 +54,7 @@ module.exports = function() {
 				Rectangle.prototype.__ks_cons_0.apply(this, args);
 			}
 			else {
-				throw new SyntaxError("wrong number of arguments");
+				throw new SyntaxError("Wrong number of arguments");
 			}
 		}
 		__ks_func_draw_0() {

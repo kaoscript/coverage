@@ -14,7 +14,7 @@ module.exports = function() {
 	__ks_coverage["/fixtures/compile/xample.blend.call.ks"].s[4]++;
 	function blend(x, y, percentage) {
 		if(arguments.length < 3) {
-			throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 3)");
+			throw new SyntaxError("Wrong number of arguments (" + arguments.length + " for 3)");
 		}
 		if(x === void 0 || x === null) {
 			throw new TypeError("'x' is not nullable");

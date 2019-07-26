@@ -9,7 +9,7 @@ module.exports = function() {
 	__ks_coverage["/fixtures/compile/function.lambda.ks"].s[1]++;
 	const foo = function(a, b) {
 		if(arguments.length < 2) {
-			throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 2)");
+			throw new SyntaxError("Wrong number of arguments (" + arguments.length + " for 2)");
 		}
 		if(a === void 0 || a === null) {
 			throw new TypeError("'a' is not nullable");

@@ -16,7 +16,7 @@ module.exports = function() {
 	__ks_coverage["/fixtures/compile/diskspace.module.ks"].s[4]++;
 	function disks(__ks_cb) {
 		if(arguments.length < 1) {
-			let __ks_error = new SyntaxError("wrong number of arguments (" + arguments.length + " for 0 + 1)");
+			let __ks_error = new SyntaxError("Wrong number of arguments (" + arguments.length + " for 0 + 1)");
 			if(arguments.length > 0 && Type.isFunction((__ks_cb = arguments[arguments.length - 1]))) {
 				return __ks_cb(__ks_error);
 			}

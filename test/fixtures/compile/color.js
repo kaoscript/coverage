@@ -178,7 +178,7 @@ module.exports = function() {
 	__ks_coverage["/fixtures/compile/color.ks"].s[10]++;
 	function $blend(x, y, percentage) {
 		if(arguments.length < 3) {
-			throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 3)");
+			throw new SyntaxError("Wrong number of arguments (" + arguments.length + " for 3)");
 		}
 		if(x === void 0 || x === null) {
 			throw new TypeError("'x' is not nullable");
@@ -205,7 +205,7 @@ module.exports = function() {
 	__ks_coverage["/fixtures/compile/color.ks"].s[12]++;
 	function $binder(last, components, first, ...firstArgs) {
 		if(arguments.length < 3) {
-			throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 3)");
+			throw new SyntaxError("Wrong number of arguments (" + arguments.length + " for 3)");
 		}
 		if(last === void 0 || last === null) {
 			throw new TypeError("'last' is not nullable");
@@ -248,7 +248,7 @@ module.exports = function() {
 		},
 		ff(n) {
 			if(arguments.length < 1) {
-				throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 1)");
+				throw new SyntaxError("Wrong number of arguments (" + arguments.length + " for 1)");
 			}
 			if(n === void 0 || n === null) {
 				throw new TypeError("'n' is not nullable");
@@ -259,7 +259,7 @@ module.exports = function() {
 		},
 		percentage(n) {
 			if(arguments.length < 1) {
-				throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 1)");
+				throw new SyntaxError("Wrong number of arguments (" + arguments.length + " for 1)");
 			}
 			if(n === void 0 || n === null) {
 				throw new TypeError("'n' is not nullable");
@@ -272,7 +272,7 @@ module.exports = function() {
 	__ks_coverage["/fixtures/compile/color.ks"].s[22]++;
 	function $component(component, name, space) {
 		if(arguments.length < 3) {
-			throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 3)");
+			throw new SyntaxError("Wrong number of arguments (" + arguments.length + " for 3)");
 		}
 		if(component === void 0 || component === null) {
 			throw new TypeError("'component' is not nullable");
@@ -310,7 +310,7 @@ module.exports = function() {
 	__ks_coverage["/fixtures/compile/color.ks"].s[28]++;
 	function $convert() {
 		if(arguments.length < 2) {
-			throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 2)");
+			throw new SyntaxError("Wrong number of arguments (" + arguments.length + " for 2)");
 		}
 		let __ks_i = -1;
 		let that = arguments[++__ks_i];
@@ -358,7 +358,7 @@ module.exports = function() {
 	__ks_coverage["/fixtures/compile/color.ks"].s[36]++;
 	function $find(from, to) {
 		if(arguments.length < 2) {
-			throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 2)");
+			throw new SyntaxError("Wrong number of arguments (" + arguments.length + " for 2)");
 		}
 		if(from === void 0 || from === null) {
 			throw new TypeError("'from' is not nullable");
@@ -388,7 +388,7 @@ module.exports = function() {
 	__ks_coverage["/fixtures/compile/color.ks"].s[41]++;
 	function $from(that, args) {
 		if(arguments.length < 2) {
-			throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 2)");
+			throw new SyntaxError("Wrong number of arguments (" + arguments.length + " for 2)");
 		}
 		if(that === void 0 || that === null) {
 			throw new TypeError("'that' is not nullable");
@@ -445,7 +445,7 @@ module.exports = function() {
 	__ks_coverage["/fixtures/compile/color.ks"].s[53]++;
 	function $hex(that) {
 		if(arguments.length < 1) {
-			throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 1)");
+			throw new SyntaxError("Wrong number of arguments (" + arguments.length + " for 1)");
 		}
 		if(that === void 0 || that === null) {
 			throw new TypeError("'that' is not nullable");
@@ -499,7 +499,7 @@ module.exports = function() {
 	let $parsers = {
 		srgb(that, args) {
 			if(arguments.length < 2) {
-				throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 2)");
+				throw new SyntaxError("Wrong number of arguments (" + arguments.length + " for 2)");
 			}
 			if(that === void 0 || that === null) {
 				throw new TypeError("'that' is not nullable");
@@ -829,7 +829,7 @@ module.exports = function() {
 		},
 		gray(that, args) {
 			if(arguments.length < 2) {
-				throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 2)");
+				throw new SyntaxError("Wrong number of arguments (" + arguments.length + " for 2)");
 			}
 			if(that === void 0 || that === null) {
 				throw new TypeError("'that' is not nullable");
@@ -904,7 +904,7 @@ module.exports = function() {
 	__ks_coverage["/fixtures/compile/color.ks"].s[207]++;
 	function $space(name) {
 		if(arguments.length < 1) {
-			throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 1)");
+			throw new SyntaxError("Wrong number of arguments (" + arguments.length + " for 1)");
 		}
 		if(name === void 0 || name === null) {
 			throw new TypeError("'name' is not nullable");
@@ -957,7 +957,7 @@ module.exports = function() {
 		}
 		__ks_func_alpha_1(value) {
 			if(arguments.length < 1) {
-				throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 1)");
+				throw new SyntaxError("Wrong number of arguments (" + arguments.length + " for 1)");
 			}
 			if(value === void 0 || value === null) {
 				throw new TypeError("'value' is not nullable");
@@ -978,11 +978,11 @@ module.exports = function() {
 			else if(arguments.length === 1) {
 				return Color.prototype.__ks_func_alpha_1.apply(this, arguments);
 			}
-			throw new SyntaxError("wrong number of arguments");
+			throw new SyntaxError("Wrong number of arguments");
 		}
 		__ks_func_blend_0() {
 			if(arguments.length < 2) {
-				throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 2)");
+				throw new SyntaxError("Wrong number of arguments (" + arguments.length + " for 2)");
 			}
 			let __ks_i = -1;
 			let color = arguments[++__ks_i];
@@ -1077,11 +1077,11 @@ module.exports = function() {
 			if(arguments.length >= 2 && arguments.length <= 4) {
 				return Color.prototype.__ks_func_blend_0.apply(this, arguments);
 			}
-			throw new SyntaxError("wrong number of arguments");
+			throw new SyntaxError("Wrong number of arguments");
 		}
 		__ks_func_clearer_0(value) {
 			if(arguments.length < 1) {
-				throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 1)");
+				throw new SyntaxError("Wrong number of arguments (" + arguments.length + " for 1)");
 			}
 			if(value === void 0 || value === null) {
 				throw new TypeError("'value' is not nullable");
@@ -1106,7 +1106,7 @@ module.exports = function() {
 			if(arguments.length === 1) {
 				return Color.prototype.__ks_func_clearer_0.apply(this, arguments);
 			}
-			throw new SyntaxError("wrong number of arguments");
+			throw new SyntaxError("Wrong number of arguments");
 		}
 		__ks_func_clone_0() {
 			__ks_coverage["/fixtures/compile/color.ks"].f[26]++;
@@ -1117,11 +1117,11 @@ module.exports = function() {
 			if(arguments.length === 0) {
 				return Color.prototype.__ks_func_clone_0.apply(this);
 			}
-			throw new SyntaxError("wrong number of arguments");
+			throw new SyntaxError("Wrong number of arguments");
 		}
 		__ks_func_contrast_0(color) {
 			if(arguments.length < 1) {
-				throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 1)");
+				throw new SyntaxError("Wrong number of arguments (" + arguments.length + " for 1)");
 			}
 			if(color === void 0 || color === null) {
 				throw new TypeError("'color' is not nullable");
@@ -1188,11 +1188,11 @@ module.exports = function() {
 			if(arguments.length === 1) {
 				return Color.prototype.__ks_func_contrast_0.apply(this, arguments);
 			}
-			throw new SyntaxError("wrong number of arguments");
+			throw new SyntaxError("Wrong number of arguments");
 		}
 		__ks_func_copy_0(target) {
 			if(arguments.length < 1) {
-				throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 1)");
+				throw new SyntaxError("Wrong number of arguments (" + arguments.length + " for 1)");
 			}
 			if(target === void 0 || target === null) {
 				throw new TypeError("'target' is not nullable");
@@ -1230,11 +1230,11 @@ module.exports = function() {
 			if(arguments.length === 1) {
 				return Color.prototype.__ks_func_copy_0.apply(this, arguments);
 			}
-			throw new SyntaxError("wrong number of arguments");
+			throw new SyntaxError("Wrong number of arguments");
 		}
 		__ks_func_distance_0(color) {
 			if(arguments.length < 1) {
-				throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 1)");
+				throw new SyntaxError("Wrong number of arguments (" + arguments.length + " for 1)");
 			}
 			if(color === void 0 || color === null) {
 				throw new TypeError("'color' is not nullable");
@@ -1254,11 +1254,11 @@ module.exports = function() {
 			if(arguments.length === 1) {
 				return Color.prototype.__ks_func_distance_0.apply(this, arguments);
 			}
-			throw new SyntaxError("wrong number of arguments");
+			throw new SyntaxError("Wrong number of arguments");
 		}
 		__ks_func_equals_0(color) {
 			if(arguments.length < 1) {
-				throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 1)");
+				throw new SyntaxError("Wrong number of arguments (" + arguments.length + " for 1)");
 			}
 			if(color === void 0 || color === null) {
 				throw new TypeError("'color' is not nullable");
@@ -1274,7 +1274,7 @@ module.exports = function() {
 			if(arguments.length === 1) {
 				return Color.prototype.__ks_func_equals_0.apply(this, arguments);
 			}
-			throw new SyntaxError("wrong number of arguments");
+			throw new SyntaxError("Wrong number of arguments");
 		}
 		__ks_func_format_0(format) {
 			if(format === void 0 || format === null) {
@@ -1300,7 +1300,7 @@ module.exports = function() {
 			if(arguments.length >= 0 && arguments.length <= 1) {
 				return Color.prototype.__ks_func_format_0.apply(this, arguments);
 			}
-			throw new SyntaxError("wrong number of arguments");
+			throw new SyntaxError("Wrong number of arguments");
 		}
 		__ks_func_from_0(...args) {
 			__ks_coverage["/fixtures/compile/color.ks"].f[32]++;
@@ -1312,7 +1312,7 @@ module.exports = function() {
 		}
 		__ks_func_getField_0(name) {
 			if(arguments.length < 1) {
-				throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 1)");
+				throw new SyntaxError("Wrong number of arguments (" + arguments.length + " for 1)");
 			}
 			if(name === void 0 || name === null) {
 				throw new TypeError("'name' is not nullable");
@@ -1345,11 +1345,11 @@ module.exports = function() {
 			if(arguments.length === 1) {
 				return Color.prototype.__ks_func_getField_0.apply(this, arguments);
 			}
-			throw new SyntaxError("wrong number of arguments");
+			throw new SyntaxError("Wrong number of arguments");
 		}
 		__ks_func_gradient_0(endColor, length) {
 			if(arguments.length < 2) {
-				throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 2)");
+				throw new SyntaxError("Wrong number of arguments (" + arguments.length + " for 2)");
 			}
 			if(endColor === void 0 || endColor === null) {
 				throw new TypeError("'endColor' is not nullable");
@@ -1406,7 +1406,7 @@ module.exports = function() {
 			if(arguments.length === 2) {
 				return Color.prototype.__ks_func_gradient_0.apply(this, arguments);
 			}
-			throw new SyntaxError("wrong number of arguments");
+			throw new SyntaxError("Wrong number of arguments");
 		}
 		__ks_func_greyscale_0(model) {
 			if(model === void 0 || model === null) {
@@ -1467,7 +1467,7 @@ module.exports = function() {
 			if(arguments.length >= 0 && arguments.length <= 1) {
 				return Color.prototype.__ks_func_greyscale_0.apply(this, arguments);
 			}
-			throw new SyntaxError("wrong number of arguments");
+			throw new SyntaxError("Wrong number of arguments");
 		}
 		__ks_func_hex_0() {
 			__ks_coverage["/fixtures/compile/color.ks"].f[36]++;
@@ -1478,7 +1478,7 @@ module.exports = function() {
 			if(arguments.length === 0) {
 				return Color.prototype.__ks_func_hex_0.apply(this);
 			}
-			throw new SyntaxError("wrong number of arguments");
+			throw new SyntaxError("Wrong number of arguments");
 		}
 		__ks_func_isBlack_0() {
 			__ks_coverage["/fixtures/compile/color.ks"].f[37]++;
@@ -1491,7 +1491,7 @@ module.exports = function() {
 			if(arguments.length === 0) {
 				return Color.prototype.__ks_func_isBlack_0.apply(this);
 			}
-			throw new SyntaxError("wrong number of arguments");
+			throw new SyntaxError("Wrong number of arguments");
 		}
 		__ks_func_isTransparent_0() {
 			__ks_coverage["/fixtures/compile/color.ks"].f[38]++;
@@ -1513,7 +1513,7 @@ module.exports = function() {
 			if(arguments.length === 0) {
 				return Color.prototype.__ks_func_isTransparent_0.apply(this);
 			}
-			throw new SyntaxError("wrong number of arguments");
+			throw new SyntaxError("Wrong number of arguments");
 		}
 		__ks_func_isWhite_0() {
 			__ks_coverage["/fixtures/compile/color.ks"].f[39]++;
@@ -1526,11 +1526,11 @@ module.exports = function() {
 			if(arguments.length === 0) {
 				return Color.prototype.__ks_func_isWhite_0.apply(this);
 			}
-			throw new SyntaxError("wrong number of arguments");
+			throw new SyntaxError("Wrong number of arguments");
 		}
 		__ks_func_like_0(space) {
 			if(arguments.length < 1) {
-				throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 1)");
+				throw new SyntaxError("Wrong number of arguments (" + arguments.length + " for 1)");
 			}
 			if(space === void 0 || space === null) {
 				throw new TypeError("'space' is not nullable");
@@ -1557,7 +1557,7 @@ module.exports = function() {
 			if(arguments.length === 1) {
 				return Color.prototype.__ks_func_like_0.apply(this, arguments);
 			}
-			throw new SyntaxError("wrong number of arguments");
+			throw new SyntaxError("Wrong number of arguments");
 		}
 		__ks_func_luminance_0() {
 			__ks_coverage["/fixtures/compile/color.ks"].f[41]++;
@@ -1582,7 +1582,7 @@ module.exports = function() {
 			if(arguments.length === 0) {
 				return Color.prototype.__ks_func_luminance_0.apply(this);
 			}
-			throw new SyntaxError("wrong number of arguments");
+			throw new SyntaxError("Wrong number of arguments");
 		}
 		__ks_func_negative_0() {
 			__ks_coverage["/fixtures/compile/color.ks"].f[42]++;
@@ -1601,11 +1601,11 @@ module.exports = function() {
 			if(arguments.length === 0) {
 				return Color.prototype.__ks_func_negative_0.apply(this);
 			}
-			throw new SyntaxError("wrong number of arguments");
+			throw new SyntaxError("Wrong number of arguments");
 		}
 		__ks_func_opaquer_0(value) {
 			if(arguments.length < 1) {
-				throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 1)");
+				throw new SyntaxError("Wrong number of arguments (" + arguments.length + " for 1)");
 			}
 			if(value === void 0 || value === null) {
 				throw new TypeError("'value' is not nullable");
@@ -1630,11 +1630,11 @@ module.exports = function() {
 			if(arguments.length === 1) {
 				return Color.prototype.__ks_func_opaquer_0.apply(this, arguments);
 			}
-			throw new SyntaxError("wrong number of arguments");
+			throw new SyntaxError("Wrong number of arguments");
 		}
 		__ks_func_readable_0() {
 			if(arguments.length < 1) {
-				throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 1)");
+				throw new SyntaxError("Wrong number of arguments (" + arguments.length + " for 1)");
 			}
 			let __ks_i = -1;
 			let color = arguments[++__ks_i];
@@ -1670,11 +1670,11 @@ module.exports = function() {
 			if(arguments.length >= 1 && arguments.length <= 2) {
 				return Color.prototype.__ks_func_readable_0.apply(this, arguments);
 			}
-			throw new SyntaxError("wrong number of arguments");
+			throw new SyntaxError("Wrong number of arguments");
 		}
 		__ks_func_scheme_0(functions) {
 			if(arguments.length < 1) {
-				throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 1)");
+				throw new SyntaxError("Wrong number of arguments (" + arguments.length + " for 1)");
 			}
 			if(functions === void 0 || functions === null) {
 				throw new TypeError("'functions' is not nullable");
@@ -1692,11 +1692,11 @@ module.exports = function() {
 			if(arguments.length === 1) {
 				return Color.prototype.__ks_func_scheme_0.apply(this, arguments);
 			}
-			throw new SyntaxError("wrong number of arguments");
+			throw new SyntaxError("Wrong number of arguments");
 		}
 		__ks_func_setField_0(name, value) {
 			if(arguments.length < 2) {
-				throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 2)");
+				throw new SyntaxError("Wrong number of arguments (" + arguments.length + " for 2)");
 			}
 			if(name === void 0 || name === null) {
 				throw new TypeError("'name' is not nullable");
@@ -1759,11 +1759,11 @@ module.exports = function() {
 			if(arguments.length === 2) {
 				return Color.prototype.__ks_func_setField_0.apply(this, arguments);
 			}
-			throw new SyntaxError("wrong number of arguments");
+			throw new SyntaxError("Wrong number of arguments");
 		}
 		__ks_func_shade_0(percentage) {
 			if(arguments.length < 1) {
-				throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 1)");
+				throw new SyntaxError("Wrong number of arguments (" + arguments.length + " for 1)");
 			}
 			if(percentage === void 0 || percentage === null) {
 				throw new TypeError("'percentage' is not nullable");
@@ -1779,7 +1779,7 @@ module.exports = function() {
 			if(arguments.length === 1) {
 				return Color.prototype.__ks_func_shade_0.apply(this, arguments);
 			}
-			throw new SyntaxError("wrong number of arguments");
+			throw new SyntaxError("Wrong number of arguments");
 		}
 		__ks_func_space_0() {
 			__ks_coverage["/fixtures/compile/color.ks"].f[48]++;
@@ -1788,7 +1788,7 @@ module.exports = function() {
 		}
 		__ks_func_space_1(space) {
 			if(arguments.length < 1) {
-				throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 1)");
+				throw new SyntaxError("Wrong number of arguments (" + arguments.length + " for 1)");
 			}
 			if(space === void 0 || space === null) {
 				throw new TypeError("'space' is not nullable");
@@ -1839,11 +1839,11 @@ module.exports = function() {
 			else if(arguments.length === 1) {
 				return Color.prototype.__ks_func_space_1.apply(this, arguments);
 			}
-			throw new SyntaxError("wrong number of arguments");
+			throw new SyntaxError("Wrong number of arguments");
 		}
 		__ks_func_tint_0(percentage) {
 			if(arguments.length < 1) {
-				throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 1)");
+				throw new SyntaxError("Wrong number of arguments (" + arguments.length + " for 1)");
 			}
 			if(percentage === void 0 || percentage === null) {
 				throw new TypeError("'percentage' is not nullable");
@@ -1859,11 +1859,11 @@ module.exports = function() {
 			if(arguments.length === 1) {
 				return Color.prototype.__ks_func_tint_0.apply(this, arguments);
 			}
-			throw new SyntaxError("wrong number of arguments");
+			throw new SyntaxError("Wrong number of arguments");
 		}
 		__ks_func_tone_0(percentage) {
 			if(arguments.length < 1) {
-				throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 1)");
+				throw new SyntaxError("Wrong number of arguments (" + arguments.length + " for 1)");
 			}
 			if(percentage === void 0 || percentage === null) {
 				throw new TypeError("'percentage' is not nullable");
@@ -1879,7 +1879,7 @@ module.exports = function() {
 			if(arguments.length === 1) {
 				return Color.prototype.__ks_func_tone_0.apply(this, arguments);
 			}
-			throw new SyntaxError("wrong number of arguments");
+			throw new SyntaxError("Wrong number of arguments");
 		}
 		static __ks_sttc_from_0(...args) {
 			__ks_coverage["/fixtures/compile/color.ks"].f[14]++;
@@ -1936,7 +1936,7 @@ module.exports = function() {
 		}
 		static __ks_sttc_registerFormatter_0(format, formatter) {
 			if(arguments.length < 2) {
-				throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 2)");
+				throw new SyntaxError("Wrong number of arguments (" + arguments.length + " for 2)");
 			}
 			if(format === void 0 || format === null) {
 				throw new TypeError("'format' is not nullable");
@@ -1960,11 +1960,11 @@ module.exports = function() {
 			if(arguments.length === 2) {
 				return Color.__ks_sttc_registerFormatter_0.apply(this, arguments);
 			}
-			throw new SyntaxError("wrong number of arguments");
+			throw new SyntaxError("Wrong number of arguments");
 		}
 		static __ks_sttc_registerParser_0(format, parser) {
 			if(arguments.length < 2) {
-				throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 2)");
+				throw new SyntaxError("Wrong number of arguments (" + arguments.length + " for 2)");
 			}
 			if(format === void 0 || format === null) {
 				throw new TypeError("'format' is not nullable");
@@ -1986,11 +1986,11 @@ module.exports = function() {
 			if(arguments.length === 2) {
 				return Color.__ks_sttc_registerParser_0.apply(this, arguments);
 			}
-			throw new SyntaxError("wrong number of arguments");
+			throw new SyntaxError("Wrong number of arguments");
 		}
 		static __ks_sttc_registerSpace_0(space) {
 			if(arguments.length < 1) {
-				throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 1)");
+				throw new SyntaxError("Wrong number of arguments (" + arguments.length + " for 1)");
 			}
 			if(space === void 0 || space === null) {
 				throw new TypeError("'space' is not nullable");
@@ -2172,7 +2172,7 @@ module.exports = function() {
 			if(arguments.length === 1) {
 				return Color.__ks_sttc_registerSpace_0.apply(this, arguments);
 			}
-			throw new SyntaxError("wrong number of arguments");
+			throw new SyntaxError("Wrong number of arguments");
 		}
 	}
 	__ks_coverage["/fixtures/compile/color.ks"].s[432]++;
@@ -2182,7 +2182,7 @@ module.exports = function() {
 		"formatters": {
 			hex(that) {
 				if(arguments.length < 1) {
-					throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 1)");
+					throw new SyntaxError("Wrong number of arguments (" + arguments.length + " for 1)");
 				}
 				if(that === void 0 || that === null) {
 					throw new TypeError("'that' is not nullable");
@@ -2194,7 +2194,7 @@ module.exports = function() {
 			},
 			srgb(that) {
 				if(arguments.length < 1) {
-					throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 1)");
+					throw new SyntaxError("Wrong number of arguments (" + arguments.length + " for 1)");
 				}
 				if(that === void 0 || that === null) {
 					throw new TypeError("'that' is not nullable");
@@ -2227,7 +2227,7 @@ module.exports = function() {
 	};
 	Color.prototype.__ks_func_red_1 = function(value) {
 		if(arguments.length < 1) {
-			throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 1)");
+			throw new SyntaxError("Wrong number of arguments (" + arguments.length + " for 1)");
 		}
 		if(value === void 0 || value === null) {
 			throw new TypeError("'value' is not nullable");
@@ -2239,7 +2239,7 @@ module.exports = function() {
 	};
 	Color.prototype.__ks_func_green_1 = function(value) {
 		if(arguments.length < 1) {
-			throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 1)");
+			throw new SyntaxError("Wrong number of arguments (" + arguments.length + " for 1)");
 		}
 		if(value === void 0 || value === null) {
 			throw new TypeError("'value' is not nullable");
@@ -2251,7 +2251,7 @@ module.exports = function() {
 	};
 	Color.prototype.__ks_func_blue_1 = function(value) {
 		if(arguments.length < 1) {
-			throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 1)");
+			throw new SyntaxError("Wrong number of arguments (" + arguments.length + " for 1)");
 		}
 		if(value === void 0 || value === null) {
 			throw new TypeError("'value' is not nullable");
@@ -2265,7 +2265,7 @@ module.exports = function() {
 		else if(arguments.length === 1) {
 			return Color.prototype.__ks_func_red_1.apply(this, arguments);
 		}
-		throw new SyntaxError("wrong number of arguments");
+		throw new SyntaxError("Wrong number of arguments");
 	};
 	Color.prototype.green = function() {
 		if(arguments.length === 0) {
@@ -2274,7 +2274,7 @@ module.exports = function() {
 		else if(arguments.length === 1) {
 			return Color.prototype.__ks_func_green_1.apply(this, arguments);
 		}
-		throw new SyntaxError("wrong number of arguments");
+		throw new SyntaxError("Wrong number of arguments");
 	};
 	Color.prototype.blue = function() {
 		if(arguments.length === 0) {
@@ -2283,7 +2283,7 @@ module.exports = function() {
 		else if(arguments.length === 1) {
 			return Color.prototype.__ks_func_blue_1.apply(this, arguments);
 		}
-		throw new SyntaxError("wrong number of arguments");
+		throw new SyntaxError("Wrong number of arguments");
 	};
 	__ks_coverage["/fixtures/compile/color.ks"].s[433]++;
 	let $static = {

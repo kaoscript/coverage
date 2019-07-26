@@ -10,7 +10,7 @@ module.exports = function() {
 	let Integer = {
 		parse(value, radix) {
 			if(arguments.length < 2) {
-				throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 2)");
+				throw new SyntaxError("Wrong number of arguments (" + arguments.length + " for 2)");
 			}
 			if(value === void 0) {
 				value = null;

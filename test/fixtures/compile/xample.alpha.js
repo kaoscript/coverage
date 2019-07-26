@@ -14,7 +14,7 @@ module.exports = function() {
 	__ks_coverage["/fixtures/compile/xample.alpha.ks"].s[4]++;
 	function alpha() {
 		if(arguments.length < 1) {
-			throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 1)");
+			throw new SyntaxError("Wrong number of arguments (" + arguments.length + " for 1)");
 		}
 		let __ks_i = -1;
 		let n = arguments[++__ks_i];

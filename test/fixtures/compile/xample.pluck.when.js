@@ -11,7 +11,7 @@ module.exports = function() {
 	__ks_coverage["/fixtures/compile/xample.pluck.when.ks"].s[2]++;
 	__ks_Array.__ks_func_pluck_0 = function(name) {
 		if(arguments.length < 1) {
-			throw new SyntaxError("wrong number of arguments (" + arguments.length + " for 1)");
+			throw new SyntaxError("Wrong number of arguments (" + arguments.length + " for 1)");
 		}
 		if(name === void 0 || name === null) {
 			throw new TypeError("'name' is not nullable");
@@ -52,6 +52,6 @@ module.exports = function() {
 		if(args.length === 1) {
 			return __ks_Array.__ks_func_pluck_0.apply(that, args);
 		}
-		throw new SyntaxError("wrong number of arguments");
+		throw new SyntaxError("Wrong number of arguments");
 	};
 };
