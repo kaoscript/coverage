@@ -1,4 +1,6 @@
 extern sealed class String {
+	length: Number
+	slice(...): String
 	trim(): String
 }
 
@@ -7,7 +9,7 @@ extern eval
 impl String {
 	evaluate() {
 		const value = this.trim()
-		
+
 		if value.startsWith('function') || value.startsWith('{') {
 			return eval('(function(){return ' + value + ';})()')
 		}

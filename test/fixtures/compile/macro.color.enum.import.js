@@ -2,7 +2,7 @@ var __ks_coverage = (function(_export) {
 	return typeof _export.__ks_coverage === 'undefined' ? _export.__ks_coverage = {} : _export.__ks_coverage;
 })(typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : this);
 if(!__ks_coverage["/fixtures/compile/macro.color.enum.import.ks"]) {
-	__ks_coverage["/fixtures/compile/macro.color.enum.import.ks"] = {"path":"/fixtures/compile/macro.color.enum.import.ks","s":{"1":0,"2":0,"3":0,"4":0},"b":{},"f":{"1":0,"2":0},"statementMap":{"1":{"start":{"line":1,"column":0},"end":{"line":1,"column":28}},"2":{"start":{"line":3,"column":0},"end":{"line":38,"column":1}},"3":{"start":{"line":40,"column":0},"end":{"line":43,"column":1}},"4":{"start":{"line":45,"column":0},"end":{"line":59,"column":2}}},"branchMap":{},"fnMap":{"1":{"name":"getField","line":36,"loc":{"start":{"line":36,"column":1},"end":{"line":36,"column":15}}},"2":{"name":"setField","line":37,"loc":{"start":{"line":37,"column":1},"end":{"line":37,"column":22}}}}};
+	__ks_coverage["/fixtures/compile/macro.color.enum.import.ks"] = {"path":"/fixtures/compile/macro.color.enum.import.ks","s":{"1":0,"2":0,"3":0,"4":0},"b":{},"f":{"1":0,"2":0,"3":0},"statementMap":{"1":{"start":{"line":1,"column":0},"end":{"line":1,"column":28}},"2":{"start":{"line":3,"column":0},"end":{"line":39,"column":1}},"3":{"start":{"line":41,"column":0},"end":{"line":44,"column":1}},"4":{"start":{"line":46,"column":0},"end":{"line":60,"column":2}}},"branchMap":{},"fnMap":{"1":{"name":"registerSpace","line":36,"loc":{"start":{"line":36,"column":1},"end":{"line":36,"column":27}}},"2":{"name":"getField","line":37,"loc":{"start":{"line":37,"column":1},"end":{"line":37,"column":15}}},"3":{"name":"setField","line":38,"loc":{"start":{"line":38,"column":1},"end":{"line":38,"column":22}}}}};
 };
 require("kaoscript/register");
 module.exports = function() {
@@ -28,7 +28,7 @@ module.exports = function() {
 			if(name === void 0 || name === null) {
 				throw new TypeError("'name' is not nullable");
 			}
-			__ks_coverage["/fixtures/compile/macro.color.enum.import.ks"].f[1]++;
+			__ks_coverage["/fixtures/compile/macro.color.enum.import.ks"].f[2]++;
 		}
 		getField() {
 			if(arguments.length === 1) {
@@ -46,11 +46,26 @@ module.exports = function() {
 			if(value === void 0 || value === null) {
 				throw new TypeError("'value' is not nullable");
 			}
-			__ks_coverage["/fixtures/compile/macro.color.enum.import.ks"].f[2]++;
+			__ks_coverage["/fixtures/compile/macro.color.enum.import.ks"].f[3]++;
 		}
 		setField() {
 			if(arguments.length === 2) {
 				return Color.prototype.__ks_func_setField_0.apply(this, arguments);
+			}
+			throw new SyntaxError("Wrong number of arguments");
+		}
+		static __ks_sttc_registerSpace_0(data) {
+			if(arguments.length < 1) {
+				throw new SyntaxError("Wrong number of arguments (" + arguments.length + " for 1)");
+			}
+			if(data === void 0 || data === null) {
+				throw new TypeError("'data' is not nullable");
+			}
+			__ks_coverage["/fixtures/compile/macro.color.enum.import.ks"].f[1]++;
+		}
+		static registerSpace() {
+			if(arguments.length === 1) {
+				return Color.__ks_sttc_registerSpace_0.apply(this, arguments);
 			}
 			throw new SyntaxError("Wrong number of arguments");
 		}
