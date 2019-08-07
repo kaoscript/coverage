@@ -1,6 +1,6 @@
 /**
  * coverage.ks
- * Version 0.2.0
+ * Version 0.1.0
  * January 11th, 2017
  *
  * Copyright (c) 2017 Baptiste Augrain
@@ -1043,12 +1043,12 @@ class CoverageModule extends Module {
 		super(data, compiler, file)
 	} // }}}
 	parse(data, file) { // {{{
-		if this.excludeFile(file) {
+		if @excludeFile(file) {
 			data = super.parse(data, file)
 		}
 		else {
 			@coverages.push(coverage = {
-				path: this.reducePath(file)
+				path: @reducePath(file)
 				statementMap: []
 				branchMap: []
 				fnMap: []
