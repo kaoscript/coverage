@@ -1,6 +1,6 @@
 /**
  * coverage.ks
- * Version 0.1.0
+ * Version 0.2.0
  * January 11th, 2017
  *
  * Copyright (c) 2017 Baptiste Augrain
