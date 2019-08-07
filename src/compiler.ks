@@ -752,6 +752,7 @@ const $statements = {
 	} // }}}
 	`\(NodeKind::ContinueStatement)`(data, coverage, coverageName, file, node) => data
 	`\(NodeKind::DestroyStatement)`(data, coverage, coverageName, file, node) => data
+	`\(NodeKind::DiscloseDeclaration)`(data, coverage, coverageName, file, node) => data
 	`\(NodeKind::DoUntilStatement)`(data, coverage, coverageName, file, node) { // {{{
 		data.condition = $compile.expression(data.condition, coverage, coverageName, file, node)
 
