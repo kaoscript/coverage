@@ -9,5 +9,5 @@ module.exports = function() {
 	__ks_coverage["/fixtures/compile/operator.assign.noexist.or.ks"].s[1]++;
 	__ks_coverage["/fixtures/compile/operator.assign.noexist.or.ks"].s[2]++;
 	let bar, __ks_0;
-	const foo = (__ks_coverage["/fixtures/compile/operator.assign.noexist.or.ks"].b[1][0]++, Type.isValue(__ks_0 = qux.getFoobar()) ? (bar = __ks_0, false) : true) || (__ks_coverage["/fixtures/compile/operator.assign.noexist.or.ks"].b[1][1]++, bar.isFoobar());
+	const foo = (__ks_coverage["/fixtures/compile/operator.assign.noexist.or.ks"].b[1][0]++, Type.isValue(__ks_0 = qux.getFoobar()) ? (bar = __ks_0, false) : true) || ((__ks_coverage["/fixtures/compile/operator.assign.noexist.or.ks"].b[1][1]++, bar.isFoobar() === true));
 };

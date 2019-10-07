@@ -16,7 +16,7 @@ module.exports = function() {
 		}
 		__ks_coverage["/fixtures/compile/unless.throw.ks"].f[1]++;
 		__ks_coverage["/fixtures/compile/unless.throw.ks"].s[3]++;
-		if(!x) {
+		if(!(x === true)) {
 			__ks_coverage["/fixtures/compile/unless.throw.ks"].b[1][0]++;
 			__ks_coverage["/fixtures/compile/unless.throw.ks"].s[4]++;
 			throw new Error();

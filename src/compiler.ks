@@ -97,10 +97,21 @@ const $compile = {
 				}
 				argument: {
 					kind: NodeKind::MemberExpression
+					modifiers: [
+						{
+							kind: ModifierKind::Computed
+						}
+					]
 					object: {
 						kind: NodeKind::MemberExpression
+						modifiers: []
 						object: {
 							kind: NodeKind::MemberExpression
+							modifiers: [
+								{
+									kind: ModifierKind::Computed
+								}
+							]
 							object: {
 								kind: NodeKind::Identifier
 								name: coverageName
@@ -109,22 +120,16 @@ const $compile = {
 								kind: NodeKind::Literal
 								value: node.reducePath(file)
 							}
-							computed: true
-							nullable: false
 						}
 						property: {
 							kind: NodeKind::Identifier
 							name: 's'
 						}
-						computed: false
-						nullable: false
 					}
 					property: {
 						kind: NodeKind::NumericExpression
 						value: sid
 					}
-					computed: true
-					nullable: false
 				}
 				attributes: []
 			}, statement))
@@ -179,6 +184,7 @@ func $constructor(members, data, coverage, coverageName, file, node) { // {{{
 		statements: [
 			$location({
 				kind: NodeKind::CallExpression
+				modifiers: []
 				scope: {
 					kind: ScopeKind::This
 				}
@@ -189,7 +195,6 @@ func $constructor(members, data, coverage, coverageName, file, node) { // {{{
 					end: data.end
 				}
 				arguments: []
-				nullable: false
 			}, data)
 			$location({
 				kind: NodeKind::UnaryExpression
@@ -198,10 +203,21 @@ func $constructor(members, data, coverage, coverageName, file, node) { // {{{
 				}
 				argument: {
 					kind: NodeKind::MemberExpression
+					modifiers: [
+						{
+							kind: ModifierKind::Computed
+						}
+					]
 					object: {
 						kind: NodeKind::MemberExpression
+						modifiers: []
 						object: {
 							kind: NodeKind::MemberExpression
+							modifiers: [
+								{
+									kind: ModifierKind::Computed
+								}
+							]
 							object: {
 								kind: NodeKind::Identifier
 								name: coverageName
@@ -210,22 +226,16 @@ func $constructor(members, data, coverage, coverageName, file, node) { // {{{
 								kind: NodeKind::Literal
 								value: node.reducePath(file)
 							}
-							computed: true
-							nullable: false
 						}
 						property: {
 							kind: NodeKind::Identifier
 							name: 'f'
 						}
-						computed: false
-						nullable: false
 					}
 					property: {
 						kind: NodeKind::NumericExpression
 						value: fid
 					}
-					computed: true
-					nullable: false
 				}
 				attributes: []
 			}, data)
@@ -243,6 +253,7 @@ const $expressions = {
 		return data
 	} // }}}
 	`\(NodeKind::ArrayRange)`(data, coverage, coverageName, file, node) => data
+	`\(NodeKind::AwaitExpression)`(data, coverage, coverageName, file, node) => data
 	`\(NodeKind::BinaryExpression)`(data, coverage, coverageName, file, node) { // {{{
 		if data.operator.kind == BinaryOperatorKind::And || data.operator.kind == BinaryOperatorKind::Or {
 			let bid = coverage.branchMap.length + 1
@@ -565,10 +576,21 @@ func $function(data, coverage, coverageName, file, node) { // {{{
 		}
 		argument: {
 			kind: NodeKind::MemberExpression
+			modifiers: [
+				{
+					kind: ModifierKind::Computed
+				}
+			]
 			object: {
 				kind: NodeKind::MemberExpression
+				modifiers: []
 				object: {
 					kind: NodeKind::MemberExpression
+					modifiers: [
+						{
+							kind: ModifierKind::Computed
+						}
+					]
 					object: {
 						kind: NodeKind::Identifier
 						name: coverageName
@@ -577,22 +599,16 @@ func $function(data, coverage, coverageName, file, node) { // {{{
 						kind: NodeKind::Literal
 						value: node.reducePath(file)
 					}
-					computed: true
-					nullable: false
 				}
 				property: {
 					kind: NodeKind::Identifier
 					name: 'f'
 				}
-				computed: false
-				nullable: false
 			}
 			property: {
 				kind: NodeKind::NumericExpression
 				value: fid
 			}
-			computed: true
-			nullable: false
 		}
 		attributes: []
 	}, $body(data.body, data), coverage, coverageName, data, file, node)
@@ -630,12 +646,28 @@ const $increment = {
 			}
 			argument: {
 				kind: NodeKind::MemberExpression
+				modifiers: [
+					{
+						kind: ModifierKind::Computed
+					}
+				]
 				object: {
 					kind: NodeKind::MemberExpression
+					modifiers: [
+						{
+							kind: ModifierKind::Computed
+						}
+					]
 					object: {
 						kind: NodeKind::MemberExpression
+						modifiers: []
 						object: {
 							kind: NodeKind::MemberExpression
+							modifiers: [
+								{
+									kind: ModifierKind::Computed
+								}
+							]
 							object: {
 								kind: NodeKind::Identifier
 								name: coverageName
@@ -644,36 +676,28 @@ const $increment = {
 								kind: NodeKind::Literal
 								value: node.reducePath(file)
 							}
-							computed: true
-							nullable: false
 						}
 						property: {
 							kind: NodeKind::Identifier
 							name: 'b'
 						}
-						computed: false
-						nullable: false
 					}
 					property: {
 						kind: NodeKind::NumericExpression
 						value: bid
 					}
-					computed: true
-					nullable: false
 				}
 				property: {
 					kind: NodeKind::NumericExpression
 					value: eid
 				}
-				computed: true
-				nullable: false
 			}
 			attributes: []
 		}, data)
 	} // }}}
 }
 
-func $location(data, location: Object) { // {{{
+func $location(data, location: Dictionary) { // {{{
 	data.start = {
 		line: location.start.line
 	}
@@ -1065,6 +1089,7 @@ class CoverageModule extends Module {
 					declarations: [
 						{
 							kind: NodeKind::VariableDeclarator
+							modifiers: []
 							name: {
 								kind: NodeKind::Identifier
 								name: @coverageName

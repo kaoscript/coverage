@@ -28,7 +28,7 @@ module.exports = function() {
 		else {
 			__ks_coverage["/fixtures/compile/_string.ks"].b[1][1]++;
 			__ks_coverage["/fixtures/compile/_string.ks"].s[6]++;
-			if(emptyLines) {
+			if(emptyLines === true) {
 				__ks_coverage["/fixtures/compile/_string.ks"].b[2][0]++;
 				__ks_coverage["/fixtures/compile/_string.ks"].s[7]++;
 				return this.replace(/\r\n/g, "\n").replace(/\r/g, "\n").split("\n");

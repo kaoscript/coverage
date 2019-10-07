@@ -12,21 +12,20 @@ module.exports = function() {
 	var {Number, __ks_Number} = require("./_number.ks")();
 	__ks_coverage["/fixtures/compile/xample.alpha.ks"].s[3]++;
 	__ks_coverage["/fixtures/compile/xample.alpha.ks"].s[4]++;
-	function alpha() {
+	function alpha(n, percentage) {
 		if(arguments.length < 1) {
 			throw new SyntaxError("Wrong number of arguments (" + arguments.length + " for 1)");
 		}
-		let __ks_i = -1;
-		let n = arguments[++__ks_i];
 		if(n === void 0) {
 			n = null;
 		}
-		let __ks__;
-		let percentage = arguments.length > 1 && (__ks__ = arguments[++__ks_i]) !== void 0 && __ks__ !== null ? __ks__ : false;
+		if(percentage === void 0 || percentage === null) {
+			percentage = false;
+		}
 		__ks_coverage["/fixtures/compile/xample.alpha.ks"].f[1]++;
 		__ks_coverage["/fixtures/compile/xample.alpha.ks"].s[5]++;
 		let i = Float.parse(n);
 		__ks_coverage["/fixtures/compile/xample.alpha.ks"].s[6]++;
-		return isNaN(i) ? (__ks_coverage["/fixtures/compile/xample.alpha.ks"].b[1][0]++, 1) : (__ks_coverage["/fixtures/compile/xample.alpha.ks"].b[1][1]++, __ks_Number._im_round(__ks_Number._im_limit(percentage ? (__ks_coverage["/fixtures/compile/xample.alpha.ks"].b[2][0]++, i / 100) : (__ks_coverage["/fixtures/compile/xample.alpha.ks"].b[2][1]++, i), 0, 1), 3));
+		return Number.isNaN(i) ? (__ks_coverage["/fixtures/compile/xample.alpha.ks"].b[1][0]++, 1) : (__ks_coverage["/fixtures/compile/xample.alpha.ks"].b[1][1]++, __ks_Number._im_round(__ks_Number._im_limit((percentage === true) ? (__ks_coverage["/fixtures/compile/xample.alpha.ks"].b[2][0]++, i / 100) : (__ks_coverage["/fixtures/compile/xample.alpha.ks"].b[2][1]++, i), 0, 1), 3));
 	}
 };

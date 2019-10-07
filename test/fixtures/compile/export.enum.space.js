@@ -4,12 +4,13 @@ var __ks_coverage = (function(_export) {
 if(!__ks_coverage["/fixtures/compile/export.enum.space.ks"]) {
 	__ks_coverage["/fixtures/compile/export.enum.space.ks"] = {"path":"/fixtures/compile/export.enum.space.ks","s":{"1":0},"b":{},"f":{},"statementMap":{"1":{"start":{"line":1,"column":0},"end":{"line":4,"column":1}}},"branchMap":{},"fnMap":{}};
 };
+var Helper = require("@kaoscript/runtime").Helper;
 module.exports = function() {
 	__ks_coverage["/fixtures/compile/export.enum.space.ks"].s[1]++;
-	let Space = {
+	let Space = Helper.enum(String, {
 		RGB: "rgb",
 		SRGB: "srgb"
-	};
+	});
 	return {
 		Space: Space
 	};

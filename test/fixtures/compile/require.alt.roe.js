@@ -19,17 +19,16 @@ module.exports = function(__ks_0, __ks___ks_0) {
 	var [Array, __ks_Array] = __ks_require(__ks_0, __ks___ks_0);
 	__ks_coverage["/fixtures/compile/require.alt.roe.ks"].s[1]++;
 	__ks_coverage["/fixtures/compile/require.alt.roe.ks"].s[2]++;
-	__ks_Array.__ks_func_contains_0 = function() {
+	__ks_Array.__ks_func_contains_0 = function(item, from) {
 		if(arguments.length < 1) {
 			throw new SyntaxError("Wrong number of arguments (" + arguments.length + " for 1)");
 		}
-		let __ks_i = -1;
-		let item = arguments[++__ks_i];
 		if(item === void 0 || item === null) {
 			throw new TypeError("'item' is not nullable");
 		}
-		let __ks__;
-		let from = arguments.length > 1 && (__ks__ = arguments[++__ks_i]) !== void 0 && __ks__ !== null ? __ks__ : 0;
+		if(from === void 0 || from === null) {
+			from = 0;
+		}
 		__ks_coverage["/fixtures/compile/require.alt.roe.ks"].f[1]++;
 		__ks_coverage["/fixtures/compile/require.alt.roe.ks"].s[3]++;
 		return this.indexOf(item, from) !== -1;
@@ -40,7 +39,7 @@ module.exports = function(__ks_0, __ks___ks_0) {
 		if(args.length === 1) {
 			__ks_coverage["/fixtures/compile/require.alt.roe.ks"].b[1][0]++;
 			__ks_coverage["/fixtures/compile/require.alt.roe.ks"].s[5]++;
-			if(!__ks_Array._im_contains(this, args[0])) {
+			if(!(__ks_Array._im_contains(this, args[0]) === true)) {
 				__ks_coverage["/fixtures/compile/require.alt.roe.ks"].b[2][0]++;
 				__ks_coverage["/fixtures/compile/require.alt.roe.ks"].s[6]++;
 				this.push(args[0]);
@@ -52,7 +51,7 @@ module.exports = function(__ks_0, __ks___ks_0) {
 			for(let __ks_0 = 0, __ks_1 = args.length, item; __ks_0 < __ks_1; ++__ks_0) {
 				item = args[__ks_0];
 				__ks_coverage["/fixtures/compile/require.alt.roe.ks"].s[8]++;
-				if(!__ks_Array._im_contains(this, item)) {
+				if(!(__ks_Array._im_contains(this, item) === true)) {
 					__ks_coverage["/fixtures/compile/require.alt.roe.ks"].b[3][0]++;
 					__ks_coverage["/fixtures/compile/require.alt.roe.ks"].s[9]++;
 					this.push(item);

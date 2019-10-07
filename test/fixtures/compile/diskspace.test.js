@@ -22,7 +22,8 @@ describe("diskspace", function() {
 		}
 		__ks_coverage["/fixtures/compile/diskspace.test.ks"].f[2]++;
 		__ks_coverage["/fixtures/compile/diskspace.test.ks"].s[5]++;
-		disks((__ks_e, d) => {
+		disks((__ks_e, __ks_0) => {
+			let d = __ks_0;
 			__ks_coverage["/fixtures/compile/diskspace.test.ks"].s[6]++;
 			expect(d).to.have.length.above(0);
 			__ks_coverage["/fixtures/compile/diskspace.test.ks"].s[7]++;

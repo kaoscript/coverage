@@ -5,13 +5,11 @@ const df_regex = /([\/[a-z0-9\-\_\s]+)\s+([0-9]+)\s+([0-9]+)\s+([0-9]+)\s+([0-9]
 
 async func disks() {
 	let stdout: string, stderr = await exec('df -k')
-	
+
 	let disks = []
-	let matches: Array<String?>
+	let matches: Array<String>
 	for line in stdout.lines() {
-		matches = df_regex.exec(line)
-		
-		if matches {
+		if matches ?= df_regex.exec(line) {
 			disks.push({
 				device: matches[1].trim()
 				mount: matches[9]
@@ -21,7 +19,7 @@ async func disks() {
 			})
 		}
 	}
-	
+
 	return disks
 }
 

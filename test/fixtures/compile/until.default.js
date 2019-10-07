@@ -4,10 +4,11 @@ var __ks_coverage = (function(_export) {
 if(!__ks_coverage["/fixtures/compile/until.default.ks"]) {
 	__ks_coverage["/fixtures/compile/until.default.ks"] = {"path":"/fixtures/compile/until.default.ks","s":{"1":0,"2":0,"3":0},"b":{},"f":{},"statementMap":{"1":{"start":{"line":1,"column":0},"end":{"line":5,"column":1}},"2":{"start":{"line":7,"column":0},"end":{"line":9,"column":1}},"3":{"start":{"line":8,"column":1},"end":{"line":8,"column":7}}},"branchMap":{},"fnMap":{}};
 };
+var Operator = require("@kaoscript/runtime").Operator;
 module.exports = function() {
 	__ks_coverage["/fixtures/compile/until.default.ks"].s[1]++;
 	__ks_coverage["/fixtures/compile/until.default.ks"].s[2]++;
-	while(!(supply > demand)) {
+	while(!Operator.gt(supply, demand)) {
 		__ks_coverage["/fixtures/compile/until.default.ks"].s[3]++;
 		sell();
 	}

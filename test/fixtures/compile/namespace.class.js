@@ -4,10 +4,10 @@ var __ks_coverage = (function(_export) {
 if(!__ks_coverage["/fixtures/compile/namespace.class.ks"]) {
 	__ks_coverage["/fixtures/compile/namespace.class.ks"] = {"path":"/fixtures/compile/namespace.class.ks","s":{"1":0,"2":0,"3":0,"4":0},"b":{},"f":{"1":0},"statementMap":{"1":{"start":{"line":1,"column":0},"end":{"line":10,"column":1}},"2":{"start":{"line":2,"column":1},"end":{"line":7,"column":2}},"3":{"start":{"line":9,"column":1},"end":{"line":9,"column":14}},"4":{"start":{"line":12,"column":0},"end":{"line":12,"column":26}}},"branchMap":{},"fnMap":{"1":{"name":"constructor","line":6,"loc":{"start":{"line":6,"column":2},"end":{"line":6,"column":29}}}}};
 };
-var Type = require("@kaoscript/runtime").Type;
+var {Helper, Type} = require("@kaoscript/runtime");
 module.exports = function() {
 	__ks_coverage["/fixtures/compile/namespace.class.ks"].s[1]++;
-	let qux = (function() {
+	let qux = Helper.namespace(function() {
 		__ks_coverage["/fixtures/compile/namespace.class.ks"].s[2]++;
 		class Foobar {
 			constructor() {
@@ -39,7 +39,7 @@ module.exports = function() {
 		return {
 			Foobar: Foobar
 		};
-	})();
+	});
 	__ks_coverage["/fixtures/compile/namespace.class.ks"].s[4]++;
 	const x = new qux.Foobar();
 };

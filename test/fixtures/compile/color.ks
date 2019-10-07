@@ -211,7 +211,7 @@ func $component(component, name: string, space: string): void { // {{{
 	$components[name].spaces[space] = true
 } // }}}
 
-func $convert(that: Color, space: string, result = {_alpha: 0}): object ~ Error { // {{{
+func $convert(that: Color, space: string, result = {_alpha: 0}): Dictionary ~ Error { // {{{
 	if ?(s = $spaces[that._space]).converters[space] {
 		let args := [that[component.field] for component, name of s.components]
 
@@ -308,7 +308,7 @@ let $parsers = {
 				that._blue = $caster.ff(args[0][2])
 				return true
 			}
-			else if args[0] is object {
+			else if args[0] is Dictionary {
 				if ?args[0].r && ?args[0].g && ?args[0].b {
 					that._space = Space::SRGB
 					that._alpha = $caster.alpha(args[0].a)
@@ -499,7 +499,7 @@ export class Color {
 		_blue: int = 0
 	}
 
-	macro registerSpace(@space: Object) {
+	macro registerSpace(@space: Dictionary) {
 		if space.components? {
 			const fields: Array = []
 			const methods: Array = []
@@ -573,8 +573,8 @@ export class Color {
 			$parsers[format] = parser
 		} // }}}
 
-		registerSpace(space: object) { // {{{
-			let spaces = Object.keys($spaces)
+		registerSpace(space: Dictionary) { // {{{
+			let spaces = Dictionary.keys($spaces)
 
 			$space(space.name)
 
@@ -947,7 +947,7 @@ export class Color {
 		let b = that._blue / 255
 		b = b / 12.92 if b < 0.03928 else Math.pow((b + 0.055) / 1.055, 2.4)
 
-		return (0.2126 * r) + (0.7152 * g) + (0.0722 * b)
+		return ((0.2126 * r) + (0.7152 * g) + (0.0722 * b))!!
 	} // }}}
 
 	#[error(off)]
@@ -980,7 +980,7 @@ export class Color {
 	} // }}}
 
 	scheme(functions: array<func>): array<Color> { // {{{
-		return [fn(this.clone()) for fn in functions]
+		return [fn(this.clone()):Color for fn in functions]
 	} // }}}
 
 	#[error(off)]
