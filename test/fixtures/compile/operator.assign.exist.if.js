@@ -9,7 +9,7 @@ module.exports = function() {
 	__ks_coverage["/fixtures/compile/operator.assign.exist.if.ks"].s[1]++;
 	let foo = "otto";
 	__ks_coverage["/fixtures/compile/operator.assign.exist.if.ks"].s[2]++;
-	let bar;
+	let bar = null;
 	__ks_coverage["/fixtures/compile/operator.assign.exist.if.ks"].s[3]++;
 	if((__ks_coverage["/fixtures/compile/operator.assign.exist.if.ks"].b[2][0]++, true) && (__ks_coverage["/fixtures/compile/operator.assign.exist.if.ks"].b[2][1]++, Type.isValue(foo) ? (bar = foo, true) : false)) {
 		__ks_coverage["/fixtures/compile/operator.assign.exist.if.ks"].b[1][0]++;

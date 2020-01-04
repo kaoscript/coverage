@@ -32,7 +32,7 @@ module.exports = function() {
 				__ks_coverage["/fixtures/compile/diskspace.module.ks"].s[6]++;
 				let disks = [];
 				__ks_coverage["/fixtures/compile/diskspace.module.ks"].s[7]++;
-				let matches;
+				let matches = null;
 				__ks_coverage["/fixtures/compile/diskspace.module.ks"].s[8]++;
 				for(let __ks_1 = 0, __ks_2 = __ks_String._im_lines(stdout), __ks_3 = __ks_2.length, line; __ks_1 < __ks_3; ++__ks_1) {
 					line = __ks_2[__ks_1];

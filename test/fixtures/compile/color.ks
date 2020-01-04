@@ -6,6 +6,7 @@ import {
 	'./_array.ks'
 	'./_float.ks'
 	'./_integer.ks'
+	'./_math.ks'
 	'./_number.ks'
 	'./_string.ks'
 }
@@ -176,24 +177,29 @@ func $blend(x: float, y: float, percentage: float): float { // {{{
 func $binder(last: func, components, first: func, ...firstArgs): func { // {{{
 	let that = first**(...firstArgs)
 
-	let lastArgs := [that[component.field] for component, name of components]
+	let lastArgs = [that[component.field] for component, name of components]
+
 	lastArgs.push(that)
 
 	return last**(...lastArgs)
 } // }}}
 
-let $caster = {
-	alpha(n = null, percentage = false): float { // {{{
+namespace $caster {
+	func alpha(n = null, percentage: bool = false): float { // {{{
 		let i: Number = Float.parse(n)
 
 		return 1 if i == NaN else (percentage ? i / 100 : i).limit(0, 1).round(3)
 	} // }}}
-	ff(n): int { // {{{
+
+	func ff(n): int { // {{{
 		return Float.parse(n).limit(0, 255).round()
 	} // }}}
-	percentage(n): float { // {{{
+
+	func percentage(n): float { // {{{
 		return Float.parse(n).limit(0, 100).round(1)
 	} // }}}
+
+	export *
 }
 
 func $component(component, name: string, space: string): void { // {{{
@@ -211,9 +217,9 @@ func $component(component, name: string, space: string): void { // {{{
 	$components[name].spaces[space] = true
 } // }}}
 
-func $convert(that: Color, space: string, result = {_alpha: 0}): Dictionary ~ Error { // {{{
+func $convert(that: Color, space: string, result: dict = {_alpha: 0}): dict ~ Error { // {{{
 	if ?(s = $spaces[that._space]).converters[space] {
-		let args := [that[component.field] for component, name of s.components]
+		let args = [that[component.field] for component, name of s.components]
 
 		args.push(result)
 
@@ -229,8 +235,8 @@ func $convert(that: Color, space: string, result = {_alpha: 0}): Dictionary ~ Er
 } // }}}
 
 func $find(from: string, to: string): void { // {{{
-	for :name of $spaces[from].converters {
-		if $spaces[name].converters[to] {
+	for const _, name of $spaces[from].converters {
+		if $spaces[name].converters[to]? {
 			$spaces[from].converters[to] = $binder^^($spaces[name].converters[to], $spaces[name].components, $spaces[from].converters[name])
 
 			return
@@ -258,7 +264,7 @@ func $from(that: Color, args: array): Color { // {{{
 	return that
 } // }}}
 
-func $hex(that) { // {{{
+func $hex(that: Color) { // {{{
 	let chars = '0123456789abcdef'
 
 	let r1 = that._red >> 4
@@ -308,7 +314,7 @@ let $parsers = {
 				that._blue = $caster.ff(args[0][2])
 				return true
 			}
-			else if args[0] is Dictionary {
+			else if args[0] is dict {
 				if ?args[0].r && ?args[0].g && ?args[0].b {
 					that._space = Space::SRGB
 					that._alpha = $caster.alpha(args[0].a)
@@ -444,9 +450,8 @@ let $parsers = {
 		return false
 	} // }}}
 	gray(that: Color, args: array): bool { // {{{
-		if args.length == 1 {
-			//if args[0] kinda integer {
-			if Type.isNumeric(args[0]) {
+		if args.length >= 1 {
+			if Number.isFinite(Float.parse(args[0])) {
 				that._space = Space::SRGB
 				that._red = that._green = that._blue = $caster.ff(args[0])
 				that._alpha = $caster.alpha(args[1]) if args.length >= 2 else 1
@@ -505,14 +510,14 @@ export class Color {
 			const methods: Array = []
 
 			let field
-			for component, name of space.components {
+			for const component, name of space.components {
 				field = `_\(name)`
 
-				fields.push(macro private #i(field): Number)
+				fields.push(macro private #w(field): Number)
 
 				methods.push(macro {
-					override #i(name)() => this.getField(#(name))
-					override #i(name)(value) => this.setField(#(name), value)
+					override #w(name)() => this.getField(#(name))
+					override #w(name)(value) => this.setField(#(name), value)
 				})
 			}
 
@@ -520,8 +525,8 @@ export class Color {
 				Color.registerSpace(#(space))
 
 				impl Color {
-					#b(fields)
-					#b(methods)
+					#s(fields)
+					#s(methods)
 				}
 			}
 		}
@@ -619,7 +624,7 @@ export class Color {
 			if ?space.converters {
 				if ?space.converters.from {
 					for converter, name of space.converters.from {
-						$space(name) if ?!$spaces[name]
+						$space(name) if !?$spaces[name]
 
 						$spaces[name].converters[space.name] = converter
 					}
@@ -632,11 +637,11 @@ export class Color {
 			}
 
 			for name in spaces {
-				if ?!$spaces[name].converters[space.name] {
+				if !?$spaces[name].converters[space.name] {
 					$find(name, space.name)
 				}
 
-				if ?!$spaces[space.name].converters[name] {
+				if !?$spaces[space.name].converters[name] {
 					$find(space.name, name)
 				}
 			}
@@ -706,13 +711,13 @@ export class Color {
 
 		for component, name of components {
 			if component.loop {
-				d = Math.abs(this[component.field] - color[component.field])
+				let d: Number = Math.abs(this[component.field] - color[component.field])
 
 				if d > component.half {
-					d = component.mod - d
+					d = component.mod:!Number - d
 				}
 
-				this[component.field] = ((this[component.field] + (d * percentage)) % component.mod).round(component.round)
+				this[component.field] = ((this[component.field]:!Number + (d * percentage)) % component.mod).round(component.round)
 			}
 			else {
 				this[component.field] = $blend(this[component.field], color[component.field], percentage).limit(component.min, component.max).round(component.round)
@@ -735,6 +740,7 @@ export class Color {
 		return this.copy(new Color())
 	} // }}}
 
+	/* contrast(color: Color): {ratio: float, error: float, min: float, max: float} ~ Error { // {{{ */
 	contrast(color: Color) ~ Error { // {{{
 		let a = this._alpha
 
@@ -743,10 +749,10 @@ export class Color {
 				color = color.clone().blend(this, 0.5, Space::SRGB, true)
 			}
 
-			let l1 := this.luminance() + 0.05
-			let l2 := color.luminance() + 0.05
+			let l1 = this.luminance() + 0.05
+			let l2 = color.luminance() + 0.05
 
-			let ratio := l1 / l2
+			let ratio = l1 / l2
 			if l2 > l1 {
 				ratio = 1 / ratio
 			}
@@ -764,7 +770,7 @@ export class Color {
 			let black = this.clone().blend($static.black, 0.5, Space::SRGB, true).contrast(color).ratio
 			let white = this.clone().blend($static.white, 0.5, Space::SRGB, true).contrast(color).ratio
 
-			let max := Math.max(black, white)
+			const max = Math.max(black, white)
 
 			let closest = new Color(
 				((color._red - (this._red * a)) / (1 - a)).limit(0, 255),
@@ -772,7 +778,7 @@ export class Color {
 				((color._blue - (this._blue * a)) / (1 - a)).limit(0, 255)
 			)
 
-			let min := this.clone().blend(closest, 0.5, Space::SRGB, true).contrast(color).ratio
+			const min: Number = this.clone().blend(closest, 0.5, Space::SRGB, true).contrast(color).ratio
 
 			return {
 				ratio: ((min + max) / 2).round(2)
@@ -805,7 +811,7 @@ export class Color {
 
 	#[error(off)]
 	distance(color: Color): float { // {{{
-		that = this.like(Space::SRGB)
+		const that: {_red: float, _green: float, _blue: float} = this.like(Space::SRGB)
 		color = color.like(Space::SRGB)
 
 		return Math.sqrt(3 * (color._red - that._red) * (color._red - that._red) + 4 * (color._green - that._green) * (color._green - that._green) + 2 * (color._blue - that._blue) * (color._blue - that._blue))
@@ -815,6 +821,7 @@ export class Color {
 		return this.hex() == color.hex()
 	} // }}}
 
+	/* format(format: string = this._space): string | bool ~ Error { // {{{ */
 	#[error(off)]
 	format(format: string = this._space) { // {{{
 		if const format = $formatters[format] {
@@ -858,10 +865,10 @@ export class Color {
 			let green = endColor._green - this._green
 			let blue = endColor._blue - this._blue
 
-			for i from 1 til length {
-				offset = i / length
+			for const i from 1 til length {
+				const offset = i / length
 
-				color = this.clone()
+				const color = this.clone()
 				color._red += Math.round(red * offset)
 				color._green += Math.round(green * offset)
 				color._blue += Math.round(blue * offset)
@@ -938,16 +945,18 @@ export class Color {
 
 	#[error(off)]
 	luminance(): Number { // {{{
-		let that = this.like(Space::SRGB)
+		const that = this.like(Space::SRGB)
 
-		let r = that._red / 255
+		let r: float = that._red:!float / 255
 		r = r / 12.92 if r < 0.03928 else Math.pow((r + 0.055) / 1.055, 2.4)
-		let g = that._green / 255
+
+		let g: float = that._green:!float / 255
 		g = g / 12.92 if g < 0.03928 else Math.pow((g + 0.055) / 1.055, 2.4)
-		let b = that._blue / 255
+
+		let b: float = that._blue:!float / 255
 		b = b / 12.92 if b < 0.03928 else Math.pow((b + 0.055) / 1.055, 2.4)
 
-		return ((0.2126 * r) + (0.7152 * g) + (0.0722 * b))!!
+		return (0.2126 * r) + (0.7152 * g) + (0.0722 * b)
 	} // }}}
 
 	#[error(off)]
@@ -979,15 +988,15 @@ export class Color {
 		}
 	} // }}}
 
-	scheme(functions: array<func>): array<Color> { // {{{
-		return [fn(this.clone()):Color for fn in functions]
+	scheme(functions: array<(color: Color): Color>): array<Color> { // {{{
+		return [fn(this.clone()) for fn in functions]
 	} // }}}
 
 	#[error(off)]
 	private setField(name, value: number | string): Color { // {{{
-		let component
+		let component = $components[name]
 
-		if $components[name].spaces[this._space]? {
+		if component.spaces[this._space]? {
 			component = $spaces[this._space].components[name]
 		}
 		else if component.families.length > 1 {

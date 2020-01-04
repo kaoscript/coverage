@@ -20,7 +20,7 @@ module.exports = function() {
 		__ks_coverage["/fixtures/compile/xample.pluck.when.ks"].s[3]++;
 		let result = [];
 		__ks_coverage["/fixtures/compile/xample.pluck.when.ks"].s[4]++;
-		let value;
+		let value = null;
 		__ks_coverage["/fixtures/compile/xample.pluck.when.ks"].s[5]++;
 		for(let __ks_0 = 0, __ks_1 = this.length, item; __ks_0 < __ks_1; ++__ks_0) {
 			item = this[__ks_0];

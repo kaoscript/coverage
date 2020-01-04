@@ -8,7 +8,7 @@
  * http://www.opensource.org/licenses/mit-license.php
  **/
 #![error(off)]
-#![rules(non-exhaustive)]
+#![rules(ignore-misfit)]
 
 import 'kaoscript'
 
@@ -793,10 +793,11 @@ const $statements = {
 	} // }}}
 	`\(NodeKind::EnumDeclaration)`(data, coverage, coverageName, file, node) => data
 	`\(NodeKind::ExportDeclaration)`(data, coverage, coverageName, file, node) { // {{{
-		data.declarations = [$compile.compile(declaration, coverage, coverageName, file, node) for declaration in data.declarations]
+		data.declarations = [$compile.compile(declaration, coverage, coverageName, file, node) for const declaration in data.declarations]
 
 		return data
 	} // }}}
+	`\(NodeKind::ExportExclusionSpecifier)`(data, coverage, coverageName, file, node) => data
 	`\(NodeKind::ExportDeclarationSpecifier)`(data, coverage, coverageName, file, node) { // {{{
 		data.declaration = $compile.compile(data.declaration, coverage, coverageName, file, node)
 
