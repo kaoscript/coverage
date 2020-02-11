@@ -1374,7 +1374,7 @@ module.exports = function() {
 				if(Operator.gt(component.families.length, 1)) {
 					__ks_coverage["/fixtures/compile/color.ks"].b[79][0]++;
 					__ks_coverage["/fixtures/compile/color.ks"].s[345]++;
-					throw new Error("The component '" + name + "' has a conflict between the spaces '" + component.families.join("', '") + "'");
+					throw new Error(Helper.concatString("The component '", name, "' has a conflict between the spaces '", component.families.join("', '"), "'"));
 				}
 				else {
 					__ks_coverage["/fixtures/compile/color.ks"].b[79][1]++;
@@ -1759,7 +1759,7 @@ module.exports = function() {
 				if(Operator.gt(component.families.length, 1)) {
 					__ks_coverage["/fixtures/compile/color.ks"].b[99][0]++;
 					__ks_coverage["/fixtures/compile/color.ks"].s[413]++;
-					throw new Error("The component '" + name + "' has a conflict between the spaces '" + component.families.join("', '") + "'");
+					throw new Error(Helper.concatString("The component '", name, "' has a conflict between the spaces '", component.families.join("', '"), "'"));
 				}
 				else {
 					__ks_coverage["/fixtures/compile/color.ks"].b[99][1]++;
@@ -1856,7 +1856,7 @@ module.exports = function() {
 					else {
 						__ks_coverage["/fixtures/compile/color.ks"].b[105][1]++;
 						__ks_coverage["/fixtures/compile/color.ks"].s[430]++;
-						throw new Error("The component '" + space + "' has a conflict between the spaces '" + $components[space].families.join("', '") + "'");
+						throw new Error(Helper.concatString("The component '", space, "' has a conflict between the spaces '", $components[space].families.join("', '"), "'"));
 					}
 				}
 			}
@@ -2277,6 +2277,15 @@ module.exports = function() {
 		})();
 		return d;
 	})());
+	Color.prototype.__ks_init_2 = function() {
+		this._red = 0;
+	};
+	Color.prototype.__ks_init_3 = function() {
+		this._green = 0;
+	};
+	Color.prototype.__ks_init_4 = function() {
+		this._blue = 0;
+	};
 	Color.prototype.__ks_func_red_0 = function() {
 		return this.getField("red");
 	};
@@ -2312,6 +2321,12 @@ module.exports = function() {
 			throw new TypeError("'value' is not nullable");
 		}
 		return this.setField("blue", value);
+	};
+	Color.prototype.__ks_init = function() {
+		Color.prototype.__ks_init_1.call(this);
+		Color.prototype.__ks_init_2.call(this);
+		Color.prototype.__ks_init_3.call(this);
+		Color.prototype.__ks_init_4.call(this);
 	};
 	Color.prototype.red = function() {
 		if(arguments.length === 0) {

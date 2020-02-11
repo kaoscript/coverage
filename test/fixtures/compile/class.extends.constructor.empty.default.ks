@@ -2,16 +2,17 @@ extern console
 
 class Shape {
 	private {
-		_color: String
+		_color: String	= 'black'
 	}
-	
+
 	draw(): String {
+		return ''
 	}
 }
 
 class Rectangle extends Shape {
 	constructor(@color)
-	
+
 	draw(): String {
 		return `I'm drawing a \(@color) rectangle.`
 	}
